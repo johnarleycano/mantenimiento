@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.min.css" /><!-- Estilos para UI Kit -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css" /><!-- Estilos generales -->
 
-<!-- Scripts para UI Kit -->
-<script src="<?php echo base_url(); ?>js/uikit.min.js"></script>
-<script src="<?php echo base_url(); ?>js/uikit-icons.min.js"></script>
+<!-- Scripts -->
+<script src="<?php echo base_url(); ?>js/jquery-3.2.1.min.js"></script> <!-- jQuery -->
+<script src="<?php echo base_url(); ?>js/uikit.min.js"></script> <!-- Scripts para UI Kit -->
+<script src="<?php echo base_url(); ?>js/uikit-icons.min.js"></script> <!-- Scripts para UI Kit -->
