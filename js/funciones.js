@@ -1,0 +1,134 @@
+/**
+ * Método para realizar consultas y carga
+ * de información mediante Ajax
+ * 
+ * @param  [string]  url            Url del controlador y método que consultará
+ * @param  [string]  datos          Datos que enviará. Normalmente en formato JSON
+ * @param  [string]  tipo_respuesta La respuesta que retorna. Se da en Ajax o HTML
+ * @param  [boolean] async          paso de datos síncrono o asíncrono
+ * 
+ * @return [array]                Respuesta con los datos
+ * 
+ */
+function ajax(url, datos, tipo_respuesta, async = false){
+    //Variable de exito
+    var exito;
+
+    // Esta es la petición ajax que llevará 
+    // a la interfaz los datos pedidos
+    $.ajax({
+        url: url,
+        data: datos,
+        type: "POST",
+        dataType: tipo_respuesta,
+        async: async,
+        success: function(respuesta){
+            //Si la respuesta no es error
+            if(respuesta){
+                //Se almacena la respuesta como variable de éxito
+                exito = respuesta;
+            } else {
+                //La variable de éxito será un mensaje de error
+                // exito = 'error';
+                exito = respuesta;
+            } //If
+        },//Success
+        error: function(respuesta){
+            //Variable de exito será mensaje de error de ajax
+            exito = respuesta;
+        }//Error
+    });//Ajax
+
+    //Se retorna la respuesta
+    return exito;
+}
+
+/**
+ * Cierra todas las notificaciones
+ * en pantalla
+ * 
+ * @return [void]
+ */
+function cerrar_notificaciones()
+{	
+	UIkit.notification.closeAll();
+}
+
+/**
+ * Imprime el mensaje de notificación en pantalla
+ * 
+ * @param  [string] tipo    primary, success, warning, danger
+ * @param  [string] mensaje Mensaje de la notificación
+ * 
+ * @return [void]
+ */
+function imprimir_notificacion(mensaje, tipo = null)
+{
+	// datos para la notificación
+	datos = {
+	    message: mensaje,
+	    pos: 'bottom-center',
+	    timeout: 0
+	}
+
+	// Si trae un tipo (para formatear el mensaje)
+	if (tipo) {
+		datos.status = tipo;
+	}
+
+	// Si la notificación es una un mensaje de éxito
+	if(tipo == "success"){
+		datos.timeout = 5000;
+	}
+
+	// Se lanza la notificación
+	UIkit.notification(datos);
+}
+
+/**
+ * Redirige a la interfaz indicada
+ * 
+ * @param  [string] url Dirección a donde se dirige
+ * 
+ * @return [void]     
+ */
+function redireccionar(url){
+    location.href = url;
+}
+
+/**
+ * Recorre los campos y obligatorios buscando
+ * que todos estén diligenciados
+ * 
+ * @param  [array] campos Arreglo de campos a validar
+ * 
+ * @return [array]        Campos que no se han diligenciado
+ */
+function validar_campos_obligatorios(campos)
+{
+    campos_vacios = new Array();
+
+    // Se recorren los registros y  se almacenan en un arreglo
+    // los nombres de los campos que están vacíos
+    $.each(campos, function(clave, campo) {
+    	if ($.trim(campo) == "") {
+    		campos_vacios.push(clave);
+    	}
+	});
+
+	// Si existen campos obligatorios sin diligenciar,
+	// se recorre cada campo y se genera notificación en pantalla
+	if(campos_vacios.length > 0){
+		cerrar_notificaciones();
+
+		for (var i = 0; i < campos_vacios.length; i++){
+			imprimir_notificacion("El valor de " + $("#" + campos_vacios[i]).attr("title")  + " no puede estar vacío", "warning");
+		}
+	}
+
+    // Si hay campos vacíos se retorna el arreglo,
+    // sino, false para continuar con el proceso del formulario
+	if (campos_vacios.length > 0) {
+		return true;
+	}
+}

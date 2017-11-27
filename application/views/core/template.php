@@ -6,9 +6,12 @@
 	</head>
 	<body>
         <?php
-        // Menús de la aplicación
-        $this->load->view('core/menu_superior');
-        $this->load->view('core/menu_lateral');
+        // Si ha iniciado sesión
+        if ($this->session->userdata("Pk_Id_Usuario")) {
+            // Menús de la aplicación
+            $this->load->view('core/menu_superior');
+            $this->load->view('core/menu_lateral');
+        }
         ?>
 
     	<!-- Contenedor principal -->

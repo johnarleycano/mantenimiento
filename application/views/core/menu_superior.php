@@ -11,6 +11,14 @@
             <li><a href="#" uk-icon="icon: file-edit" title="Editar" uk-tooltip="pos: bottom-center"></a></li>
             <li><a href="#" uk-icon="icon: copy" title="Copiar" uk-tooltip="pos: bottom-center"></a></li>
             <li><a href="#" uk-icon="icon: trash" title="Eliminar" uk-tooltip="pos: bottom-left"></a></li>
+            <li><a href="javascript:cerrar_sesion()" uk-icon="icon: sign-out" title="Cerrar sesión" uk-tooltip="pos: bottom-left"></a></li>
         </ul>
     </div>
 </nav>
+
+<script type="text/javascript">
+    function cerrar_sesion()
+    {
+        redireccionar("<?php echo site_url('sesion/cerrar'); ?>");
+    }
+</script>
