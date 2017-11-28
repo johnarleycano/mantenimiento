@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido');
 
+/**
+ * @author:     John Arley Cano Salinas
+ * Fecha:       24 de noviembre de 2017
+ * Programa:    Mediciones | Módulo de sesión
+ *              Gestiona todo lo relacionado con el inicio
+ *              y cierre de sesión del usuario
+ * Email:       johnarleycano@hotmail.com
+ */
 class Sesion extends CI_Controller {
 	/**
 	 * Función constructora de la clase. Se hereda el mismo constructor 
@@ -15,10 +23,10 @@ class Sesion extends CI_Controller {
     }
 
 	/**
-	 * Método inicial del controlador
-	 * 
-	 * @return [void]
-	 */
+     * Interfaz inicial de la sesión
+     * 
+     * @return [void]
+     */
 	function index()
 	{
         $this->data['titulo'] = 'Identifcación';
@@ -97,14 +105,13 @@ class Sesion extends CI_Controller {
 	                "Email" => $datos_sesion->Email,
 	                'Permisos' => $accesos
 	            );
-
-	            
-
-                //Respuesta ok
+            	
+            	// Envío de datos mediante JSON
         		print json_encode($sesion);
 	            exit();
             }
             
+        	// Envío de datos mediante JSON
         	print json_encode($datos_sesion);
 		} else {
             // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -112,3 +119,5 @@ class Sesion extends CI_Controller {
         }
 	}
 }
+/* Fin del archivo Sesion.php */
+/* Ubicación: ./application/controllers/Sesion.php */

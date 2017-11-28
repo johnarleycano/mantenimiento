@@ -15,10 +15,3 @@
         </ul>
     </div>
 </nav>
-
-<script type="text/javascript">
-    function cerrar_sesion()
-    {
-        redireccionar("<?php echo site_url('sesion/cerrar'); ?>");
-    }
-</script>

@@ -55,6 +55,18 @@ function cerrar_notificaciones()
 }
 
 /**
+ * Imprime mensaje en consola
+ * 
+ * @param  [string] mensaje Mensaje a imprimir
+ * 
+ * @return [void]
+ */
+function imprimir(mensaje)
+{
+    console.log(mensaje);
+}
+
+/**
  * Imprime el mensaje de notificación en pantalla
  * 
  * @param  [string] tipo    primary, success, warning, danger

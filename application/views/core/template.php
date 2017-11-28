@@ -24,3 +24,15 @@
         <?php $this->load->view('core/footer'); ?>
 	</body>
 </html>
+
+<script type="text/javascript">
+    /**
+     * Cierra la sesión del usuario
+     * 
+     * @return [void]
+     */
+    function cerrar_sesion()
+    {
+        redireccionar("<?php echo site_url('sesion/cerrar'); ?>");
+    }
+</script>
