@@ -15,7 +15,7 @@
         ?>
 
     	<!-- Contenedor principal -->
-        <div id="contenedor_principal" class="uk-container uk-container-large">
+        <div id="contenedor_principal" class="uk-container uk-container">
             <!--Se carga el contenido principal -->
             <?php $this->load->view($contenido_principal); ?>
     	</div>
@@ -27,12 +27,12 @@
 
 <script type="text/javascript">
     /**
-     * Cierra la sesión del usuario
+     * Carga de interfaz de medición de rocería
      * 
      * @return [void]
      */
-    function cerrar_sesion()
+    function medir_roceria()
     {
-        redireccionar("<?php echo site_url('sesion/cerrar'); ?>");
+        redireccionar("<?php echo site_url('roceria/parametrizar'); ?>");
     }
 </script>

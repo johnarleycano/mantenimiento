@@ -44,6 +44,69 @@ function ajax(url, datos, tipo_respuesta, async = false){
 }
 
 /**
+ * Oculta todos los íconos y habilita
+ * los que estén parametrizados en cada
+ * interfaz
+ * 
+ * @param  [array] parametros íconos a habilitar
+ * 
+ * @return [void]
+ */
+function botones(parametros)
+{
+    $("[id^='icono_']").hide();
+
+    // Si trae parámetros
+    if (parametros) {
+        $("#menu_superior > div").removeClass("uk-hidden");
+        
+        for (i = 0; i < parametros.length; i++) { 
+            $("#icono_" + parametros[i]).show();
+        }
+    }
+}
+
+function cargar_interfaz(contenedor, url, datos)
+{
+    // Configuración de los botones (de esta manera entran desactivados)
+    // botones();
+
+    // Carga de la interfaz
+    $("#" + contenedor).load(url, datos);
+}
+
+/**
+ * Se limpia la lista, se consultan los elementos
+ * y se cargan en la lista nuevamente
+ * 
+ * @param  [array] datos    Datos a cargar y mostrar
+ * 
+ * @return [void]
+ */
+function cargar_lista_desplegable(datos){
+    // Si no se elige ninguna opción, se limpia la lista
+    if (datos.elemento_padre.val() == "") {
+        limpiar_lista(datos.elemento_hijo, datos.mensaje_padre);
+
+        return false;
+    }
+    
+    // Se limpia la lista
+    limpiar_lista(datos.elemento_hijo, datos.mensaje_hijo);
+
+    // Consulta de las vías del sector seleccionado
+    vias = ajax(datos.url, {"tipo": datos.tipo, "id": datos.id}, "JSON");
+
+    // Se recorren las vías y se alimenta la lista desplegable
+    $.each(vias, function(clave, via) {
+        datos.elemento_hijo.append("<option value='" + via.Pk_Id + "'>" + via.Nombre + "</option>");
+    });
+
+    // Se pone el foco en la siguiente lista desplegable
+    datos.elemento_hijo.focus();
+}
+
+/**
  * Cierra todas las notificaciones
  * en pantalla
  * 
@@ -98,6 +161,18 @@ function imprimir_notificacion(mensaje, tipo = null)
 }
 
 /**
+ * Limpia la lista desplegable y deja la opción por defecto
+ * 
+ * @param  [element]    elemento elemento del formulario (lista)
+ * @param  [string]     mensaje  Mensaje de la opción por defecto
+ * 
+ * @return [void]
+ */
+function limpiar_lista(elemento, mensaje){
+    elemento.html('').append("<option value=''>" + mensaje + "</option>");
+}
+
+/**
  * Redirige a la interfaz indicada
  * 
  * @param  [string] url Dirección a donde se dirige
@@ -126,14 +201,15 @@ function validar_campos_obligatorios(campos)
     	if ($.trim(campo) == "") {
     		campos_vacios.push(clave);
     	}
-	});
+    });
 
-	// Si existen campos obligatorios sin diligenciar,
-	// se recorre cada campo y se genera notificación en pantalla
-	if(campos_vacios.length > 0){
-		cerrar_notificaciones();
+    // Si existen campos obligatorios sin diligenciar,
+    // se recorre cada campo y se genera notificación en pantalla
+    if(campos_vacios.length > 0){
+        cerrar_notificaciones();
 
-		for (var i = 0; i < campos_vacios.length; i++){
+        for (var i = 0; i < campos_vacios.length; i++){
+            imprimir($("#" + campos_vacios[i]).attr("id"))
 			imprimir_notificacion("El valor de " + $("#" + campos_vacios[i]).attr("title")  + " no puede estar vacío", "warning");
 		}
 	}
@@ -143,4 +219,26 @@ function validar_campos_obligatorios(campos)
 	if (campos_vacios.length > 0) {
 		return true;
 	}
+}
+
+/**
+ * Se recorren los checks y se busca que
+ * al menos esté uno marcado
+ * 
+ * @param  [string] elemento nombre del id de los checks
+ * 
+ * @return [boolean]          true = no hay checks marcados
+ */
+function validar_checks(elemento)
+{
+    var marcados = 0;
+
+    // Se recorren los checks y se acumulan los marcados
+    $("#" + elemento + ":checked").each(function(){
+        marcados++;
+    });
+
+    if (marcados < 1) {
+        return true;
+    }
 }

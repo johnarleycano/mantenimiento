@@ -20,9 +20,6 @@
 				        <p uk-margin>
     						<input type="submit" class="uk-button uk-button-secondary uk-button-large uk-width-1-1" value="INICIAR SESIÓN">
     					</p>
-				        <!-- <div class="uk-margin">
-				            <input class="uk-range" type="range" value="2" min="0" max="10" step="0.5">
-				        </div> -->
 				    </fieldset>
 				</form>
             </div>
@@ -41,7 +38,7 @@
 				"login": $("#login").val(),
 				"clave": $("#clave").val()
 			}
-			// console.log(campos_obligatorios);
+			// imprimir(campos_obligatorios);
 
 			// Si existen campos obligatorios sin diligenciar
 			if(validar_campos_obligatorios(campos_obligatorios)){
@@ -50,7 +47,7 @@
 
 			// Se consulta los datos del usuario
             usuario = ajax("<?php echo site_url('sesion/validar'); ?>", {"usuario": $("#login").val(), "clave": $("#clave").val()}, 'JSON');
-            // console.log(usuario);
+            // imprimir(usuario);
 
             // Si no existe el usuario con esas credenciales
             if (!usuario) {
@@ -84,5 +81,4 @@
 			return false;
 		});
 	});
-
 </script>

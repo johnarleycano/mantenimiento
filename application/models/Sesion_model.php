@@ -1,14 +1,13 @@
 <?php 
 Class Sesion_model extends CI_Model{
-	/*
-     * db_suite es la conexion a la base de datos unificada de usuarios de la suite de aplicaciones.
-     * Esta se llama porque en el archivo database.php la variable ['suite']['pconnect] esta marcada como false,
-     * lo que quiere decir que no se conecta persistentemente sino cuando se le invoca, como en esta ocasión.
-     */
     function __construct() {
         parent::__construct();
 
-        //Se carga la conexion a la base de la suite de aplicaciones
+        /*
+         * db_suite es la conexion a la base de datos unificada de usuarios de la suite de aplicaciones.
+         * Esta se llama porque en el archivo database.php la variable ['suite']['pconnect] esta marcada como false,
+         * lo que quiere decir que no se conecta persistentemente sino cuando se le invoca, como en esta ocasión.
+         */
         $this->db_suite = $this->load->database('suite', TRUE);
     }
 
