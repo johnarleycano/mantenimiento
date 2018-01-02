@@ -8,7 +8,7 @@ Class Sesion_model extends CI_Model{
          * Esta se llama porque en el archivo database.php la variable ['suite']['pconnect] esta marcada como false,
          * lo que quiere decir que no se conecta persistentemente sino cuando se le invoca, como en esta ocasión.
          */
-        $this->db_suite = $this->load->database('suite', TRUE);
+        $this->db_configuracion = $this->load->database('configuracion', TRUE);
     }
 
     /**
@@ -52,8 +52,7 @@ Class Sesion_model extends CI_Model{
      */
 	function validar($usuario, $clave)
 	{
-		// Consulta
-        $this->db_suite
+        $this->db_configuracion
         	->select(array(
 	            'u.Pk_Id',
 	            'u.Nombres',
@@ -68,9 +67,8 @@ Class Sesion_model extends CI_Model{
             ->join('permisos_aplicaciones p', 'p.Fk_Id_Usuario = u.Pk_Id', 'left')
             ->where(array('Login' => $usuario, 'Clave' => $clave));
         
-        // Retorno
-        // return $this->db_suite->get_compiled_select(); // string de la consulta
-        return $this->db_suite->get()->row();
+        // return $this->db_configuracion->get_compiled_select(); // string de la consulta
+        return $this->db_configuracion->get()->row();
 	}
 
 

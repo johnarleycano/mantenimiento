@@ -1,0 +1,67 @@
+color_fe = gray;
+color_cinco = rgb(21,116,36);
+color_cuatro = rgb(62,225,87);
+color_tres = rgb(100,242,47);
+color_dos = rgb(251,246,34);
+color_uno = rgb(244,10,10);
+
+input[type="radio"]
+	margin 15%
+	background-color rgba(255,255,255,.15)
+	height 1em
+	width 1em
+	-webkit-border-radius 50%
+	-webkit-box-shadow 0px 0px 0px 30px rgba(255,255,255,0)
+	-webkit-transition box-shadow .4s
+			
+input[type="radio"]:hover
+	-webkit-box-shadow 0px 0px 0px 0px rgba(255,255,255,.6)
+	
+#mediciones
+	text-align center
+
+#medicion
+	display inline-block
+	height 480px
+	width 11%
+	max-width 100px
+	
+	#cero
+		background-color color_fe
+		
+	#uno
+		background-color color_uno
+	#dos
+		background-color color_dos
+		
+	#tres
+		background-color color_tres
+		
+	#cuatro
+		background-color color_cuatro
+		
+	#cinco
+		background-color color_cinco
+	
+	.contenedor
+		cursor pointer
+		float left
+		height 10%
+		width 100%
+		padding 3px
+		
+	.icon
+		margin:5% auto;
+		background-color: rgba(255,255,255,.15);
+		width:2.5em;
+		padding:2%;
+		-webkit-border-radius: 50%;
+		-webkit-box-shadow: 0px 0px 0px 30px rgba(255,255,255,0);
+		-webkit-transition:box-shadow .4s;
+		
+	.opacidad
+		opacity: .4
+
+.separador
+	width 5px
+	display inline-block

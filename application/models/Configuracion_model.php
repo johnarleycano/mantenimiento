@@ -11,6 +11,7 @@ Class Configuracion_model extends CI_Model{
          */
         $this->db_configuracion = $this->load->database('configuracion', TRUE);
     }
+    
 	/**
 	 * Obtiene registros de base de datos
 	 * y los retorna a las vistas
@@ -37,10 +38,38 @@ Class Configuracion_model extends CI_Model{
                 return "KM ".$kilometros."+".str_pad(substr($id, -3), 3, "0", STR_PAD_LEFT);
             break;
 
+			case "calificaciones":
+				return $this->db
+					->order_by("Valor", "DESC")
+					->get("valores_calificaciones")->result();
+			break;
+
+			case "costados":
+				$this->db_configuracion
+		        	->select(array(
+			            'c.Pk_Id',
+			            'tc.Codigo',
+			            'tc.Nombre',
+			            ))
+		            ->from('costados c')
+		            ->join('tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
+		            ->where('c.Fk_Id_Via', $id);
+		        
+		        // return $this->db_configuracion->get_compiled_select(); // string de la consulta
+		        return $this->db_configuracion->get()->result();
+			break;
+
 			case "sectores":
 				return $this->db_configuracion
 					->order_by("Nombre")
 					->get("sectores")->result();
+			break;
+
+			case "tipos_mediciones":
+				return $this->db
+					->where("Estado", 1)
+					->order_by("Nombre")
+					->get("tipos_mediciones")->result();
 			break;
 
 			case "via":

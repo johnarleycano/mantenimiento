@@ -59,18 +59,23 @@
 		}
 
 	    datos = {
-	    	"tipo": "medicion_roceria",
-	    	"abscisa_inicial": $("#abscisa_inicial").val(),
-	    	"abscisa_final": $("#abscisa_final").val(),
-	    	"id_via": $("#select_via").val()
+	    	"Abscisa_Inicial": $("#abscisa_inicial").val(),
+	    	"Abscisa_Final": $("#abscisa_final").val(),
+	    	"Fk_Id_Via": $("#select_via").val(),
+	    	"Fk_Id_Via": $("#select_via").val(),
+	    	"Fecha_Inicial": "<?php echo date("Y-m-d h:i:s"); ?>",
+	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>"
 	    }
+	    // imprimir(datos);
+
+        id_medicion_temporal = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_temporal", "datos": datos}, 'HTML');
+        // imprimir(id_medicion_temporal);
+        
+        // Url con el inicio de la medición
+        url = "<?php echo site_url('roceria/medir') ?>" + "/" + id_medicion_temporal + "/1" + "/" + $("#abscisa_inicial").val() + "/" + $("#abscisa_final").val();
 
 		// Se carga la interfaz de medición
-		cargar_interfaz("contenedor_principal", "<?php echo site_url('configuracion/cargar_interfaz'); ?>", datos);
-
-
-
-
+		redireccionar(url);
 
 		return false;
 	}
@@ -80,7 +85,7 @@
 		botones(Array("iniciar"));
 
 		// Se carga el rango de abscisado por defecto
-		cargar_interfaz("cont_abscisado", "<?php echo site_url('configuracion/cargar_interfaz'); ?>", {"tipo": "rango_abscisado", "id_via": "0"});
+		cargar_interfaz("cont_abscisado", "<?php echo site_url('roceria/cargar_interfaz'); ?>", {"tipo": "rango_abscisado", "id_via": "0"});
 
 		// Cuando se elija el sector, se cargan las vías de
 		// ese sector
@@ -100,7 +105,7 @@
 		// Al seleccionar una vía, carga una interfaz con el rango del abscisado
 		$("#select_via").on("change", function(){
 			// Se cargan los abscisados
-			cargar_interfaz("cont_abscisado", "<?php echo site_url('configuracion/cargar_interfaz'); ?>", {"tipo": "rango_abscisado", "id_via": $(this).val()});
+			cargar_interfaz("cont_abscisado", "<?php echo site_url('roceria/cargar_interfaz'); ?>", {"tipo": "rango_abscisado", "id_via": $(this).val()});
 		});
 	});
 </script>

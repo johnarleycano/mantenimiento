@@ -11,6 +11,15 @@ defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido
  */
 class Panel extends CI_Controller {
     /**
+     * Función constructora de la clase. Se hereda el mismo constructor 
+     * de la clase para evitar sobreescribirlo y de esa manera 
+     * conservar el funcionamiento de controlador.
+     */
+    function __construct() {
+        parent::__construct();
+    }
+    
+    /**
      * Interfaz inicial del panel
      * 
      * @return [void]

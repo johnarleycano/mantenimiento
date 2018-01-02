@@ -47,15 +47,8 @@ class Configuracion extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "medicion_roceria":
-                    $this->data["abscisa_inicial"] = $this->input->post("abscisa_inicial");
-                    $this->data["abscisa_final"] = $this->input->post("abscisa_final");
-                    $this->load->view("roceria/medir", $this->data);
-                break;
-
-                case "rango_abscisado":
-                    $this->data["id_via"] = $this->input->post("id_via");
-                    $this->load->view("roceria/rango_abscisado", $this->data);
+                case "":
+                    
                 break;
             }
         } else {

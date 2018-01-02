@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Estilos para UI Kit -->
+        <link rel="stylesheet" href="css/uikit.min.css" />
+
+        <!-- Scripts para UI Kit -->
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+    </head>
+    <body>
+        
+
+
+        <script>
+            UIkit.notification({
+                message: 'La medición se guardó correctamente',
+                status: 'success',
+                pos: 'top-center',
+                timeout: 5000
+            });
+
+
+            // Shortcuts
+            // UIkit.notification('My message');
+            // UIkit.notification('My message', status);
+            // UIkit.notification('My message', { /* options */ });
+        </script>
+    </body>
+</html>
