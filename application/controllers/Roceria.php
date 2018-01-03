@@ -109,6 +109,7 @@ class Roceria extends CI_Controller {
         $this->data['posicion'] = $this->uri->segment(4);
         $this->data['abscisa'] = $this->uri->segment(5);
         $this->data['abscisa_final'] = $this->uri->segment(6);
+        $this->data['abscisa_inicial'] = $this->uri->segment(7);
         $this->data['titulo'] = 'Rocería - Parametrizar';
         $this->data['contenido_principal'] = 'roceria/medir';
         $this->load->view('core/template', $this->data);

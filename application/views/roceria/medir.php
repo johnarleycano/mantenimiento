@@ -16,10 +16,11 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 // print_r($costados);
 
 ?>
-<input type="text" id="posicion" value="<?php echo $posicion; ?>">
-<input type="text" id="id_medicion_temporal" value="<?php echo $id_medicion_temporal; ?>">
-<input type="text" id="abscisa" value="<?php echo $abscisa; ?>">
-<input type="text" id="abscisa_final" value="<?php echo $abscisa_final; ?>">
+<input type="hidden" id="posicion" value="<?php echo $posicion; ?>">
+<input type="hidden" id="id_medicion_temporal" value="<?php echo $id_medicion_temporal; ?>">
+<input type="hidden" id="abscisa" value="<?php echo $abscisa; ?>">
+<input type="hidden" id="abscisa_inicial" value="<?php echo $abscisa_inicial; ?>">
+<input type="hidden" id="abscisa_final" value="<?php echo $abscisa_final; ?>">
 
 <div id="mediciones">
 	<h3 class="uk-heading-bullet">Kilómetro <?php echo ($abscisa/1000) ?></h3>
@@ -99,8 +100,6 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 
 		// Se carga la interfaz de medición
 		redireccionar(url);
-
-		
 	}
 
 	function siguiente()
@@ -112,6 +111,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		var posicion = parseFloat($("#posicion").val()) + 1;
 	    var abscisa = parseFloat($("#abscisa").val()) + 1000;
 	    var abscisa_final = $("#abscisa_final").val();
+	    var abscisa_inicial = $("#abscisa_inicial").val();
 
 		// Se elimina la medición si anteriormente se hizo
 		
@@ -124,11 +124,19 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
         		"Fk_Id_Temp_Medicion": id_medicion_temporal,
         		"Fk_Id_Tipo_Medicion": $(this).attr("data-tipo_medicion"),
         		"Fk_Id_Costado": $(this).attr("data-costado"),
-        		"Fk_Id_Calificacion": $(this).attr("data-calificacion"),
+        		"Calificacion": $(this).attr("data-calificacion"),
         	}
             datos_medicion.push(medicion);
         });
-        // imprimir(unidades_medida);
+        // imprimir(datos_medicion);
+
+        // Si no se marcó ningún ítem, mostrará un mensaje para que marque al menos uno
+        if (datos_medicion.length == 0) {
+        	cerrar_notificaciones();
+			imprimir_notificacion("No ha tomado ninguna medida. Marque al menos un ítem.", "danger");
+
+			return false;
+        }
         
 		guardar = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_detalle_temporal", "datos": datos_medicion}, 'html');
 		// imprimir(guardar);
@@ -145,9 +153,6 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 			return false;
 		}
 		
-		
-	   
-	    
 		// Url con el inicio de la medición
         url = "<?php echo site_url('roceria/medir') ?>" + "/" + id_medicion_temporal + "/" + posicion + "/" + abscisa + "/" + abscisa_final;
 

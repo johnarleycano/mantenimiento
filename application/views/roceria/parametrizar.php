@@ -70,9 +70,9 @@
 
         id_medicion_temporal = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_temporal", "datos": datos}, 'HTML');
         // imprimir(id_medicion_temporal);
-        
+
         // Url con el inicio de la medición
-        url = "<?php echo site_url('roceria/medir') ?>" + "/" + id_medicion_temporal + "/1" + "/" + $("#abscisa_inicial").val() + "/" + $("#abscisa_final").val();
+        url = "<?php echo site_url('roceria/medir') ?>" + "/" + id_medicion_temporal + "/1" + "/" + $("#abscisa_inicial").val() + "/" + $("#abscisa_final").val() + "/" + $("#abscisa_inicial").val();
 
 		// Se carga la interfaz de medición
 		redireccionar(url);
