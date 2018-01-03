@@ -75,6 +75,8 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		<?php } ?>
 		<div class="separador"></div>
 	<?php } ?>
+
+	<progress id="js-progressbar" class="uk-progress" value="<?php echo $abscisa; ?>" max="<?php echo $abscisa_final; ?>"></progress>
 </div>
 
 <script type="text/javascript">
