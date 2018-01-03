@@ -58,6 +58,29 @@ class Roceria extends CI_Controller {
     }
 
     /**
+     * Elimina registros en base de datos
+     * 
+     * @return [boolean] true, false
+     */
+    function eliminar(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Datos por POST
+            $tipo = $this->input->post("tipo");
+
+            // Suiche
+            switch ($tipo) {
+                case 'medicion_detalle':
+                    echo $this->roceria_model->eliminar($tipo, $this->input->post("datos"));
+                break;
+            }
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+    /**
      * Permite la inserción de datos en la base de datos 
      * 
      * @return [void]
@@ -71,23 +94,23 @@ class Roceria extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
-                case "medicion_temporal":
+                case "medicion":
                     // Se inserta el registro y log en base de datos
                     if ($this->roceria_model->insertar($tipo, $datos)) {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        $this->logs_model->insertar(3, "Medición temporal $id");
+                        $this->logs_model->insertar(3, "Inicio de medición ($id)");
                     }
                 break;
 
-                case "medicion_detalle_temporal":
+                case "medicion_detalle":
                     // Se inserta el registro y log en base de datos
                     if ($this->roceria_model->insertar($tipo, $datos)) {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        // $this->logs_model->insertar(3, "Medición temporal $id");
+                        $this->logs_model->insertar(4, "Detalle de medición ($id)");
                     }
                 break;
             }
@@ -105,11 +128,12 @@ class Roceria extends CI_Controller {
             redirect('sesion/cerrar');
         }
 
-        $this->data['id_medicion_temporal'] = $this->uri->segment(3);
+        $this->data['id_medicion'] = $this->uri->segment(3);
         $this->data['posicion'] = $this->uri->segment(4);
         $this->data['abscisa'] = $this->uri->segment(5);
         $this->data['abscisa_final'] = $this->uri->segment(6);
         $this->data['abscisa_inicial'] = $this->uri->segment(7);
+
         $this->data['titulo'] = 'Rocería - Parametrizar';
         $this->data['contenido_principal'] = 'roceria/medir';
         $this->load->view('core/template', $this->data);

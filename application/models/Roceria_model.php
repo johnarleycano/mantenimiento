@@ -1,5 +1,16 @@
 <?php 
 Class Roceria_model extends CI_Model{
+	function eliminar($tipo, $id){
+		// Según el tipo
+		switch ($tipo) {
+			case 'medicion_detalle':
+				if($this->db->delete('mediciones_detalle', $id)){
+					return true;
+				}
+			break;
+		}
+	}
+
 	/**
 	 * Permite la inserción de datos en la base de datos 
 	 * 
@@ -11,14 +22,14 @@ Class Roceria_model extends CI_Model{
 	function insertar($tipo, $datos)
 	{
 		switch ($tipo) {
-			case "medicion_temporal":
-				return $this->db->insert('temp_medicion', $datos);
+			case "medicion":
+				return $this->db->insert('mediciones', $datos);
 			break;
 		}
 
 		switch ($tipo) {
-			case "medicion_detalle_temporal":
-				return $this->db->insert_batch('temp_medicion_detalle', $datos);
+			case "medicion_detalle":
+				return $this->db->insert_batch('mediciones_detalle', $datos);
 			break;
 		}
 	}
@@ -35,10 +46,16 @@ Class Roceria_model extends CI_Model{
 	function obtener($tipo, $id = null)
 	{
 		switch ($tipo) {
-			case 'medicion_temporal':
+			case 'medicion':
 				return $this->db
 					->where("Pk_Id", $id)
-					->get("temp_medicion")->row();
+					->get("mediciones")->row();
+			break;
+
+			case 'medicion_detalle':
+				return $this->db
+					->where($id)
+					->get("mediciones_detalle")->row();
 			break;
 		}
 	}
