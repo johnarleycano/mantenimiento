@@ -68,9 +68,6 @@ function botones(parametros)
 
 function cargar_interfaz(contenedor, url, datos)
 {
-    // Configuración de los botones (de esta manera entran desactivados)
-    // botones();
-
     // Carga de la interfaz
     $("#" + contenedor).load(url, datos);
 }

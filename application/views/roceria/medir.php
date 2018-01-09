@@ -27,12 +27,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	<div id="medicion">
 		<h5 class="uk-heading-divider">&nbsp;</h5>
 
-		<div class="contenedor" id="cinco"><img class="icon" src="<?php echo base_url(); ?>img/5.png"></div>
-		<div class="contenedor" id="cuatro"><img class="icon" src="<?php echo base_url(); ?>img/4.png"></div>
-		<div class="contenedor" id="tres"><img class="icon" src="<?php echo base_url(); ?>img/3.png"></div>
-		<div class="contenedor" id="dos"><img class="icon" src="<?php echo base_url(); ?>img/2.png"></div>
-		<div class="contenedor" id="uno"><img class="icon" src="<?php echo base_url(); ?>img/1.png"></div>
-		<div class="contenedor" id="cero"><p class="texto"><b>FE</b></p></div>
+		<div class="contenedor cinco"><img class="icon" src="<?php echo base_url(); ?>img/5.png"></div>
+		<div class="contenedor cuatro"><img class="icon" src="<?php echo base_url(); ?>img/4.png"></div>
+		<div class="contenedor tres"><img class="icon" src="<?php echo base_url(); ?>img/3.png"></div>
+		<div class="contenedor dos"><img class="icon" src="<?php echo base_url(); ?>img/2.png"></div>
+		<div class="contenedor uno"><img class="icon" src="<?php echo base_url(); ?>img/1.png"></div>
+		<div class="contenedor cero"><p class="texto"><b>FE</b></p></div>
 	</div>
 	<div class="separador"></div>
 
@@ -56,8 +56,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 					} ?>
 
 					<label>
-						<div class="contenedor <?php echo $opacidad; ?>" id="<?php echo $calificacion->Clase; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>">
-
+						<div class="contenedor <?php echo $opacidad.' '.$calificacion->Clase; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>">
 							<input
 								class="uk-radio opacidad" 
 								type="radio" 

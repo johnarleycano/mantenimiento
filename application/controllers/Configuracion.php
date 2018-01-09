@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Bogota');
+
 defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido');
 
 /**
@@ -40,6 +42,11 @@ class Configuracion extends CI_Controller {
         $this->load->view('core/template', $this->data);
 	}
 
+    /**
+     * Carga de interfaz vía Ajax
+     * 
+     * @return [void]
+     */
     function cargar_interfaz()
     {
         //Se valida que la peticion venga mediante ajax y no mediante el navegador

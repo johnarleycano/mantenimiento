@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Bogota');
+
 defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido');
 
 /**
@@ -17,6 +19,9 @@ class Panel extends CI_Controller {
      */
     function __construct() {
         parent::__construct();
+
+        // Carga de modelos
+        $this->load->model(array('configuracion_model', 'panel_model'));
     }
     
     /**
@@ -36,6 +41,34 @@ class Panel extends CI_Controller {
         $this->data['contenido_principal'] = 'panel/index';
         $this->load->view('core/template', $this->data);
 	}
+
+    /**
+     * Carga de interfaz vía Ajax
+     * 
+     * @return [void]
+     */
+    function cargar_interfaz()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            $tipo = $this->input->post("tipo");
+
+            switch ($tipo) {
+                case "mediciones_urgentes":
+                    $this->data["calificacion"] = $this->input->post("calificacion");
+                    $this->load->view("panel/mediciones_urgentes", $this->data);
+                break;
+
+                case "ultimas_mediciones":
+                    $this->data["fecha"] = $this->input->post("fecha");
+                    $this->load->view("panel/ultimas_mediciones", $this->data);
+                break;
+            }
+        } else {
+            // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
 }
 /* Fin del archivo Panel.php */
 /* Ubicación: ./application/controllers/Panel.php */

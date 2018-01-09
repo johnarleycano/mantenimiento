@@ -59,6 +59,57 @@ Class Configuracion_model extends CI_Model{
 		        return $this->db_configuracion->get()->result();
 			break;
 
+			case 'formato_fecha':
+				$fecha = $id;
+
+				// Si la fecha toda es cero
+		    	if ($fecha == "0000-00-00") {
+		    		return "";
+		    	} // if
+
+		    	// Si el día, el mes o el año están en ceros
+		    	if (substr($fecha, 8, 2) == "00" || substr($fecha, 5, 2) == "00" || substr($fecha, 0, 4) == "0000") {
+		    		return "Fecha no válida";
+		    	} // if
+
+		        $dia_num = date("j", strtotime($fecha));
+		        $dia = date("N", strtotime($fecha));
+		        $mes = date("m", strtotime($fecha));
+		        $anio_es = date("Y", strtotime($fecha));
+
+		        //Si No hay fecha, devuelva vac&iacute;o en vez de 0000-00-00
+		        if($fecha == '1969-12-31 19:00:00' || !$fecha){
+		            return false;
+		        } // if
+
+		        //Nombres de los d&iacute;as
+		        if($dia == "1"){ $dia_es = "Lunes"; }
+		        if($dia == "2"){ $dia_es = "Martes"; }
+		        if($dia == "3"){ $dia_es = "Miercoles"; }
+		        if($dia == "4"){ $dia_es = "Jueves"; }
+		        if($dia == "5"){ $dia_es = "Viernes"; }
+		        if($dia == "6"){ $dia_es = "Sabado"; }
+		        if($dia == "7"){ $dia_es = "Domingo"; }
+
+		        //Nombres de los meses
+		        if($mes == "1"){ $mes_es = "Enero"; }
+		        if($mes == "2"){ $mes_es = "Febrero"; }
+		        if($mes == "3"){ $mes_es = "Marzo"; }
+		        if($mes == "4"){ $mes_es = "Abril"; }
+		        if($mes == "5"){ $mes_es = "Mayo"; }
+		        if($mes == "6"){ $mes_es = "junio"; }
+		        if($mes == "7"){ $mes_es = "Julio"; }
+		        if($mes == "8"){ $mes_es = "Agosto"; }
+		        if($mes == "9"){ $mes_es = "Septiembre"; }
+		        if($mes == "10"){ $mes_es = "Octubre"; }
+		        if($mes == "11"){ $mes_es = "Noviembre"; }
+		        if($mes == "12"){ $mes_es = "Diciembre"; } 
+
+		        //Se foramtea la fecha
+		        // $fecha = $dia_num." de ".$mes_es." de ".$anio_es;
+		        return "$mes_es $dia_num, $anio_es";
+			break;
+
 			case "sectores":
 				return $this->db_configuracion
 					->order_by("Nombre")
