@@ -1,4 +1,4 @@
-<!-- <input type="text" id="ultima_medicion"> -->
+<input type="text" id="ultima_medicion">
 
 <div class="uk-section">
     <div class="uk-container">
