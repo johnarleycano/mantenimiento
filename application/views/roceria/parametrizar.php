@@ -63,7 +63,7 @@
 	    	"Abscisa_Final": $("#abscisa_final").val(),
 	    	"Fk_Id_Via": $("#select_via").val(),
 	    	"Fk_Id_Via": $("#select_via").val(),
-	    	"Fecha_Inicial": "<?php echo date("Y-m-d h:i:s"); ?>",
+	    	"Fecha_Inicial": "<?php echo date("Y-m-d H:i:s"); ?>",
 	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>"
 	    }
 	    // imprimir(datos);

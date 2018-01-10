@@ -1,19 +1,21 @@
 <?php
-// Se consulta la medición
+// Se consulta la medición actual
 $medicion = $this->roceria_model->obtener("medicion", $id_medicion);
-// print_r($medicion);
+
+// Se consulta la medición anterior
+$medicion_anterior = $this->roceria_model->obtener("medicion_anterior", $medicion->Fk_Id_Via);
+
+// Asigna el id de la medición anterior, si existe tal medición
+$id_medicion_anterior = ($medicion_anterior) ? $medicion_anterior->Pk_Id : 0 ;
 
 // Se consulta los ítems a medir
 $tipos_mediciones = $this->configuracion_model->obtener("tipos_mediciones");
-// print_r($tipos_mediciones);
 
 // Se consulta los costados de la vía a medir
 $costados = $this->configuracion_model->obtener("costados", $medicion->Fk_Id_Via);
-// print_r($costados);
 
 // Se consulta los costados de la vía a medir
 $calificaciones = $this->configuracion_model->obtener("calificaciones");
-// print_r($costados);
 ?>
 
 <input type="hidden" id="posicion" value="<?php echo $posicion; ?>">
@@ -22,10 +24,15 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 <input type="hidden" id="abscisa_inicial" value="<?php echo $abscisa_inicial; ?>">
 <input type="hidden" id="abscisa_final" value="<?php echo $abscisa_final; ?>">
 
+<!-- Contenedor de mediciones -->
 <div id="mediciones">
-	<h3 class="uk-heading-bullet">Kilómetro <?php echo ($abscisa/1000) ?></h3>
+	<h3 class="uk-heading-line uk-text-center">
+		<span>Kilómetro <?php echo ($abscisa / 1000) ?> de <?php echo ($abscisa_final / 1000); ?></span>
+	</h3>
+
+	<!-- Medición -->
 	<div id="medicion">
-		<h5 class="uk-heading-divider">&nbsp;</h5>
+		<span>&nbsp;</span>
 
 		<div class="contenedor cinco"><img class="icon" src="<?php echo base_url(); ?>img/5.png"></div>
 		<div class="contenedor cuatro"><img class="icon" src="<?php echo base_url(); ?>img/4.png"></div>
@@ -36,16 +43,33 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	</div>
 	<div class="separador"></div>
 
-	<?php foreach ($tipos_mediciones as $tipo_medicion) { ?>
-		<?php foreach ($costados as $costado) { ?>
-			<!-- Se consulta el detalle de la medición -->
-			<?php $detalle_medicion = $this->roceria_model->obtener("medicion_detalle", array("Fk_Id_Medicion" => $id_medicion, "Abscisa" => $abscisa, "Fk_Id_Tipo_Medicion" => $tipo_medicion->Pk_Id, "Fk_Id_Costado" => $costado->Pk_Id)); ?>
+	<?php
+	// Se recorren los tipos de mediciones
+	foreach ($tipos_mediciones as $tipo_medicion) {
+		// Se recorren los costados
+		foreach ($costados as $costado) {
+			// Datos para consultar detalles de la medición
+			$datos = array(
+				"Abscisa" => $abscisa,
+				"Fk_Id_Tipo_Medicion" => $tipo_medicion->Pk_Id,
+				"Fk_Id_Costado" => $costado->Pk_Id,
+			);
+
+			// Se consulta el detalle de la medición actual
+			$datos["Fk_Id_Medicion"] = $id_medicion;
+			$detalle_medicion = $this->roceria_model->obtener("medicion_detalle", $datos);
+
+			// Se consulta el detalle de la medición anterior
+			$datos["Fk_Id_Medicion"] = $id_medicion_anterior;
+			$detalle_medicion_anterior = $this->roceria_model->obtener("medicion_detalle", $datos);
+			?>
 
 			<div id="medicion">
-				<h5 class="uk-heading-divider"><?php echo $costado->Codigo; ?></h5>
-				
-				<?php foreach ($calificaciones as $calificacion) { ?>
-					<?php
+				<span class="uk-text-small"><?php echo "$tipo_medicion->Nombre $costado->Codigo"; ?></span>
+
+				<?php
+				// Se recorren las calificaciones
+				foreach ($calificaciones as $calificacion) {
 					// Si existe la calificación con anterioridad, se activa o desactiva el check y selecciona la casilla
 					if (isset($detalle_medicion->Calificacion) && $detalle_medicion->Calificacion == $calificacion->Valor) {
 						$chequeado = "checked";
@@ -53,12 +77,16 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 					} else {
 						$chequeado = "";
 						$opacidad = "opacidad";
-					} ?>
+					}
 
+					// Si tiene medición anterior, se marca la clase para que se vea en la calificación
+					$clase_medicion_anterior = (isset($detalle_medicion_anterior->Calificacion) && $detalle_medicion_anterior->Calificacion == $calificacion->Valor) ? "medicion_anterior" : "medicion_normal" ;
+					?>
+					
 					<label>
-						<div class="contenedor <?php echo $opacidad.' '.$calificacion->Clase; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>">
+						<div class="contenedor <?php echo $opacidad.' '.$calificacion->Clase.' '.$clase_medicion_anterior; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>">
 							<input
-								class="uk-radio opacidad" 
+								class="uk-radio opacidad " 
 								type="radio" 
 								name='calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}" ?>' 
 								onClick="javascript:marcar(<?php echo $tipo_medicion->Pk_Id; ?>, <?php echo $costado->Pk_Id; ?>, <?php echo $calificacion->Valor; ?>)" 
@@ -79,7 +107,11 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 </div>
 
 <script type="text/javascript">
-	// Cargará el detalle de la medición en esa posición
+	/**
+	 * Cargará el detalle de la medición en esa posición
+	 * 
+	 * @return [void]
+	 */
 	function anterior()
 	{
 		// Si es paso 1, se devuelve a la interfaz de parametrización
@@ -95,6 +127,14 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		redireccionar(url);
 	}
 
+	/**
+	 * Envía los registros vía Ajax para ser guardados
+	 * en base de datos
+	 * 
+	 * @param  [string] tipo [siguiente, anterior]
+	 * 
+	 * @return void
+	 */
 	function guardar(tipo)
 	{
 		var datos_medicion = []
@@ -107,7 +147,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
         		"Fk_Id_Tipo_Medicion": $(this).attr("data-tipo_medicion"),
         		"Fk_Id_Costado": $(this).attr("data-costado"),
         		"Calificacion": $(this).attr("data-calificacion"),
-        		"Fecha": "<?php echo date("Y-m-d h:i:s"); ?>",
+        		"Fecha": "<?php echo date("Y-m-d H:i:s"); ?>",
         	}
             datos_medicion.push(medicion);
         });

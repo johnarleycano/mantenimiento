@@ -57,6 +57,21 @@ Class Roceria_model extends CI_Model{
 					->where($id)
 					->get("mediciones_detalle")->row();
 			break;
+
+            case 'medicion_anterior':
+                $this->db
+                    ->select(array(
+                        'm.Pk_Id',
+                        ))
+                    ->from('mediciones m')
+                    ->where('m.Fk_Id_Via', $id)
+                    ->order_by('m.Fecha_Inicial', 'DESC')
+                    ->limit(1, 1)
+                ;
+
+		        // return $this->db->get_compiled_select(); // string de la consulta
+		        return $this->db->get()->row();
+            break;
 		}
 	}
 }
