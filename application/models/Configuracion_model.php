@@ -53,7 +53,9 @@ Class Configuracion_model extends CI_Model{
 			            ))
 		            ->from('costados c')
 		            ->join('tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
-		            ->where('c.Fk_Id_Via', $id);
+		            ->where('c.Fk_Id_Via', $id)
+		            ->order_by('Orden')
+	            ;
 		        
 		        // return $this->db_configuracion->get_compiled_select(); // string de la consulta
 		        return $this->db_configuracion->get()->result();
@@ -124,7 +126,7 @@ Class Configuracion_model extends CI_Model{
 			case "tipos_mediciones":
 				return $this->db
 					->where("Estado", 1)
-					->order_by("Nombre")
+					->order_by("Orden")
 					->get("tipos_mediciones")->result();
 			break;
 
