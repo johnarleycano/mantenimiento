@@ -24,6 +24,29 @@ Class Panel_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case 'mediciones_urgentes':
+                $this->db
+                    ->select(array(
+                        's.Nombre Sector',
+                        'v.Nombre Via',
+                        'd.Fk_Id_Medicion',
+                        'd.Fecha',
+                        'Date_format(d.Fecha,"%h:%i %p") Hora',
+                        'Count(d.Pk_Id) Puntos',
+                        ))
+                    ->from('mediciones_detalle d')
+                    ->join('configuracion.costados c', 'd.Fk_Id_Costado = c.Pk_Id')
+                    ->join('configuracion.vias v', 'c.Fk_Id_Via = v.Pk_Id')
+                    ->join('configuracion.sectores s', 'v.Fk_Id_Sector = s.Pk_Id')
+                    ->where('d.Calificacion', $id)
+                    ->group_by('d.Fk_Id_Medicion')
+                    ->order_by('d.Fecha')
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
+            break;
+            
             case "ultimas_mediciones":
                 $this->db
                     ->select(array(
@@ -59,7 +82,6 @@ Class Panel_model extends CI_Model{
                         ->group_by("d.Fk_Id_Medicion")
                     ;
                 }
-
                 
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->result();

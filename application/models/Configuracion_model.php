@@ -110,6 +110,11 @@ Class Configuracion_model extends CI_Model{
 		        return "$mes_es $dia_num, $anio_es";
 			break;
 
+			case 'nombre_calificacion':
+				$calificacion = $this->db->where("Valor", $id)->get("valores_calificaciones")->row();
+				return $calificacion->Descripcion;
+			break;
+
 			case "sectores":
 				return $this->db_configuracion
 					->order_by("Nombre")

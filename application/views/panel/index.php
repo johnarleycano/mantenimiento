@@ -1,4 +1,5 @@
-<input type="text" id="ultima_medicion">
+<input type="hidden" id="ultima_medicion">
+<input type="hidden" id="calificacion">
 
 <div class="uk-section">
     <div class="uk-container">
@@ -7,17 +8,14 @@
             	<div class="uk-margin-medium-top">
 				    <ul class="uk-flex-center" uk-tab>
 				        <li class="uk-active">
-				        	<a onCLick="javascript:mediciones_urgentes(1);"><span class="uk-label uno">1</span></a>
+				        	<a onCLick="javascript:mediciones_urgentes(1);"><span class="uk-label uno"><?php echo $this->configuracion_model->obtener("nombre_calificacion", 1) ?></span></a>
 				        </li>
 				        <li>
-				        	<a onCLick="javascript:mediciones_urgentes(2);"><span class="uk-label dos">2</span></a>
-				        </li>
-				        <li>
-				        	<a onCLick="javascript:mediciones_urgentes(3);"><span class="uk-label tres">3</span></a>
+				        	<a onCLick="javascript:mediciones_urgentes(2);"><span class="uk-label dos"><?php echo $this->configuracion_model->obtener("nombre_calificacion", 2) ?></span></a>
 				        </li>
 				    </ul>
-				</div>
-                <div id="cont_mediciones_urgentes"></div>
+                    <div id="cont_mediciones_urgentes"></div>
+                </div>
             </div>
             <div>
             	<div class="uk-margin-medium-top">
@@ -32,12 +30,15 @@
 			        		<a onCLick="javascript:ultimas_mediciones('mes');">El último mes</a>
 				    	</li>
 				    </ul>
-				</div>
-                <div id="cont_ultimas_mediciones">aa</div>
+                    <div id="cont_ultimas_mediciones"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 
@@ -153,12 +154,14 @@
 	 * Carga la interfaz con las zonas que necesitan atención
 	 * debido a su baja calificación
 	 * 
-	 * @param  [string] calificacion 	[1,2,3]
+	 * @param  [string] calificacion 	[1,2]
 	 * 
 	 * @return [void]       	
 	 */
 	function mediciones_urgentes(calificacion)
 	{
+        // Se carga el valor a consultar en un input y se carga la interfaz en el panel
+        $("#calificacion").val(calificacion);
 		cargar_interfaz("cont_mediciones_urgentes", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "mediciones_urgentes", "calificacion": calificacion});
 	}
 
@@ -178,7 +181,7 @@
 
 	$(document).ready(function(){
 		setInterval(function(){
-			mediciones_urgentes(1);
+			mediciones_urgentes($("#calificacion").val());
 			ultimas_mediciones($("#ultima_medicion").val());
 		}, 1000);
 
