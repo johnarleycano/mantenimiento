@@ -47,9 +47,25 @@ Class Roceria_model extends CI_Model{
 	{
 		switch ($tipo) {
 			case 'medicion':
-				return $this->db
-					->where("Pk_Id", $id)
-					->get("mediciones")->row();
+				// return $this->db
+				// 	->where("Pk_Id", $id)
+				// 	->get("mediciones")->row();
+
+				$this->db
+		        	->select(array(
+			            'm.Fecha_Inicial',
+			            'v.Nombre Via',
+			            's.Nombre Sector',
+			            'm.Fk_Id_Via',
+			            ))
+		            ->from('mediciones m')
+		            ->join('configuracion.vias v', 'm.Fk_Id_Via = v.Pk_Id')
+		            ->join('configuracion.sectores s', 'v.Fk_Id_Sector = s.Pk_Id')
+		            ->where('m.Pk_Id', $id)
+	            ;
+
+		        // return $this->db->get_compiled_select(); // string de la consulta
+		        return $this->db->get()->row();
 			break;
 
 			case 'medicion_detalle':

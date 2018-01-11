@@ -21,7 +21,7 @@ class Panel extends CI_Controller {
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('configuracion_model', 'panel_model'));
+        $this->load->model(array('configuracion_model', 'panel_model', 'roceria_model'));
     }
     
     /**
@@ -54,6 +54,12 @@ class Panel extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
+                case "detalle_medicion":
+                    $this->data["calificacion"] = $this->input->post("calificacion");
+                    $this->data["id_medicion"] = $this->input->post("id_medicion");
+                    $this->load->view("panel/detalle_medicion", $this->data);
+                break;
+
                 case "mediciones_urgentes":
                     $this->data["calificacion"] = $this->input->post("calificacion");
                     $this->load->view("panel/mediciones_urgentes", $this->data);

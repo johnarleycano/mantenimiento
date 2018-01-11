@@ -46,11 +46,31 @@ Class Panel_model extends CI_Model{
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->result();
             break;
+
+            case 'puntos_criticos_medicion':
+                $this->db
+                    ->select(array(
+                        'tm.Nombre Tipo_Medicion',
+                        'd.Abscisa',
+                        'tc.Nombre Costado'
+                        ))
+                    ->from('mediciones_detalle d')
+                    ->join('tipos_mediciones tm', 'd.Fk_Id_Tipo_Medicion = tm.Pk_Id')
+                    ->join('configuracion.costados c', 'd.Fk_Id_Costado = c.Pk_Id')
+                    ->join('configuracion.tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
+                    ->where($id)
+                    ->order_by('d.Abscisa, Tipo_Medicion')
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
+            break;
             
             case "ultimas_mediciones":
                 $this->db
                     ->select(array(
                         'd.Fecha',
+                        'd.Fk_Id_Medicion',
                         'Date_format(d.Fecha,"%h:%i %p") Hora',
                         's.Nombre Sector',
                         'v.Nombre Via',

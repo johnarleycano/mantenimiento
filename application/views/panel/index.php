@@ -35,119 +35,9 @@
             </div>
         </div>
     </div>
+
+    <div id="cont_modal"></div>
 </div>
-
-
-
-
-
-
-
-<!-- <div class="uk-section uk-section-muted"> -->
-<!-- <div class="uk-section">
-    <div class="uk-container">
-        <h2 class="uk-heading-line uk-text-center"><span>Últimas mediciones</span></h2>
-        <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-            <div>
-            	<h4 class="uk-heading-bullet"><span>Hoy</span></h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-            </div>
-            <div>
-            	<h4 class="uk-heading-bullet"><span>Esta semana</span></h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-            </div>
-            <div>
-            	<h4 class="uk-heading-bullet"><span>Este mes</span></h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="uk-section">
-    <div class="uk-container">
-        <h2 class="uk-heading-line uk-text-center"><span>Puntos de atención urgente</span></h2>
-        <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
-            <div>
-            	<h4 class="uk-heading-bullet"><span>Hoy</span></h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-            </div>
-            <div>
-            	<h4 class="uk-heading-bullet"><span>Esta semana</span></h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="uk-grid-match uk-grid-small uk-text-center">
-    <div class="uk-width-1-1@m">
-        <h3 class="uk-heading-line"><span>Puntos de atención urgente</span></h3>
-        <div class="uk-grid">
-    		<div class="uk-width-1-2@m">
-		        <div>
-			        <p>1</p>
-
-
-		    	</div>
-		    </div>
-		    <div class="uk-width-1-2@m">
-		        <div>
-			        <p>2</p>
-
-
-		    	</div>
-		    </div>
-        </div>
-			
-
-
-
-    </div>
-    <div class="uk-width-1-3@m">
-	        <h5 class="uk-heading-bullet"><span>Últimas mediciones | Hoy</span></h5>
-
-
-    </div>
-    <div class="uk-width-1-3@m">
-	        <h5 class="uk-heading-bullet"><span>Últimas mediciones | Esta semana</span></h5>
-
-	        
-    </div>
-    <div class="uk-width-1-3@m">
-	        <h5 class="uk-heading-bullet"><span>Últimas mediciones | Este mes</span></h5>
-
-
-    </div>
-
-    <div class="uk-width-1-4@m">
-        <div>1-4@m</div>
-    </div>
-    <div class="uk-width-1-4@m">
-        <div>1-4@m</div>
-    </div>
-    <div class="uk-width-1-5@m uk-hidden@l">
-        <div>1-5@m<br>hidden@l</div>
-    </div>
-    <div class="uk-width-1-5@m uk-width-1-3@l">
-        <div>1-5@m<br>1-3@l</div>
-    </div>
-    <div class="uk-width-3-5@m uk-width-2-3@l">
-        <div>3-5@m<br>2-3@l</div>
-    </div>
-</div>
-
-<div class="uk-grid-match uk-grid-small uk-text-center" uk-grid>
-    <div class="uk-width-auto@m uk-visible@l">
-        <div>auto@m<br>visible@l</div>
-    </div>
-    <div class="uk-width-1-3@m">
-        <div>1-3@m</div>
-    </div>
-    <div class="uk-width-expand@m">
-        <div>expand@m</div>
-    </div>
-</div> -->
 
 <script type="text/javascript">
 	/**
@@ -178,6 +68,12 @@
 		$("#ultima_medicion").val(fecha);
 		cargar_interfaz("cont_ultimas_mediciones", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "ultimas_mediciones", "fecha": fecha});
 	}
+
+    function ver_detalle(id_medicion, calificacion)
+    {
+        imprimir(id_medicion)
+        cargar_interfaz("cont_modal", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "detalle_medicion", "id_medicion": id_medicion, "calificacion": calificacion});
+    }
 
 	$(document).ready(function(){
 		setInterval(function(){
