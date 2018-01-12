@@ -54,6 +54,16 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#id_medicion").val("<?php echo $id_medicion; ?>");
+
+		// Botones del menú
+		botones(Array("pdf"));
+
 		UIkit.modal("#modal_detalles").show();
+
+		UIkit.util.on('#modal_detalles', 'hide', function () {
+			botones();
+		});
+
 	});
 </script>

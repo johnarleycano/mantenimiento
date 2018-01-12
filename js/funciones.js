@@ -176,7 +176,12 @@ function limpiar_lista(elemento, mensaje){
  * 
  * @return [void]     
  */
-function redireccionar(url){
+function redireccionar(url, tipo = null){
+    if (tipo == "ventana") {
+        window.open(url);
+        return false;
+    }
+
     location.href = url;
 }
 

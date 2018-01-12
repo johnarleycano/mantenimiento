@@ -1,5 +1,6 @@
 <input type="hidden" id="ultima_medicion">
 <input type="hidden" id="calificacion">
+<input type="hidden" id="id_medicion">
 
 <div class="uk-section">
     <div class="uk-container">
@@ -40,6 +41,12 @@
 </div>
 
 <script type="text/javascript">
+	function generar_pdf()
+	{
+		url = "<?php echo site_url('reportes/pdf/medicion') ?>" + "/" + $("#id_medicion").val();
+		redireccionar(url, "ventana");
+	}
+
 	/**
 	 * Carga la interfaz con las zonas que necesitan atención
 	 * debido a su baja calificación
