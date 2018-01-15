@@ -3,10 +3,11 @@
 $medicion = $this->roceria_model->obtener("medicion", $id_medicion);
 
 // Se consulta la medición anterior
-$medicion_anterior = $this->roceria_model->obtener("medicion_anterior", $medicion->Fk_Id_Via);
+$medicion_anterior = $this->roceria_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
 
-// Asigna el id de la medición anterior, si existe tal medición
-$id_medicion_anterior = ($medicion_anterior) ? $medicion_anterior->Pk_Id : 0 ;
+// Se toma el id de la medición actual y anterior (Asigna el id de la medición anterior, si existe tal medición)
+$id_medicion = $medicion->Pk_Id;
+$id_medicion_anterior = ($medicion_anterior) ? $medicion_anterior->Pk_Id : 0;
 
 // Se consulta los ítems a medir
 $tipos_mediciones = $this->configuracion_model->obtener("tipos_mediciones");
@@ -34,11 +35,14 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	<div id="medicion">
 		<span>&nbsp;</span>
 
-		<div class="contenedor cinco"><img class="icon" src="<?php echo base_url(); ?>img/5.png"></div>
-		<div class="contenedor cuatro"><img class="icon" src="<?php echo base_url(); ?>img/4.png"></div>
-		<div class="contenedor tres"><img class="icon" src="<?php echo base_url(); ?>img/3.png"></div>
-		<div class="contenedor dos"><img class="icon" src="<?php echo base_url(); ?>img/2.png"></div>
-		<div class="contenedor uno"><img class="icon" src="<?php echo base_url(); ?>img/1.png"></div>
+		<!-- Se recorren las calificaciones -->
+		<?php foreach ($calificaciones as $calificacion) { ?>
+			<div class="contenedor" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);"><img class="icon" src="<?php echo base_url(); ?>img/<?php echo $calificacion->Valor; ?>.png"></div>
+			<!-- <div class="contenedor cuatro"><img class="icon" src="<?php // echo base_url(); ?>img/4.png"></div> -->
+			<!-- <div class="contenedor tres"><img class="icon" src="<?php // echo base_url(); ?>img/3.png"></div> -->
+			<!-- <div class="contenedor dos"><img class="icon" src="<?php // echo base_url(); ?>img/2.png"></div> -->
+			<!-- <div class="contenedor uno"><img class="icon" src="<?php // echo base_url(); ?>img/1.png"></div> -->
+		<?php } ?>
 		<div class="contenedor cero"><p class="texto"><b>FE</b></p></div>
 	</div>
 	<div class="separador"></div>
@@ -84,7 +88,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 					?>
 					
 					<label>
-						<div class="contenedor <?php echo $opacidad.' '.$calificacion->Clase.' '.$clase_medicion_anterior; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>">
+						<div class="contenedor <?php echo $opacidad.' '.$clase_medicion_anterior; ?>" name="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);">
 							<input
 								class="uk-radio opacidad " 
 								type="radio" 
