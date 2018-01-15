@@ -46,10 +46,11 @@ Class Roceria_model extends CI_Model{
 	function obtener($tipo, $id = null)
 	{
 		switch ($tipo) {
-			case 'abscisas_medicion':
+			case 'abscisas_mediciones':
 				return $this->db
 					->select("Abscisa Valor")
-					->where("Fk_Id_Medicion", $id)
+					->where("Fk_Id_Medicion", $id["id_medicion"])
+					->or_where("Fk_Id_Medicion", $id["id_medicion_anterior"])
 					->group_by("Abscisa")
 					->get("mediciones_detalle")->result();
 			break;
@@ -62,10 +63,12 @@ Class Roceria_model extends CI_Model{
 			            'v.Nombre Via',
 			            's.Nombre Sector',
 			            'm.Fk_Id_Via',
+			            'CONCAT(u.Nombres, " ", u.Apellidos) Usuario',
 			            ))
 		            ->from('mediciones m')
 		            ->join('configuracion.vias v', 'm.Fk_Id_Via = v.Pk_Id')
 		            ->join('configuracion.sectores s', 'v.Fk_Id_Sector = s.Pk_Id')
+		            ->join('configuracion.usuarios u', 'm.Fk_Id_Usuario = u.Pk_Id')
 		            ->where('m.Pk_Id', $id)
 	            ;
 
@@ -73,17 +76,24 @@ Class Roceria_model extends CI_Model{
 		        return $this->db->get()->row();
 			break;
 
-			// case 'medicion_datos':
-			// 	return $this->db
-			// 		->where("Fk_Id_Medicion", $id)
-			// 		->get("mediciones_detalle")->result();
-			// break;
+            case 'medicion_anterior':
+                $this->db
+                    ->select(array(
+                        'm.Pk_Id',
+                        'm.Fecha_Inicial',
+                        ))
+                    ->from('mediciones m')
+                    ->where('m.Fk_Id_Via', $id["id_via"])
+                    ->where("m.Pk_Id <", $id["id_medicion"])
+                    ->order_by('m.Fecha_Inicial', 'DESC')
+                    ->limit(1)
+                ;
+
+		        // return $this->db->get_compiled_select(); // string de la consulta
+		        return $this->db->get()->row();
+            break;
 
 			case 'medicion_detalle':
-				// return $this->db
-				// 	->where($id)
-				// 	->get("mediciones_detalle")->row();
-				
 				$this->db
                     ->select(array(
                         'd.Calificacion',
@@ -103,22 +113,6 @@ Class Roceria_model extends CI_Model{
 		        // return $this->db->get_compiled_select(); // string de la consulta
 		        return $this->db->get()->row();
 			break;
-
-            case 'medicion_anterior':
-                $this->db
-                    ->select(array(
-                        'm.Pk_Id',
-                        'm.Fecha_Inicial',
-                        ))
-                    ->from('mediciones m')
-                    ->where('m.Fk_Id_Via', $id)
-                    ->order_by('m.Fecha_Inicial', 'DESC')
-                    ->limit(1, 1)
-                ;
-
-		        // return $this->db->get_compiled_select(); // string de la consulta
-		        return $this->db->get()->row();
-            break;
 		}
 	}
 }
