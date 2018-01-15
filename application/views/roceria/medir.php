@@ -37,13 +37,9 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 
 		<!-- Se recorren las calificaciones -->
 		<?php foreach ($calificaciones as $calificacion) { ?>
-			<div class="contenedor" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);"><img class="icon" src="<?php echo base_url(); ?>img/<?php echo $calificacion->Valor; ?>.png"></div>
-			<!-- <div class="contenedor cuatro"><img class="icon" src="<?php // echo base_url(); ?>img/4.png"></div> -->
-			<!-- <div class="contenedor tres"><img class="icon" src="<?php // echo base_url(); ?>img/3.png"></div> -->
-			<!-- <div class="contenedor dos"><img class="icon" src="<?php // echo base_url(); ?>img/2.png"></div> -->
-			<!-- <div class="contenedor uno"><img class="icon" src="<?php // echo base_url(); ?>img/1.png"></div> -->
+			<div class="contenedor" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);"><img class="icon" src="<?php echo base_url(); ?>img/<?php echo $calificacion->Valor; ?>.png" title="<?php echo $calificacion->Descripcion; ?>" uk-tooltip="pos: bottom-center"></div>
 		<?php } ?>
-		<div class="contenedor cero"><p class="texto"><b>FE</b></p></div>
+		<div class="contenedor cero"><p class="texto" title="Factor externo" uk-tooltip="pos: bottom-center"><b>FE</b></p></div>
 	</div>
 	<div class="separador"></div>
 
@@ -187,8 +183,25 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	 */
 	function marcar(tipo_medicion, costado, calificacion)
 	{
+		// if ($("").is(':checked')) {
+		// 	imprimir("chequeado")
+		// }
+		
+		// if($("input[name='calificacion_" + tipo_medicion + "_" + costado + "']").prop('checked') ) {
+		//     alert('Seleccionado');
+		// }
+
+		// imprimir($("input[name='calificacion_" + tipo_medicion + "_" + costado + "']").attr("data-calificacion"))
+		
 		$("div[name^='calificacion_" + tipo_medicion + "_" + costado + "']").addClass('opacidad');
 		$("div[name='calificacion_" + tipo_medicion + "_" + costado + "_" + calificacion + "']").removeClass("opacidad");
+		desmarcar(tipo_medicion, costado);
+	}
+
+	function desmarcar(tipo_medicion, costado)
+	{
+		$("div[input='calificacion_" + tipo_medicion + "_" + costado + "']").prop('checked', false); 
+
 	}
 
 	/**

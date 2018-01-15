@@ -44,6 +44,13 @@ Class Configuracion_model extends CI_Model{
 					->get("valores_calificaciones")->result();
 			break;
 
+			case "calificaciones_criticas":
+				return $this->db
+					->order_by("Valor")
+					->where("Valor <=", "2")
+					->get("valores_calificaciones")->result();
+			break;
+
 			case "costados":
 				$this->db_configuracion
 		        	->select(array(
@@ -112,14 +119,9 @@ Class Configuracion_model extends CI_Model{
 		        return "$mes_es $dia_num, $anio_es";
 			break;
 
-			case 'nombre_calificacion':
-				$calificacion = $this->db->where("Valor", $id)->get("valores_calificaciones")->row();
-				return $calificacion->Descripcion;
-			break;
-
 			case "sectores":
 				return $this->db_configuracion
-					->order_by("Nombre")
+					->order_by("Codigo")
 					->get("sectores")->result();
 			break;
 
@@ -139,7 +141,7 @@ Class Configuracion_model extends CI_Model{
 			case "vias":
 				return $this->db_configuracion
 					->where("Fk_Id_Sector", $id)
-					->order_by("Nombre")
+					->order_by("Abscisa_Inicial")
 					->get("vias")->result();
 			break;
 		}

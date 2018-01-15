@@ -8,7 +8,6 @@ if (count($mediciones) == 0) {
 	die();
 }
 ?>
-
 	<dl class="uk-description-list uk-description-list-divider">
 		<?php foreach ($mediciones as $medicion) { ?>
 			<dt><?php echo "$medicion->Sector | $medicion->Via"; ?></dt>

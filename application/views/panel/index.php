@@ -8,12 +8,14 @@
             <div>
             	<div class="uk-margin-medium-top">
 				    <ul class="uk-flex-center" uk-tab>
-				        <li class="uk-active">
-				        	<a onCLick="javascript:mediciones_urgentes(1);"><span class="uk-label uno"><?php echo $this->configuracion_model->obtener("nombre_calificacion", 1) ?></span></a>
-				        </li>
-				        <li>
-				        	<a onCLick="javascript:mediciones_urgentes(2);"><span class="uk-label dos"><?php echo $this->configuracion_model->obtener("nombre_calificacion", 2) ?></span></a>
-				        </li>
+				    	<!-- se recorren las calificaciones críticas -->
+				    	<?php foreach ($this->configuracion_model->obtener("calificaciones_criticas") as $calificacion) { ?>
+				    		<li>
+					        	<a onCLick="javascript:mediciones_urgentes(<?php echo $calificacion->Valor; ?>);">
+					        		<span class="uk-label" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);" id="calificacion_<?php echo $calificacion->Valor; ?>"><?php echo $calificacion->Descripcion; ?></span>
+					        	</a>
+					        </li>
+				    	<?php } ?>
 				    </ul>
                     <div id="cont_mediciones_urgentes"></div>
                 </div>
@@ -41,10 +43,14 @@
 </div>
 
 <script type="text/javascript">
+	/**
+	 * Genera el reporte en PDF en una pestaña adicional
+	 * 
+	 * @return [void]
+	 */
 	function generar_pdf()
 	{
-		url = "<?php echo site_url('reportes/pdf/medicion') ?>" + "/" + $("#id_medicion").val();
-		redireccionar(url, "ventana");
+		redireccionar("<?php echo site_url('reportes/pdf/medicion') ?>" + "/" + $("#id_medicion").val(), "ventana");
 	}
 
 	/**
@@ -76,6 +82,14 @@
 		cargar_interfaz("cont_ultimas_mediciones", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "ultimas_mediciones", "fecha": fecha});
 	}
 
+	/**
+	 * Ventana emergente que muestra detalles de una medición
+	 * 
+	 * @param  [int] id_medicion  [id de la medición]
+	 * @param  [int] calificacion [calificación]
+	 * 
+	 * @return [void]
+	 */
     function ver_detalle(id_medicion, calificacion)
     {
         imprimir(id_medicion)
@@ -83,6 +97,8 @@
     }
 
 	$(document).ready(function(){
+		$("#calificacion_2").css({"color": "black"});
+
 		setInterval(function(){
 			mediciones_urgentes($("#calificacion").val());
 			ultimas_mediciones($("#ultima_medicion").val());
