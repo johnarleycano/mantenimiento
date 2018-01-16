@@ -70,6 +70,13 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 				<?php
 				// Se recorren las calificaciones
 				foreach ($calificaciones as $calificacion) {
+					$activo_fe = "disabled";
+					$chequeado_fe = "";
+
+					if (isset($detalle_medicion_anterior->Factor_Externo) && $detalle_medicion_anterior->Factor_Externo == 1) {
+						$chequeado_fe = "checked";
+					}
+
 					// Si existe la calificación con anterioridad, se activa o desactiva el check y selecciona la casilla
 					if (isset($detalle_medicion->Calificacion) && $detalle_medicion->Calificacion == $calificacion->Valor) {
 						$chequeado = "checked";
@@ -78,6 +85,19 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 						$chequeado = "";
 						$opacidad = "opacidad";
 					}
+
+					// Si factor externo está marcado, chequeará el input
+					if (isset($detalle_medicion->Calificacion) && $detalle_medicion->Factor_Externo == 1) {
+						$chequeado_fe = "checked";
+						$activo_fe = "";
+					}
+
+					// Si factor externo está marcado, chequeará el input
+					if (isset($detalle_medicion->Calificacion) && $detalle_medicion->Factor_Externo == 0) {
+						$chequeado_fe = "";
+					}
+
+					$activo_fe = (isset($detalle_medicion->Calificacion)) ? "" : "disabled" ;
 
 					// Si tiene medición anterior, se marca la clase para que se vea en la calificación
 					$clase_medicion_anterior = (isset($detalle_medicion_anterior->Calificacion) && $detalle_medicion_anterior->Calificacion == $calificacion->Valor) ? "medicion_anterior" : "medicion_normal" ;
@@ -88,16 +108,27 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 							<input
 								class="uk-radio opacidad " 
 								type="radio" 
-								name='calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}" ?>' 
-								onClick="javascript:marcar(<?php echo $tipo_medicion->Pk_Id; ?>, <?php echo $costado->Pk_Id; ?>, <?php echo $calificacion->Valor; ?>)" 
+								onClick="javascript:marcar(<?php echo $tipo_medicion->Pk_Id; ?>, <?php echo $costado->Pk_Id; ?>, <?php echo $calificacion->Valor; ?>)"
+								id="calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}" ?>"
+								name='calificacion_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}"; ?>' 
 								data-tipo_medicion="<?php echo $tipo_medicion->Pk_Id; ?>"
 								data-costado="<?php echo $costado->Pk_Id; ?>"
 								data-calificacion="<?php echo $calificacion->Valor; ?>"
 								<?php echo $chequeado; ?>
 							>
+
+							<!-- Input que almacena la marca de la calificación realizada, para tenerla en cuenta al momento de quitar la calificación -->
+							<input type="hidden" id="<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}_{$calificacion->Valor}"; ?>" value="<?php echo $chequeado; ?>">
 						</div>
 					</label>
 				<?php } ?>
+
+				<label>
+					<!-- Factor externo -->
+					<div class="contenedor">
+						<input class="uk-radio" type="checkbox" id="factor_externo_<?php echo "{$tipo_medicion->Pk_Id}_{$costado->Pk_Id}" ?>" <?php echo "$chequeado_fe $activo_fe"; ?>>
+					</div>
+				</label>
 			</div>
 		<?php } ?>
 		<div class="separador"></div>
@@ -137,10 +168,17 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	 */
 	function guardar(tipo)
 	{
-		var datos_medicion = []
+		var datos_medicion = [];
 		
 		// Se recorren los chequeados y se almacenan en el arreglo
         $("input[name^='calificacion_']:checked").each(function() {
+        	// Si está marcado como factor externo, se almacena para guardarse
+        	if( $("#factor_externo_" + $(this).attr("data-tipo_medicion") + "_" + $(this).attr("data-costado")).prop('checked')) {
+			    var factor_externo = 1;
+			} else {
+				var factor_externo = 0;
+			}
+
         	var medicion = {
         		"Abscisa": $("#abscisa").val(),
         		"Fk_Id_Medicion": $("#id_medicion").val(),
@@ -148,6 +186,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
         		"Fk_Id_Costado": $(this).attr("data-costado"),
         		"Calificacion": $(this).attr("data-calificacion"),
         		"Fecha": "<?php echo date("Y-m-d H:i:s"); ?>",
+        		"Factor_Externo": factor_externo,
         	}
             datos_medicion.push(medicion);
         });
@@ -176,32 +215,59 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	 * calificación de 1 a 5
 	 *
 	 * @param  [string] tipo_medicion [Tipo de medición que se va a tomar (cuneta, rocería, etc)]
-	 * @param  [string] costado       [Derecho, Izquierdo, central]
-	 * @param  [string] calificacion  [Desde 0 a 5]
+	 * @param  [string] costado       [Derecho, Izquierdo, Central]
+	 * @param  [string] calificacion  [Desde 1 a 5]
 	 * 
 	 * @return [void]
 	 */
 	function marcar(tipo_medicion, costado, calificacion)
 	{
-		// if ($("").is(':checked')) {
-		// 	imprimir("chequeado")
-		// }
-		
-		// if($("input[name='calificacion_" + tipo_medicion + "_" + costado + "']").prop('checked') ) {
-		//     alert('Seleccionado');
-		// }
+		// Si la marca estaba en la misma posición, se ejecuta la desmarcación
+		if ($("#"+tipo_medicion+"_"+costado+"_"+calificacion).val() == "checked") {
+			desmarcar(tipo_medicion, costado, calificacion);
 
-		// imprimir($("input[name='calificacion_" + tipo_medicion + "_" + costado + "']").attr("data-calificacion"))
+			return false;
+		}
+
+		// Se quitan las marcas de chequeado
+		$("input[id^='"+tipo_medicion+"_"+costado+"']").val("");
 		
+		// Se marca como chequeado el valor escogido
+		$("#" + tipo_medicion + "_" + costado + "_" + calificacion).val("checked");
+
+		// Se activa el factor externo
+		$("#factor_externo_" + tipo_medicion + "_" + costado).removeAttr("disabled")
+		
+		// Se desactivan todos los contenedores
 		$("div[name^='calificacion_" + tipo_medicion + "_" + costado + "']").addClass('opacidad');
+
+		// Se activa el contenedor seleccionado
 		$("div[name='calificacion_" + tipo_medicion + "_" + costado + "_" + calificacion + "']").removeClass("opacidad");
-		desmarcar(tipo_medicion, costado);
 	}
 
-	function desmarcar(tipo_medicion, costado)
+	/**
+	 * Desmarca el ítem que se marcó, para que no quede ninguna 
+	 * calificación marcada
+	 *
+	 * @param  [string] tipo_medicion [Tipo de medición que se va a tomar (cuneta, rocería, etc)]
+	 * @param  [string] costado       [Derecho, Izquierdo, Central]
+	 * @param  [string] calificacion  [Desde 1 a 5]
+	 * 
+	 * @return [void]
+	 */
+	function desmarcar(tipo_medicion, costado, calificacion)
 	{
-		$("div[input='calificacion_" + tipo_medicion + "_" + costado + "']").prop('checked', false); 
+		// Se quita la marca de chequeado
+		$("input[id^='"+tipo_medicion+"_"+costado+"_"+calificacion+"']").val("");
+		
+		// Se inactiva el factor externo
+		$("#factor_externo_" + tipo_medicion + "_" + costado).prop({"disabled": true, "checked": false});
 
+		// Se desactivan todos los contenedores
+		$("div[name^='calificacion_" + tipo_medicion + "_" + costado + "']").addClass('opacidad');
+
+		// Se quita el check
+		$("input[name='calificacion_" + tipo_medicion + "_" + costado + "']").prop('checked', false); 
 	}
 
 	/**
@@ -248,6 +314,18 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		if ($("#posicion").val() == "1") {
 			opciones.splice(0, 1);
 		}
+
+		// $("input[type='radio']").on("click", function(){
+		// 	// marcar($(this));
+		// 	imprimir($(this).prev().attr("class"));
+		// 	 // if($(this).hasClass('opacidad')){
+		// 	 // 	marcar($(this).attr("data-tipo_medicion"), $(this).attr("data-costado"), $(this).attr("data-calificacion"))
+		// 	 // }
+
+		// 	 // if($(this).is('not:checked')){
+	 //   //      	desmarcar($(this).attr("data-tipo_medicion"), $(this).attr("data-costado"))
+		// 	 // }
+		// });
 
 		// Botones del menú
 		botones(opciones);

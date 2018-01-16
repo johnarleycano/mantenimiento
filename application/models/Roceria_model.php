@@ -61,7 +61,7 @@ Class Roceria_model extends CI_Model{
 			            'm.Pk_Id',
 			            'm.Fecha_Inicial',
 			            'v.Nombre Via',
-			            's.Nombre Sector',
+			            's.Codigo Sector',
 			            'm.Fk_Id_Via',
 			            'CONCAT(u.Nombres, " ", u.Apellidos) Usuario',
 			            ))
@@ -97,6 +97,7 @@ Class Roceria_model extends CI_Model{
 				$this->db
                     ->select(array(
                         'd.Calificacion',
+                        'd.Factor_Externo',
                         'd.Fecha',
                         'd.Fk_Id_Costado',
                         'd.Fk_Id_Medicion',

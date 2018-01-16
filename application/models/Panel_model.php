@@ -27,7 +27,7 @@ Class Panel_model extends CI_Model{
             case 'mediciones_urgentes':
                 $this->db
                     ->select(array(
-                        's.Nombre Sector',
+                        's.Codigo Sector',
                         'v.Nombre Via',
                         'd.Fk_Id_Medicion',
                         'd.Fecha',
@@ -72,7 +72,7 @@ Class Panel_model extends CI_Model{
                         'd.Fecha',
                         'd.Fk_Id_Medicion',
                         'Date_format(d.Fecha,"%h:%i %p") Hora',
-                        's.Nombre Sector',
+                        's.Codigo Sector',
                         'v.Nombre Via',
                         ))
                     ->from('mediciones_detalle d')
