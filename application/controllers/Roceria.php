@@ -161,12 +161,11 @@ class Roceria extends CI_Controller {
     }
 
     /**
-     * Muestra los resultados de las mediciones
-     * para finalizar
+     * Muestra los resultados de la medición
      * 
      * @return [void]
      */
-	function terminar()
+	function resumen_medicion()
 	{
         // Si no ha iniciado sesión o es un usuario diferente al 1,
         // redirecciona al inicio de sesión
@@ -174,8 +173,8 @@ class Roceria extends CI_Controller {
             redirect('sesion/cerrar');
         }
 
-        $this->data['titulo'] = 'Rocería - Finalizar';
-        $this->data['contenido_principal'] = 'roceria/terminar';
+        $this->data['titulo'] = 'Medición - Resumen';
+        $this->data['contenido_principal'] = 'roceria/resumen';
         $this->load->view('core/template', $this->data);
 	}
 }

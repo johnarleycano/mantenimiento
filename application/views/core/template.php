@@ -35,4 +35,9 @@
     {
         redireccionar("<?php echo site_url('roceria/parametrizar'); ?>");
     }
+
+    function volver()
+    {
+        redireccionar("<?php echo site_url(''); ?>");
+    }
 </script>
