@@ -12,9 +12,10 @@
             <li><a onClick="javascript:algo()" id="icono_eliminar" uk-icon="icon: trash; ratio: 2" title="Eliminar" uk-tooltip="pos: bottom-left"></a></li>
             <li><a onClick="javascript:iniciar_medicion()" id="icono_iniciar" uk-icon="icon: play; ratio: 2" title="Iniciar medición" uk-tooltip="pos: bottom-left"></a></li>
             <li><a onClick="javascript:anterior()" id="icono_anterior" uk-icon="icon: chevron-left; ratio: 2" title="Anterior" uk-tooltip="pos: bottom-left"></a></li>
-            <li><a onClick="javascript:terminar()" id="icono_terminar" uk-icon="icon: close; ratio: 2" title="Terminar" uk-tooltip="pos: bottom-left"></a></li>
+            <li><a onClick="javascript:detener()" id="icono_detener" uk-icon="icon: minus-circle; ratio: 2" title="Detener medición" uk-tooltip="pos: bottom-left"></a></li>
             <li><a onClick="javascript:siguiente()" id="icono_siguiente" uk-icon="icon: chevron-right; ratio: 2" title="Siguiente" uk-tooltip="pos: bottom-left"></a></li>
             <li><a onClick="javascript:generar_pdf()" id="icono_pdf" uk-icon="icon: copy; ratio: 2" title="Imprimir reporte en PDF" uk-tooltip="pos: bottom-center"></a></li>
+            <li><a onClick="javascript:volver()" id="icono_volver" uk-icon="icon: reply; ratio: 2" title="Volver al panel" uk-tooltip="pos: bottom-center"></a></li>
         </ul>
     </div>
 </nav>

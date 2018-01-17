@@ -166,7 +166,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	 * 
 	 * @return void
 	 */
-	function guardar(tipo)
+	function guardar(tipo = null)
 	{
 		var datos_medicion = [];
 		
@@ -271,6 +271,23 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	}
 
 	/**
+	 * Carga la interfaz de resumen de la medición realizada
+	 * 
+	 * @return [void]
+	 */
+	function detener()
+	{
+		cerrar_notificaciones();
+		imprimir_notificacion("<div uk-spinner></div> Guardando medición...");
+
+		// Se guarda, si la hay
+		guardar("detener");
+
+		// Se redirecciona a la interfaz de resumen
+		redireccionar(`${"<?php echo site_url('roceria/resumen_medicion'); ?>"}/${$("#id_medicion").val()}`);
+	}
+
+	/**
 	 * Continúa la medición en el siguiente kilómetro
 	 * 
 	 * @return [void]
@@ -295,37 +312,14 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 			redireccionar(url);
 		}
 	}
-
-	/**
-	 * Carga la interfaz de resumen de la medición realizada
-	 * 
-	 * @return [void]
-	 */
-	function terminar()
-	{
-    	url = "<?php echo site_url('roceria/terminar') ?>" + "/" + $("#id_medicion").val();
-		redireccionar(url);
-	}
 	
 	$(document).ready(function(){
-		var opciones = Array("anterior", "siguiente", "terminar");
+		var opciones = Array("anterior", "detener", "siguiente");
 
-		// Si es la primera posición, quita el botón "anterior"
-		if ($("#posicion").val() == "1") {
-			opciones.splice(0, 1);
+		// Si es la primera posición, quita el botón "anterior" y "detener medición"
+		if ($("#posicion").val() == 1) {
+			opciones.splice(0, 2);
 		}
-
-		// $("input[type='radio']").on("click", function(){
-		// 	// marcar($(this));
-		// 	imprimir($(this).prev().attr("class"));
-		// 	 // if($(this).hasClass('opacidad')){
-		// 	 // 	marcar($(this).attr("data-tipo_medicion"), $(this).attr("data-costado"), $(this).attr("data-calificacion"))
-		// 	 // }
-
-		// 	 // if($(this).is('not:checked')){
-	 //   //      	desmarcar($(this).attr("data-tipo_medicion"), $(this).attr("data-costado"))
-		// 	 // }
-		// });
 
 		// Botones del menú
 		botones(opciones);
