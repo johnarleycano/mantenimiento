@@ -34,7 +34,8 @@ $config['id_aplicacion'] = 1;
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.168.0.173/devimed/mediciones';
+// $config['base_url'] = 'http://localhost/devimed/mediciones';
+$config['base_url'] = 'http://192.168.0.136/devimed/mediciones';
 
 /*
 |--------------------------------------------------------------------------
