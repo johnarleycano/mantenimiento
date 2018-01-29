@@ -1,6 +1,8 @@
 <?php
+$abscisa = $this->uri->segment(5);
+
 // Se consulta la medición actual
-$medicion = $this->roceria_model->obtener("medicion", $id_medicion);
+$medicion = $this->roceria_model->obtener("medicion", $this->uri->segment(3));
 
 // Se consulta la medición anterior
 $medicion_anterior = $this->roceria_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
@@ -19,16 +21,16 @@ $costados = $this->configuracion_model->obtener("costados", $medicion->Fk_Id_Via
 $calificaciones = $this->configuracion_model->obtener("calificaciones");
 ?>
 
-<input type="hidden" id="posicion" value="<?php echo $posicion; ?>">
 <input type="hidden" id="id_medicion" value="<?php echo $id_medicion; ?>">
+<input type="hidden" id="posicion" value="<?php echo $this->uri->segment(4); ?>">
 <input type="hidden" id="abscisa" value="<?php echo $abscisa; ?>">
-<input type="hidden" id="abscisa_inicial" value="<?php echo $abscisa_inicial; ?>">
-<input type="hidden" id="abscisa_final" value="<?php echo $abscisa_final; ?>">
+<input type="hidden" id="abscisa_inicial" value="<?php echo $medicion->Abscisa_Inicial; ?>">
+<input type="hidden" id="abscisa_final" value="<?php echo $medicion->Abscisa_Final; ?>">
 
 <!-- Contenedor de mediciones -->
 <div id="mediciones">
 	<h3 class="uk-heading-line uk-text-center">
-		<span>Kilómetro <?php echo ($abscisa / 1000) ?> de <?php echo ($abscisa_final / 1000); ?></span>
+		<span>Kilómetro <?php echo $abscisa/1000; ?> de <?php echo $medicion->Kilometro_Final; ?></span>
 	</h3>
 
 	<!-- Medición -->
@@ -134,7 +136,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		<div class="separador"></div>
 	<?php } ?>
 
-	<progress id="js-progressbar" class="uk-progress" value="<?php echo $abscisa; ?>" max="<?php echo $abscisa_final; ?>"></progress>
+	<progress id="js-progressbar" class="uk-progress" value="<?php // echo $abscisa; ?>" max="<?php // echo $abscisa_final; ?>"></progress>
 </div>
 
 <script type="text/javascript">
@@ -151,10 +153,10 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 			return false;
 		}
 
-		guardar("anterior")
+		guardar("anterior");
 
 		// Se carga la interfaz de medición
-        url = "<?php echo site_url('roceria/medir') ?>" + "/" + $("#id_medicion").val() + "/" + (parseFloat($("#posicion").val()) - 1) + "/" + (parseFloat($("#abscisa").val()) - 1000) + "/" + $("#abscisa_final").val();
+        url = `<?php echo site_url('roceria/medir') ?>/${$("#id_medicion").val()}/${(parseFloat($("#posicion").val()) - 1)}/${(parseFloat($("#abscisa").val()) - 1000)}/${$("#abscisa_final").val()}`;
 		redireccionar(url);
 	}
 
@@ -302,13 +304,13 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 			// Si la abscisa siguiente es mayor a la abscisa final,
 			// entonces mostrará los resultados finales
 			if ((parseFloat($("#abscisa").val()) + 1000) > $("#abscisa_final").val()) {
-	        	terminar();
+	        	detener();
 
 				return false;
 			}
 
 			// Se carga la interfaz de medición
-	        url = "<?php echo site_url('roceria/medir') ?>" + "/" + $("#id_medicion").val() + "/" + (parseFloat($("#posicion").val()) + 1) + "/" + (parseFloat($("#abscisa").val()) + 1000) + "/" + $("#abscisa_final").val();
+	        url = `<?php echo site_url('roceria/medir'); ?>/${$("#id_medicion").val()}/${parseFloat($("#posicion").val()) + 1}/${parseFloat($("#abscisa").val()) + 1000}/${$("#abscisa_final").val()}`;
 			redireccionar(url);
 		}
 	}
@@ -318,7 +320,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 
 		// Si es la primera posición, quita el botón "anterior" y "detener medición"
 		if ($("#posicion").val() == 1) {
-			opciones.splice(0, 2);
+			opciones.splice(0, 1);
 		}
 
 		// Botones del menú

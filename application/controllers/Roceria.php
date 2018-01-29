@@ -48,9 +48,7 @@ class Roceria extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "rango_abscisado":
-                    $this->data["id_via"] = $this->input->post("id_via");
-                    $this->load->view("roceria/rango_abscisado", $this->data);
+                case "":
                 break;
             }
         } else {
@@ -129,12 +127,6 @@ class Roceria extends CI_Controller {
         if(!$this->session->userdata('Pk_Id_Usuario')){
             redirect('sesion/cerrar');
         }
-
-        $this->data['id_medicion'] = $this->uri->segment(3);
-        $this->data['posicion'] = $this->uri->segment(4);
-        $this->data['abscisa'] = $this->uri->segment(5);
-        $this->data['abscisa_final'] = $this->uri->segment(6);
-        $this->data['abscisa_inicial'] = $this->uri->segment(7);
 
         $this->data['titulo'] = 'Rocería - Parametrizar';
         $this->data['contenido_principal'] = 'roceria/medir';
