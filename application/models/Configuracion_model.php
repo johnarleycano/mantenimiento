@@ -134,6 +134,11 @@ Class Configuracion_model extends CI_Model{
 
 			case "via":
 				return $this->db_configuracion
+					->select(array(
+						"*",
+						"ROUND(Abscisa_Inicial/1000, 0) Kilometro_Inicial",
+						"ROUND(Abscisa_Final/1000, 0) Kilometro_Final",
+					))
 					->where("Pk_Id", $id)
 					->get("vias")->row();
 			break;
@@ -142,7 +147,8 @@ Class Configuracion_model extends CI_Model{
 				return $this->db_configuracion
 					->where("Fk_Id_Sector", $id)
 					->order_by("Abscisa_Inicial")
-					->get("vias")->result();
+					->get("vias")
+					->result();
 			break;
 		}
 	}
