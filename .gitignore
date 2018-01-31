@@ -1,27 +1,4 @@
-# Created by https://www.gitignore.io/api/codeigniter
-
-### CodeIgniter ###
-*/config/development
-*/logs/log-*.php
-!*/logs/index.html
-*/cache/*
-!*/cache/index.html
-!*/cache/.htaccess
-
-#codeigniter 3
 commits.txt
-user_guide/*
-application/config/config.php
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
-
-### CodeIgniter Patch ###
-#codeigniter 3
-
-
-# End of https://www.gitignore.io/api/codeigniter
-
+/user_guide/*
 
 
