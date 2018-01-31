@@ -55,10 +55,21 @@ Class Roceria_model extends CI_Model{
 					->get("mediciones_detalle")->result();
 			break;
 
+			case 'fecha_medicion':
+				return $this->db
+					->select("Fecha Valor")
+					->where($id)
+					->get("mediciones_detalle")->row();
+			break;
+
 			case 'medicion':
 				$this->db
 		        	->select(array(
 			            'm.Pk_Id',
+			            'm.Abscisa_Inicial',
+			            "ROUND(m.Abscisa_Inicial/1000, 0) Kilometro_Inicial",
+			            'm.Abscisa_Final',
+						"ROUND(m.Abscisa_Final/1000, 0) Kilometro_Final",
 			            'm.Fecha_Inicial',
 			            'v.Nombre Via',
 			            's.Codigo Sector',
@@ -114,6 +125,35 @@ Class Roceria_model extends CI_Model{
 		        // return $this->db->get_compiled_select(); // string de la consulta
 		        return $this->db->get()->row();
 			break;
+
+			case 'medicion_detalle':
+				$this->db
+                    ->select(array(
+                        'd.Calificacion',
+                        'd.Factor_Externo',
+                        'd.Fecha',
+                        'd.Fk_Id_Costado',
+                        'd.Fk_Id_Medicion',
+                        'd.Fk_Id_Tipo_Medicion',
+                        'c.Color_R',
+                        'c.Color_G',
+                        'c.Color_B',
+                        ))
+                    ->from('mediciones_detalle d')
+		            ->join('valores_calificaciones c', 'd.Calificacion = c.Valor')
+                    ->where($id)
+                ;
+
+		        // return $this->db->get_compiled_select(); // string de la consulta
+		        return $this->db->get()->row();
+			break;
+
+			// case 'resumen_medicion':
+			// 	return $this->db
+			// 		->where("Fk_Id_Medicion", $id)
+			// 		->order_by("Abscisa")
+			// 		->get("mediciones_detalle")->result();
+			// break;
 		}
 	}
 }
