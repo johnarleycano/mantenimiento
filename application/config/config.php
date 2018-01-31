@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 /*
 |--------------------------------------------------------------------------
 | Id del Sistema de Mediciones
@@ -35,7 +36,7 @@ $config['id_aplicacion'] = 1;
 |
 */
 // $config['base_url'] = 'http://localhost/devimed/mediciones';
-$config['base_url'] = 'http://192.168.0.136/devimed/mediciones';
+$config['base_url'] = 'http://mediciones.devimed.com.co';
 
 /*
 |--------------------------------------------------------------------------
