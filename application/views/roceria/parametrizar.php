@@ -62,7 +62,7 @@
 		}
 
 		// Si el kilómetro seleccionado es mayor al kilómetro final o menor al kilómetro inicial
-		if ($("#input_kilometro_inicio").val() < $("#kilometro_inicial").val() || $("#input_kilometro_inicio").val() > $("#kilometro_final").val()) {
+		if ($("#input_kilometro_inicio").val() < $("#kilometro_inicial").val() || parseFloat($("#input_kilometro_inicio").val()) > $("#kilometro_final").val()) {
 			cerrar_notificaciones();
 			imprimir_notificacion(`El kilómetro de inicio debe estar entre ${$("#kilometro_inicial").val()} y ${$("#kilometro_final").val()}`, `danger`);
 
