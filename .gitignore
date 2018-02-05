@@ -1,7 +1,5 @@
-application/config/config.php
-commits.txt
-/user_guide/*
-
-
-application/config/config.php
-application/config/database.php
+user_guide/
+application/
+js/commits.txt
+inicio.html
+index.php
