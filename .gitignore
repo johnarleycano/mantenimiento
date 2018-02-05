@@ -2,3 +2,6 @@ commits.txt
 /user_guide/*
 
 
+application/config/config.php
+application/config/config.php
+application/config/database.php
