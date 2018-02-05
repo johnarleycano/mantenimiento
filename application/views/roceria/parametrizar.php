@@ -35,6 +35,18 @@
 	            <input class="uk-input" type="number" id="input_kilometro_inicio" title="kilómetro de inicio" placeholder="Elja primero una vía" disabled>
 	        </div>
 	    </div>
+		
+		
+		<!-- Orden -->
+	    <div class="uk-margin">
+        	<label class="uk-form-label" for="select_orden">Orden para medir</label>
+	        <div class="uk-form-controls">
+	        	<select class="uk-select" id="select_orden" title="vía">
+	            	<option value="1">Ascendente</option>
+	            	<option value="2">Descendente</option>
+	            </select>
+	        </div>
+	    </div>
     </form>
 </div>
 
@@ -81,17 +93,13 @@
         id_medicion = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML');
 
 		// Se carga la interfaz de medición
-		url = `<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${$("#input_kilometro_inicio").val()*1000}`;
-		redireccionar(url);
+		redireccionar(`<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${$("#input_kilometro_inicio").val()*1000}/${$("#select_orden").val()}`);
 		return false;
 	}
 
 	$(document).ready(function(){
 		// Botones del menú
 		botones(Array("iniciar"));
-
-		// Se carga el rango de abscisado por defecto
-		// cargar_interfaz("cont_abscisado", "<?php // echo site_url('roceria/cargar_interfaz'); ?>", {"tipo": "rango_abscisado", "id_via": "0"});
 
 		$("form").on("submit", function(){
 			iniciar_medicion();
@@ -130,6 +138,11 @@
 				// Se activa el input y se pone valor mínimo
 				$("#input_kilometro_inicio").val(via.Kilometro_Inicial).removeAttr("disabled").focus();
 			}
+		});
+
+		// Al seleccionar el orden, cambia los valores límite del kilómetro de inicio
+		$("#select_orden").on("change", function(){
+			($(this).val() == 1) ? $("#input_kilometro_inicio").val($("#kilometro_inicial").val()) : $("#input_kilometro_inicio").val($("#kilometro_final").val())
 		});
 	});
 </script>
