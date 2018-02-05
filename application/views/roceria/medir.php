@@ -26,11 +26,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 <input type="hidden" id="abscisa" value="<?php echo $abscisa; ?>">
 <input type="hidden" id="abscisa_inicial" value="<?php echo $medicion->Abscisa_Inicial; ?>">
 <input type="hidden" id="abscisa_final" value="<?php echo $medicion->Abscisa_Final; ?>">
+<input type="hidden" id="orden" value="<?php echo $this->uri->segment(6); ?>">
 
 <!-- Contenedor de mediciones -->
 <div id="mediciones">
 	<h3 class="uk-heading-line uk-text-center">
-		<span>Kilómetro <?php echo $abscisa/1000; ?> de <?php echo $medicion->Kilometro_Final; ?></span>
+		<span>Kilómetro <?php echo $abscisa/1000; ?></span>
 	</h3>
 
 	<!-- Medición -->
@@ -135,29 +136,43 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		<?php } ?>
 		<div class="separador"></div>
 	<?php } ?>
-
-	<progress id="js-progressbar" class="uk-progress" value="<?php // echo $abscisa; ?>" max="<?php // echo $abscisa_final; ?>"></progress>
 </div>
 
 <script type="text/javascript">
-	/**
-	 * Cargará el detalle de la medición en esa posición
-	 * 
-	 * @return [void]
-	 */
-	function anterior()
-	{
-		// Si es paso 1, se devuelve a la interfaz de parametrización
-		if ($("#posicion").val() == "1") {
-			redireccionar("<?php echo site_url('roceria/parametrizar'); ?>");
+
+	function continuar(tipo) {
+		cerrar_notificaciones();
+		imprimir_notificacion("<div uk-spinner></div> Guardando medición...");
+
+		const abscisa = parseFloat($("#abscisa").val())
+		const posicion = (tipo == "adelante") ? parseFloat($("#posicion").val()) + 1 : parseFloat($("#posicion").val()) - 1
+		let siguiente_abscisa
+		let rango
+
+		switch($("#orden").val()) {
+		    case "1":
+		        siguiente_abscisa = (tipo == "adelante") ? abscisa + 1000 : abscisa - 1000
+		        rango = (siguiente_abscisa >= $("#abscisa_inicial").val() && siguiente_abscisa <= $("#abscisa_final").val()) ? true : false
+	        break;
+		
+		    case "2":
+		        siguiente_abscisa = (tipo == "adelante") ? abscisa - 1000 : abscisa + 1000
+		        rango = (siguiente_abscisa >= $("#abscisa_inicial").val() && siguiente_abscisa <= $("#abscisa_final").val()) ? true : false
+	        break;
+		}
+
+		if (!rango && tipo == "adelante") {
+			detener()
+			return false;
+		}
+		
+		if (!rango && tipo == "atras") {
+			redireccionar("<?php echo site_url('roceria/parametrizar'); ?>")
 			return false;
 		}
 
-		guardar("anterior");
-
-		// Se carga la interfaz de medición
-        url = `<?php echo site_url('roceria/medir') ?>/${$("#id_medicion").val()}/${(parseFloat($("#posicion").val()) - 1)}/${(parseFloat($("#abscisa").val()) - 1000)}/${$("#abscisa_final").val()}`;
-		redireccionar(url);
+		guardar(tipo)
+		redireccionar(`<?php echo site_url('roceria/medir'); ?>/${$("#id_medicion").val()}/${posicion}/${siguiente_abscisa}/${$("#orden").val()}`)
 	}
 
 	/**
@@ -170,20 +185,20 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	 */
 	function guardar(tipo = null)
 	{
-		var datos_medicion = [];
+		let datos_medicion = [];
+		let abscisa = $("#abscisa").val()
+		let id_medicion = $("#id_medicion").val()
 		
 		// Se recorren los chequeados y se almacenan en el arreglo
         $("input[name^='calificacion_']:checked").each(function() {
-        	// Si está marcado como factor externo, se almacena para guardarse
-        	if( $("#factor_externo_" + $(this).attr("data-tipo_medicion") + "_" + $(this).attr("data-costado")).prop('checked')) {
-			    var factor_externo = 1;
-			} else {
-				var factor_externo = 0;
-			}
+        	let factor_externo
 
-        	var medicion = {
-        		"Abscisa": $("#abscisa").val(),
-        		"Fk_Id_Medicion": $("#id_medicion").val(),
+        	// Si está marcado como factor externo, se almacena para guardarse
+        	( $("#factor_externo_" + $(this).attr("data-tipo_medicion") + "_" + $(this).attr("data-costado")).prop('checked')) ? factor_externo = 1 : factor_externo = 0
+
+        	let medicion = {
+        		"Abscisa": abscisa,
+        		"Fk_Id_Medicion": id_medicion,
         		"Fk_Id_Tipo_Medicion": $(this).attr("data-tipo_medicion"),
         		"Fk_Id_Costado": $(this).attr("data-costado"),
         		"Calificacion": $(this).attr("data-calificacion"),
@@ -195,15 +210,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
         // imprimir(datos_medicion);
         
         // Se eliminan los anteriores registros que pueda tener
-        ajax("<?php echo site_url('roceria/eliminar'); ?>", {"tipo": "medicion_detalle", "datos": {"Abscisa": $("#abscisa").val(), "Fk_Id_Medicion": $("#id_medicion").val()}}, 'html');
-
-      	// Si es medición siguiente y no se marcó ningún ítem, mostrará un mensaje para que marque al menos uno
-        if (datos_medicion.length == 0 && tipo == "siguiente") {
-        	cerrar_notificaciones();
-			imprimir_notificacion("No ha tomado ninguna medida. Marque al menos un ítem.", "danger");
-
-			return false;
-        }
+        ajax("<?php echo site_url('roceria/eliminar'); ?>", {"tipo": "medicion_detalle", "datos": {"Abscisa": abscisa, "Fk_Id_Medicion": id_medicion}}, 'html');
 
         // Si tiene ítems marcados, se procede a guardar y retornar el id
         if (datos_medicion.length > 0) {
@@ -288,40 +295,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		// Se redirecciona a la interfaz de resumen
 		redireccionar(`${"<?php echo site_url('roceria/resumen_medicion'); ?>"}/${$("#id_medicion").val()}`);
 	}
-
-	/**
-	 * Continúa la medición en el siguiente kilómetro
-	 * 
-	 * @return [void]
-	 */
-	function siguiente()
-	{
-		cerrar_notificaciones();
-		imprimir_notificacion("<div uk-spinner></div> Guardando medición...");
-
-		// Si se guarda exitosamente
-		if (guardar("siguiente")) {
-			// Si la abscisa siguiente es mayor a la abscisa final,
-			// entonces mostrará los resultados finales
-			if ((parseFloat($("#abscisa").val()) + 1000) > $("#abscisa_final").val()) {
-	        	detener();
-
-				return false;
-			}
-
-			// Se carga la interfaz de medición
-	        url = `<?php echo site_url('roceria/medir'); ?>/${$("#id_medicion").val()}/${parseFloat($("#posicion").val()) + 1}/${parseFloat($("#abscisa").val()) + 1000}/${$("#abscisa_final").val()}`;
-			redireccionar(url);
-		}
-	}
 	
 	$(document).ready(function(){
 		var opciones = Array("anterior", "detener", "siguiente");
 
 		// Si es la primera posición, quita el botón "anterior" y "detener medición"
-		if ($("#posicion").val() == 1) {
-			opciones.splice(0, 1);
-		}
+		if ($("#posicion").val() == 1) opciones.splice(0, 1);
 
 		// Botones del menú
 		botones(opciones);
