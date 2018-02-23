@@ -1,24 +1,26 @@
 <footer style="
-    background-color: #808080;
+    background: white;
     bottom: 0;
-    color: white;
-    font-size: 0.7em;
+    color: gray;
+    font-size: 0.8em;
     left: 0;
-	position: fixed;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: fixed;
     text-align: center;
     width: 100%;
 ">
-	Sistema de administración de permisos de usos de vía | Devimed S.A. | <i>Versión <?php echo version(); ?></i>
+	Sistema de registro de mediciones | <a href="http://devimed.com.co/" target="_blank">Devimed S.A.</a> | <i>Versión <b><?php echo version(); ?>
 </footer>
 
 <?php
 function version()
 {
-	foreach(array_reverse(glob('.git/refs/tags/*')) as $archivo) {
-    	$contents = file_get_contents($archivo);
+    foreach(array_reverse(glob('.git/refs/tags/*')) as $archivo) {
+        $contents = file_get_contents($archivo);
 
-	    return basename($archivo);
-	    exit();
-	}
+        return basename($archivo);
+        exit();
+    }
 }
 ?>
