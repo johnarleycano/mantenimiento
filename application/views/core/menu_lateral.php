@@ -14,7 +14,7 @@
 
                 <li class="uk-nav-header">ROCERÍA Y CUNETAS</li>
                 <li><a onCLick="javascript:medir_roceria()"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> Medir</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: album"></span> Ver mediciones</a></li>
+                <li><a href="<?php echo site_url('panel'); ?>"><span class="uk-margin-small-right" uk-icon="icon: album"></span> Ver mediciones</a></li>
 
                 <!-- <li class="uk-nav-header">SEÑALIZACIÓN VERTICAL</li>
                 <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> Medir</a></li>
