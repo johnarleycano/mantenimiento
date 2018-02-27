@@ -10,15 +10,16 @@ if (count($mediciones) == 0) {
 ?>
 <dl class="uk-description-list uk-description-list-divider">
 	<?php foreach ($mediciones as $medicion) { ?>
-		<dt><?php echo "$medicion->Sector | $medicion->Via"; ?></dt>
+		<dt style="vertical-align: middle;">
+			<span class="uk-badge"><?php echo "$medicion->Puntos" ?></span> <?php echo "$medicion->Sector | $medicion->Via"; ?>
+		</dt>
+				    	
 		
 		<a onCLick="javascript:ver_detalle(<?php echo $medicion->Fk_Id_Medicion; ?>, <?php echo $calificacion; ?>)" class="uk-link-reset">
 		    <dd class="uk-text-small">
 				<article class="uk-article">
 				    <p class="uk-article-meta">
-				    	<span class="uk-badge"><?php echo "$medicion->Puntos" ?></span>
-				    	<?php // echo $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha)." | ".$medicion->Hora; ?>
-						<time class="timeago" datetime="<?php echo $medicion->Fecha; ?>"><?php echo $medicion->Fecha; ?></time>
+						<time datetime="<?php echo $medicion->Fecha; ?>"><?php echo $medicion->Fecha; ?></time>
 				    </p>
 				</article>
 		    </dd>

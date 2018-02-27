@@ -48,9 +48,9 @@
 	 * 
 	 * @return [void]
 	 */
-	function generar_pdf()
+	function generar_pdf(id_medicion)
 	{
-		redireccionar("<?php echo site_url('reportes/pdf/medicion') ?>" + "/" + $("#id_medicion").val(), "ventana");
+		redireccionar(`<?php echo site_url('reportes/pdf/medicion'); ?>/${id_medicion}`, "ventana");
 	}
 
 	/**
@@ -92,7 +92,6 @@
 	 */
     function ver_detalle(id_medicion, calificacion)
     {
-        imprimir(id_medicion)
         cargar_interfaz("cont_modal", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "detalle_medicion", "id_medicion": id_medicion, "calificacion": calificacion});
     }
 
