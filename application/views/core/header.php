@@ -12,19 +12,23 @@
 <?php if(ENVIRONMENT === 'development') { ?>
 	<!-- Estilos -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.css" />
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/fontawesome-all.css" />
 
 	<!-- Scripts -->
 	<script src="<?php echo base_url(); ?>js/uikit.js"></script> <!-- Scripts para UI Kit -->
 	<script src="<?php echo base_url(); ?>js/uikit-icons.js"></script> <!-- Scripts para UI Kit -->
+	<script src="<?php echo base_url(); ?>js/fontawesome-all.js"></script>
 <?php } ?>
 
 <?php if(ENVIRONMENT === 'production') { ?>
 	<!-- Estilos -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.min.css" />
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/fontawesome-all.min.css" />
 
 	<!-- Scripts -->
 	<script src="<?php echo base_url(); ?>js/uikit.min.js"></script> <!-- Scripts para UI Kit -->
 	<script src="<?php echo base_url(); ?>js/uikit-icons.min.js"></script> <!-- Scripts para UI Kit -->
+	<script src="<?php echo base_url(); ?>js/fontawesome-all.min.js"></script>
 <?php } ?>
 
 <!-- Scripts -->
