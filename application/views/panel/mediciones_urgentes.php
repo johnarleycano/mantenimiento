@@ -17,10 +17,15 @@ if (count($mediciones) == 0) {
 				<article class="uk-article">
 				    <p class="uk-article-meta">
 				    	<span class="uk-badge"><?php echo "$medicion->Puntos" ?></span>
-				    	<?php echo $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha)." | ".$medicion->Hora; ?> 
+				    	<?php // echo $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha)." | ".$medicion->Hora; ?>
+						<time class="timeago" datetime="<?php echo $medicion->Fecha; ?>"><?php echo $medicion->Fecha; ?></time>
 				    </p>
 				</article>
 		    </dd>
 		</a>
 	<?php } ?>
 </dl>
+
+<script type="text/javascript">
+	$("time").timeago();
+</script>
