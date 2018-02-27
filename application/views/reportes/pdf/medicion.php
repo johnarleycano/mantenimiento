@@ -30,6 +30,7 @@ $GLOBALS['medicion'] = $medicion;
 $GLOBALS['fecha_titulo'] = $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha_Inicial);
 $GLOBALS['fecha'] = date("d-m", strtotime($medicion->Fecha_Inicial));
 $GLOBALS['fecha_generacion'] = $this->configuracion_model->obtener("formato_fecha", date("Y-m-d"));
+$GLOBALS['fecha_anterior'] = ($medicion_anterior) ? date("d-m", strtotime($medicion_anterior->Fecha_Inicial)) : "N/A";
 $GLOBALS['tipos_mediciones'] = $tipos_mediciones;
 $GLOBALS['costados'] = $costados;
 $GLOBALS['calificaciones'] = $calificaciones;
