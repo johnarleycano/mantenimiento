@@ -9,11 +9,11 @@
 }(function (jQuery) {
   // Spanish
   jQuery.timeago.settings.strings = {
-     prefixAgo: "hace",
-     prefixFromNow: "dentro de",
+     prefixAgo: "Hace",
+     prefixFromNow: "Dentro de",
      suffixAgo: "",
      suffixFromNow: "",
-     seconds: "menos de un minuto",
+     seconds: "Menos de un minuto",
      minute: "un minuto",
      minutes: "unos %d minutos",
      hour: "una hora",
