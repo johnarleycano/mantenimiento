@@ -25,9 +25,11 @@ $helvetica = 'Helvetica';
 $GLOBALS['ancho_logo'] = 30;
 $GLOBALS['ancho_hoja'] = 195;
 $GLOBALS['ancho_km'] = 10;
+$GLOBALS['ancho_fe'] = 5;
 $GLOBALS['medicion'] = $medicion;
-$GLOBALS['fecha'] = $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha_Inicial);
-$GLOBALS['fecha_anterior'] = ($medicion_anterior) ? "Anterior: ".$this->configuracion_model->obtener("formato_fecha", $medicion_anterior->Fecha_Inicial) : "No hay medición anterior" ;
+$GLOBALS['fecha'] = date("d-m", strtotime($medicion->Fecha_Inicial));
+$GLOBALS['fecha_titulo'] = $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha_Inicial);
+$GLOBALS['fecha_anterior'] = ($medicion_anterior) ? "Ant: ".date("d-m", strtotime($medicion_anterior->Fecha_Inicial)) : "N/A" ;
 $GLOBALS['fecha_generacion'] = $this->configuracion_model->obtener("formato_fecha", date("Y-m-d"));
 $GLOBALS['tipos_mediciones'] = $tipos_mediciones;
 $GLOBALS['costados'] = $costados;
@@ -53,7 +55,7 @@ class PDF extends FPDF
 	    $this->Cell(50,6, utf8_decode($GLOBALS['medicion']->Via),0,0,'C');
 	    $this->SetFont($GLOBALS['helvetica'], "", 9);
 	    $this->Cell(5,6, utf8_decode('|'),0,0,'C');
-	    $this->Cell(30,6, utf8_decode($GLOBALS['fecha']),0,0,'C');
+	    $this->Cell(30,6, utf8_decode($GLOBALS['fecha_titulo']),0,0,'C');
 	    $this->Cell(5,6, utf8_decode('|'),0,0,'C');
 	    $this->Cell(50,6, utf8_decode("Usuario: {$GLOBALS['medicion']->Usuario}"),0,1,'C');
 	    $this->Ln(5);
@@ -79,57 +81,56 @@ class PDF extends FPDF
     	$this->Cell($GLOBALS['ancho_km'], 15, utf8_decode("Km"),1,0,'C', 0);
 
 	    // Se establecen los ejes X
+	    $x_costado = $this->getX();
 	    $x_tipo_medicion = $this->getX();
 	    $x_fecha = $this->getX();
-	    $x_costado = $this->getX();
 
 	    // 1. Se calcula el ancho
-	    $ancho_tipo_medicion = ($GLOBALS['ancho_hoja'] - $GLOBALS['ancho_km']) / count($GLOBALS['tipos_mediciones']);
+	    $ancho_costado = ($GLOBALS['ancho_hoja'] - $GLOBALS['ancho_km']) / count($GLOBALS['costados']);
 
 	    // 2. Se recorren los registros existentes
-		foreach ($GLOBALS['tipos_mediciones'] as $tipo_medicion) {
+		foreach ($GLOBALS['costados'] as $costado) {
 			// 3. Se define las coordenadas
-			$this->setXY($x_tipo_medicion, 41);
+			$this->setXY($x_costado, 41);
 
 			// 4. Se imprime la información de la celda
-			$this->Cell($ancho_tipo_medicion, 5, utf8_decode($tipo_medicion->Nombre),1,0,'C', 0);
+			$this->Cell($ancho_costado, 5, utf8_decode($costado->Nombre),1,0,'C', 0);
 
 	    	// 1. Se calcula el ancho
-			$ancho_fecha = $ancho_tipo_medicion / 2;
-			$GLOBALS['ancho_fecha'] = $ancho_fecha;
+			$ancho_tipo_medicion = $ancho_costado / count($GLOBALS['tipos_mediciones']);
 
-			$fechas = Array($GLOBALS['fecha_anterior'], $GLOBALS['fecha']);
-
-	    	// 2. Se recorren los registros existentes
-			for ($i=0; $i <= 1; $i++) { 
+			// 2. Se recorren los registros existentes
+			foreach ($GLOBALS['tipos_mediciones'] as $tipo_medicion) {
 				// 3. Se define las coordenadas
-				$this->SetXY($x_fecha, 46);
+				$this->setXY($x_tipo_medicion, 46);
 
 				// 4. Se imprime la información de la celda
-    			$this->Cell($ancho_fecha, 5, utf8_decode($fechas[$i]),1,0,'C', 0);
+				$this->Cell($ancho_tipo_medicion, 5, utf8_decode($tipo_medicion->Nombre),1,0,'C', 0);
 
-	    		// 1. Se calcula el ancho
-				$ancho_costado = $ancho_fecha / count($GLOBALS['costados']);
-				$GLOBALS['ancho_costado'] = $ancho_costado;
+				// 1. Se calcula el ancho
+				$ancho_fecha = $ancho_tipo_medicion / 2;
+				$GLOBALS['ancho_fecha'] = $ancho_fecha;
 
-	    		// 2. Se recorren los registros existentes
-				foreach ($GLOBALS['costados'] as $costado) {
+				$fechas = Array($GLOBALS['fecha_anterior'], $GLOBALS['fecha']);
+
+				// 2. Se recorren los registros existentes
+				for ($i=0; $i <= 1; $i++) {
 					// 3. Se define las coordenadas
-					$this->SetXY($x_costado, 51);
+					$this->SetXY($x_fecha, 51);
 
 					// 4. Se imprime la información de la celda
-	    			$this->Cell($ancho_costado, 5, utf8_decode($costado->Nombre),1,0,'C', 0);
+    				$this->Cell($ancho_fecha, 5, utf8_decode($fechas[$i]),1,0,'C', 0);
 
-					// 5. Se incrementa el eje X para que continúe en el mismo eje
-					$x_costado += $ancho_costado;
+    				// 5. Se incrementa el eje X para que continúe en el mismo eje
+					$x_fecha += $ancho_fecha;
 				}
-		
+
 				// 5. Se incrementa el eje X para que continúe en el mismo eje
-				$x_fecha += $ancho_fecha;
+				$x_tipo_medicion += $ancho_tipo_medicion;
 			}
 
 			// 5. Se incrementa el eje X para que continúe en el mismo eje
-			$x_tipo_medicion += $ancho_tipo_medicion;
+			$x_costado += $ancho_costado;
 		}
 
 		$this->Ln();
@@ -169,13 +170,16 @@ $pdf->SetCreator('John Arley Cano - johnarleycano@hotmail.com');
 foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => $id_medicion_anterior)) as $abscisa) {
 	$pdf->Cell($GLOBALS['ancho_km'], 5, ($abscisa->Valor / 1000),1,0,'R', 0);
 
-	// Se recorren los tipos de mediciones
-	foreach ($tipos_mediciones as $tipo_medicion) {
+	// Se recorren los costados de la medición anterior
+	foreach ($GLOBALS['costados'] as $costado) {
 		/**
 		 * Medición anterior
 		 */
-		// Se recorren los costados de la medición anterior
-		foreach ($GLOBALS['costados'] as $costado) {
+		// Se recorren los tipos de mediciones
+		foreach ($tipos_mediciones as $tipo_medicion) {
+			/**
+			 * Medición anterior
+			 */
 			// Datos para consultar detalles de la medición
 			$datos = array(
 				"Abscisa" => $abscisa->Valor,
@@ -191,20 +195,22 @@ foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion
 				$calificacion_anterior = $detalle_medicion_anterior->Calificacion;
 		    	$pdf->SetFillColor($detalle_medicion_anterior->Color_R, $detalle_medicion_anterior->Color_G, $detalle_medicion_anterior->Color_B);
 		    	$relleno = 1;
+		    	$factor_externo_anterior = ($detalle_medicion_anterior->Factor_Externo) ? "FE" : "";
+
+		    	
 			} else {
 				$calificacion_anterior = "";
 		    	$relleno = 0;
+		    	$factor_externo_anterior = "";
 			}
 
-			$pdf->Cell($GLOBALS['ancho_costado'], 5, null, 1,0,'C', $relleno);
-			// $pdf->Cell($GLOBALS['ancho_costado'], 5, $calificacion_anterior, 1,0,'C', $relleno);
-		}
+			$pdf->Cell($GLOBALS['ancho_fecha'] - $GLOBALS['ancho_fe'], 5, null, 1,0,'C', $relleno);
+			$pdf->Cell($GLOBALS['ancho_fe'], 5, "", 1,0,'C', $relleno);
+			// $pdf->Cell($GLOBALS['ancho_fecha'], 5, $calificacion_anterior, 1,0,'C', $relleno);
 
-		/**
-		 * Medición actual
-		 */
-		// Se recorren los costados de la medición actual
-		foreach ($GLOBALS['costados'] as $costado) {
+			/**
+			 * Medición actual
+			 */
 			// Datos para consultar detalles de la medición
 			$datos = array(
 				"Abscisa" => $abscisa->Valor,
@@ -220,13 +226,16 @@ foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion
 				$calificacion_actual = $detalle_medicion_actual->Calificacion;
 		    	$pdf->SetFillColor($detalle_medicion_actual->Color_R, $detalle_medicion_actual->Color_G, $detalle_medicion_actual->Color_B);
 		    	$relleno = 1;
+		    	$factor_externo = ($detalle_medicion_actual->Factor_Externo) ? "FE" : "";
 			} else {
 				$calificacion_actual = "";
 		    	$relleno = 0;
+		    	$factor_externo = "";
 			}
 
-			$pdf->Cell($GLOBALS['ancho_costado'], 5, null,1,0,'C', $relleno);
-			// $pdf->Cell($GLOBALS['ancho_costado'], 5, $calificacion_actual,1,0,'C', $relleno);
+			$pdf->Cell($GLOBALS['ancho_fecha'] - $GLOBALS['ancho_fe'], 5, null,1,0,'C', $relleno);
+			$pdf->Cell($GLOBALS['ancho_fe'], 5, $factor_externo, 1,0,'C', $relleno);
+			// $pdf->Cell($GLOBALS['ancho_fecha'], 5, $calificacion_actual,1,0,'C', $relleno);
 		}
 	}
 
