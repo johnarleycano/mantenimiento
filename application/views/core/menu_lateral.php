@@ -13,29 +13,16 @@
                 </li> -->
 
                 <li class="uk-nav-header">ROCERÍA Y CUNETAS</li>
-                <li><a onCLick="javascript:medir_roceria()"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> Medir</a></li>
-                <li><a href="<?php echo site_url('panel'); ?>"><span class="uk-margin-small-right" uk-icon="icon: album"></span> Ver mediciones</a></li>
-
-                <!-- <li class="uk-nav-header">SEÑALIZACIÓN VERTICAL</li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> Medir</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: album"></span> Ver mediciones</a></li>
-
-                <li class="uk-nav-header">LUMINARIAS</li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> Medir</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: album"></span> Ver mediciones</a></li>
-                <br> -->
+                <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Medir</a></li>
+                <li><a href="<?php echo site_url('roceria/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver mediciones</a></li>
                 
                 <li class="uk-nav-divider"></li>
-                <li><a href="<?php echo site_url('reportes'); ?>"><span class="uk-margin-small-right" uk-icon="icon: copy"></span> Reportes</a></li>
-                <li><a href="<?php echo site_url('configuracion'); ?>"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Configuración</a></li>
+                <li><a href="<?php echo site_url('reportes'); ?>"><i class="far fa-clipboard fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Reportes</a></li>
+                <li><a href="<?php echo site_url('configuracion'); ?>"><i class="fas fa-cog fa-lg"></i>&nbsp;&nbsp;&nbsp;Configuración</a></li>
                 
                 <li class="uk-nav-divider"></li>
-                <li><a href="<?php echo site_url('sesion/cerrar'); ?>"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Salir</a></li>
+                <li><a href="<?php echo site_url('sesion/cerrar'); ?>"><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;Salir</a></li>
             </ul>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    
-</script>
