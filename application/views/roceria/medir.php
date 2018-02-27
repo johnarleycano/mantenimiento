@@ -37,7 +37,6 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	<!-- Medición -->
 	<div id="medicion">
 		<span>&nbsp;</span>
-
 		<!-- Se recorren las calificaciones -->
 		<?php foreach ($calificaciones as $calificacion) { ?>
 			<div class="contenedor" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);"><img class="icon" src="<?php echo base_url(); ?>img/<?php echo $calificacion->Valor; ?>.png" title="<?php echo $calificacion->Descripcion; ?>" uk-tooltip="pos: bottom-center"></div>
@@ -47,10 +46,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	<div class="separador"></div>
 
 	<?php
-	// Se recorren los tipos de mediciones
-	foreach ($tipos_mediciones as $tipo_medicion) {
-		// Se recorren los costados
-		foreach ($costados as $costado) {
+	// Se recorren los costados
+	foreach ($costados as $costado) {
+		$nombre_costado = $costado->Nombre;
+
+		// Se recorren los tipos de mediciones
+		foreach ($tipos_mediciones as $tipo_medicion) {
 			// Datos para consultar detalles de la medición
 			$datos = array(
 				"Abscisa" => $abscisa,
@@ -66,9 +67,18 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 			$datos["Fk_Id_Medicion"] = $id_medicion_anterior;
 			$detalle_medicion_anterior = $this->roceria_model->obtener("medicion_detalle", $datos);
 			?>
-
+			
 			<div id="medicion">
-				<span class="uk-text-small"><?php echo "$tipo_medicion->Nombre $costado->Codigo"; ?></span>
+				<?php
+				if($costado->Nombre == $nombre_costado) {
+					?>
+					<div class="titulo_costado"><?php echo $nombre_costado; ?></div>
+					<?php
+				}
+				$nombre_costado = "";
+				?>
+
+				<span class="uk-text-small">&nbsp;<?php echo "$tipo_medicion->Nombre"; ?></span>
 
 				<?php
 				// Se recorren las calificaciones
@@ -139,7 +149,13 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 </div>
 
 <script type="text/javascript">
-
+	/**
+	 * Continúa la medición
+	 * 
+	 * @param  {string} tipo [continúa hacia adelante o hacia atrás]
+	 * 
+	 * @return {void}
+	 */
 	function continuar(tipo) {
 		cerrar_notificaciones();
 		imprimir_notificacion("<div uk-spinner></div> Guardando medición...");
