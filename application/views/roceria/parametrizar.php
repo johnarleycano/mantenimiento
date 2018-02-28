@@ -86,7 +86,8 @@
 	    	"Abscisa_Final": $("#kilometro_final").val()*1000,
 	    	"Fk_Id_Via": $("#select_via").val(),
 	    	"Fecha_Inicial": "<?php echo date("Y-m-d H:i:s"); ?>",
-	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>"
+	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>",
+	    	"Orden": $("#select_orden").val()
 	    }
 	    // imprimir(datos);
 
