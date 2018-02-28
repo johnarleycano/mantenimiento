@@ -119,6 +119,14 @@ Class Configuracion_model extends CI_Model{
 		        return "$mes_es $dia_num, $anio_es";
 			break;
 
+			case 'rango_abscisado':
+				return $this->db_configuracion
+					->select("ROUND(MIN( Abscisa_Inicial ) / 1000, 0) Minimo")
+					->select("ROUND(MAX( Abscisa_Final + 1 ) / 1000 - 1, 0) Maximo")
+					->get("vias")->row()
+				;
+			break;
+
 			case "sectores":
 				return $this->db_configuracion
 					->order_by("Codigo")
@@ -132,6 +140,12 @@ Class Configuracion_model extends CI_Model{
 					->get("tipos_mediciones")->result();
 			break;
 
+			case "tipos_costados":
+				return $this->db_configuracion
+					->order_by("Orden")
+					->get("tipos_costados")->result();
+			break;
+
 			case "via":
 				return $this->db_configuracion
 					->select(array(
@@ -139,13 +153,14 @@ Class Configuracion_model extends CI_Model{
 						"ROUND(Abscisa_Inicial/1000, 0) Kilometro_Inicial",
 						"ROUND(Abscisa_Final/1000, 0) Kilometro_Final",
 					))
-					->where("Pk_Id", $id)
+					
 					->get("vias")->row();
 			break;
 
 			case "vias":
+				if ($id) $this->db_configuracion->where("Fk_Id_Sector", $id);
+				
 				return $this->db_configuracion
-					->where("Fk_Id_Sector", $id)
 					->order_by("Abscisa_Inicial")
 					->get("vias")
 					->result();

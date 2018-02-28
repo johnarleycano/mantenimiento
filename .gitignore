@@ -7,7 +7,7 @@
 # Creado por https://www.gitignore.io/api/codeigniter
 
 ### Archivos ###
-index.php
+/index.php
 commits.txt
 
 ### Carpetas ###

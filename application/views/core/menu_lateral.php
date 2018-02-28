@@ -14,7 +14,7 @@
 
                 <li class="uk-nav-header">ROCERÍA Y CUNETAS</li>
                 <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Medir</a></li>
-                <li><a href="<?php echo site_url('roceria/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver mediciones</a></li>
+                <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver mediciones</a></li>
                 
                 <li class="uk-nav-divider"></li>
                 <li><a href="<?php echo site_url('reportes'); ?>"><i class="far fa-clipboard fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Reportes</a></li>

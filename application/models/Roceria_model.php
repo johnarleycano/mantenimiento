@@ -1,5 +1,12 @@
 <?php 
 Class Roceria_model extends CI_Model{
+	/**
+	 * Elimina registros en base de datos
+	 * 
+	 * @param  [string] $tipo 	[lo que eliminará]
+	 * @param  [int] $id   		[Id del registro a eliminar]
+	 * @return [boolean]       	[true]
+	 */	
 	function eliminar($tipo, $id){
 		// Según el tipo
 		switch ($tipo) {
@@ -125,35 +132,6 @@ Class Roceria_model extends CI_Model{
 		        // return $this->db->get_compiled_select(); // string de la consulta
 		        return $this->db->get()->row();
 			break;
-
-			case 'medicion_detalle':
-				$this->db
-                    ->select(array(
-                        'd.Calificacion',
-                        'd.Factor_Externo',
-                        'd.Fecha',
-                        'd.Fk_Id_Costado',
-                        'd.Fk_Id_Medicion',
-                        'd.Fk_Id_Tipo_Medicion',
-                        'c.Color_R',
-                        'c.Color_G',
-                        'c.Color_B',
-                        ))
-                    ->from('mediciones_detalle d')
-		            ->join('valores_calificaciones c', 'd.Calificacion = c.Valor')
-                    ->where($id)
-                ;
-
-		        // return $this->db->get_compiled_select(); // string de la consulta
-		        return $this->db->get()->row();
-			break;
-
-			// case 'resumen_medicion':
-			// 	return $this->db
-			// 		->where("Fk_Id_Medicion", $id)
-			// 		->order_by("Abscisa")
-			// 		->get("mediciones_detalle")->result();
-			// break;
 		}
 	}
 }
