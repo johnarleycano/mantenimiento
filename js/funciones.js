@@ -92,11 +92,11 @@ function cargar_lista_desplegable(datos){
     limpiar_lista(datos.elemento_hijo, datos.mensaje_hijo);
 
     // Consulta de las vías del sector seleccionado
-    vias = ajax(datos.url, {"tipo": datos.tipo, "id": datos.id}, "JSON");
+    registros = ajax(datos.url, {"tipo": datos.tipo, "id": datos.id}, "JSON");
 
     // Se recorren las vías y se alimenta la lista desplegable
-    $.each(vias, function(clave, via) {
-        datos.elemento_hijo.append("<option value='" + via.Pk_Id + "'>" + via.Nombre + "</option>");
+    $.each(registros, function(clave, valor) {
+        datos.elemento_hijo.append("<option value='" + valor.Pk_Id + "'>" + valor.Nombre + "</option>");
     });
 
     // Se pone el foco en la siguiente lista desplegable
@@ -121,9 +121,28 @@ function cerrar_notificaciones()
  * 
  * @return [void]
  */
-function imprimir(mensaje)
+function imprimir(mensaje, tipo = null)
 {
-    console.log(mensaje);
+    switch(tipo) {
+        case "tabla":
+            console.table(mensaje)
+        break;
+
+        case "tiempo_inicio":
+            console.time(mensaje)
+        break;
+
+        case "tiempo_final":
+            console.timeEnd(mensaje)
+        break;
+
+        case "grupo":
+            console.group(mensaje)
+        break;
+
+        default:
+            console.log(mensaje)
+    }
 }
 
 /**
