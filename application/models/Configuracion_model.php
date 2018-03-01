@@ -38,6 +38,12 @@ Class Configuracion_model extends CI_Model{
                 return "KM ".$kilometros."+".str_pad(substr($id, -3), 3, "0", STR_PAD_LEFT);
             break;
 
+            case "aplicacion":
+                return $this->db_configuracion
+                ->where("Pk_Id", $id)
+                ->get("aplicaciones")->row();
+            break;
+
 			case "calificaciones":
 				return $this->db
 					->order_by("Valor", "DESC")

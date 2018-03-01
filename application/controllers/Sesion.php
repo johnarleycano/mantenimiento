@@ -21,7 +21,7 @@ class Sesion extends CI_Controller {
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('sesion_model'));
+        $this->load->model(array('configuracion_model', 'sesion_model'));
     }
 
 	/**
@@ -31,9 +31,15 @@ class Sesion extends CI_Controller {
      */
 	function index()
 	{
-        $this->data['titulo'] = 'Identifcación';
-        $this->data['contenido_principal'] = 'sesion/index';
-        $this->load->view('core/template', $this->data);
+        // Se obtiene los datos de la aplicación principal
+        $aplicacion = $this->configuracion_model->obtener("aplicacion", $this->config->item("id_aplicacion"));
+
+        // Se lee el archivo con los datos de sesión activa
+        $archivo = file_get_contents($aplicacion->Url."sesion.json");
+        $datos_sesion = json_decode($archivo, true);
+
+        $this->session->set_userdata($datos_sesion);
+        redirect("");
 	}
 
 	/**
@@ -48,7 +54,9 @@ class Sesion extends CI_Controller {
         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
         $this->logs_model->insertar(2);
         
-        redirect('sesion');
+        $aplicacion = $this->configuracion_model->obtener("aplicacion", $this->config->item('id_aplicacion_sesion'));
+        
+        redirect("{$aplicacion->Url}index.php/sesion/iniciar/".$this->config->item('id_aplicacion'));
 	}
 
 	/**
