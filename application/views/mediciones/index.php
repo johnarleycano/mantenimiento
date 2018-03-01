@@ -35,7 +35,7 @@
         medicion_abscisa = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "abscisas_limite", "id": id_medicion}, 'JSON')
 
         // Si el orden es ascendente, la abscisa será la mayor, sino, será la menor
-        abscisa = (medicion.Orden == 1) ? medicion_abscisa.Mayor + 1000 : medicion_abscisa.Menor - 1000
+        abscisa = (medicion.Orden == 1) ? parseFloat(medicion_abscisa.Mayor) + 1000 : parseFloat(medicion_abscisa.Menor) - 1000
 
         // roceria/medir/id_medicion/posicion/abscisa/orden
         redireccionar(`<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${abscisa}/${medicion.Orden}`)
