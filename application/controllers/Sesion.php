@@ -36,9 +36,14 @@ class Sesion extends CI_Controller {
 
         // Se lee el archivo con los datos de sesión activa
         $archivo = file_get_contents($aplicacion->Url."sesion.json");
+        
         $datos_sesion = json_decode($archivo, true);
+        
         $this->session->set_userdata($datos_sesion);
-
+        
+        // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
+        $this->logs_model->insertar(1);
+        
         redirect("");
 	}
 

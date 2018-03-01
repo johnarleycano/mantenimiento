@@ -12,11 +12,14 @@ Class Logs_model extends CI_Model{
 	function insertar($tipo, $observacion = null){
         $datos = array(
             'Fk_Id_Tipo_Log' => $tipo,
+            'Fecha' => date("Y-m-d H:i:s"),
             'Fk_Id_Usuario' => $this->session->userdata('Pk_Id_Usuario'),
             'Observacion' => $observacion
         );
 
-        $this->db->insert('logs', $datos);
+       	// if(ENVIRONMENT !== 'development') {
+	        $this->db->insert('logs', $datos);
+	    // }
     }
 
 

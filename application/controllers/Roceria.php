@@ -100,7 +100,7 @@ class Roceria extends CI_Controller {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        $this->logs_model->insertar(3, "Inicio de medición ($id)");
+                        $this->logs_model->insertar(3, "Medición $id");
                     }
                 break;
 
@@ -110,7 +110,7 @@ class Roceria extends CI_Controller {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        $this->logs_model->insertar(4, "Detalle de medición ($id)");
+                        $this->logs_model->insertar(4, "Medición {$datos["0"]["Fk_Id_Medicion"]}, Abscisa {$datos["0"]["Abscisa"]}");
                     }
                 break;
             }
@@ -122,7 +122,7 @@ class Roceria extends CI_Controller {
 
     function medir()
     {
-        // Si no ha iniciado sesión o es un usuario diferente al 1,
+        // Si no ha iniciado sesión
         // redirecciona al inicio de sesión
         if(!$this->session->userdata('Pk_Id_Usuario')){
             redirect('sesion/cerrar');
@@ -164,6 +164,9 @@ class Roceria extends CI_Controller {
         if(!$this->session->userdata('Pk_Id_Usuario')){
             redirect('sesion/cerrar');
         }
+
+        // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
+        $this->logs_model->insertar(5, "Medición ".$this->uri->segment(3));
 
         $this->data['titulo'] = 'Medición - Resumen';
         $this->data['contenido_principal'] = 'roceria/resumen';
