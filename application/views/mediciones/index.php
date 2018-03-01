@@ -16,6 +16,25 @@
             <?php } ?>
         </select>
     </p>
+    
+    <p>
+        <?php
+        $rango = $this->configuracion_model->obtener("rango_abscisado");
+        ?>
+        <select class="uk-select" id="select_km_inicial">
+            <?php for ($i = $rango->Minimo; $i < $rango->Maximo; $i++) { ?>
+                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+            <?php } ?>
+        </select>
+    </p>
+    
+    <p>
+        <select class="uk-select" id="select_km_final">
+            <?php for ($i = $rango->Minimo; $i < $rango->Maximo; $i++) { ?>
+                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+            <?php } ?>
+        </select>
+    </p>
 </div>
 
 <div id="cont_lista"></div>
