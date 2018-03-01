@@ -37,8 +37,8 @@ class Sesion extends CI_Controller {
         // Se lee el archivo con los datos de sesión activa
         $archivo = file_get_contents($aplicacion->Url."sesion.json");
         $datos_sesion = json_decode($archivo, true);
-
         $this->session->set_userdata($datos_sesion);
+
         redirect("");
 	}
 
