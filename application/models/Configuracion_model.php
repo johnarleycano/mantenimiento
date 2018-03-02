@@ -159,7 +159,7 @@ Class Configuracion_model extends CI_Model{
 						"ROUND(Abscisa_Inicial/1000, 0) Kilometro_Inicial",
 						"ROUND(Abscisa_Final/1000, 0) Kilometro_Final",
 					))
-					
+					->where("Pk_Id", $id)
 					->get("vias")->row();
 			break;
 
