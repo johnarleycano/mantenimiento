@@ -56,6 +56,7 @@ Class Roceria_model extends CI_Model{
 			case 'abscisas_mediciones':
 				return $this->db
 					->select("Abscisa Valor")
+					->select("Fecha")
 					->where("Fk_Id_Medicion", $id["id_medicion"])
 					->or_where("Fk_Id_Medicion", $id["id_medicion_anterior"])
 					->group_by("Abscisa")

@@ -24,13 +24,14 @@ $helvetica = 'Helvetica';
 // Variables globales
 $GLOBALS['ancho_logo'] = 30;
 $GLOBALS['ancho_hoja'] = 195;
-$GLOBALS['ancho_km'] = 10;
+$GLOBALS['ancho_km'] = 7;
+$GLOBALS['ancho_fecha_medicion'] = 18;
 $GLOBALS['ancho_fe'] = 5;
 $GLOBALS['medicion'] = $medicion;
 $GLOBALS['fecha_titulo'] = $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha_Inicial);
-$GLOBALS['fecha'] = date("d-m", strtotime($medicion->Fecha_Inicial));
+$GLOBALS['fecha'] = $this->configuracion_model->obtener("formato_fecha", $medicion->Fecha_Inicial, "corto");
 $GLOBALS['fecha_generacion'] = $this->configuracion_model->obtener("formato_fecha", date("Y-m-d"));
-$GLOBALS['fecha_anterior'] = ($medicion_anterior) ? date("d-m", strtotime($medicion_anterior->Fecha_Inicial)) : "N/A";
+$GLOBALS['fecha_anterior'] = ($medicion_anterior) ? $this->configuracion_model->obtener("formato_fecha", $medicion_anterior->Fecha_Inicial, "corto") : "N/A";
 $GLOBALS['tipos_mediciones'] = $tipos_mediciones;
 $GLOBALS['costados'] = $costados;
 $GLOBALS['calificaciones'] = $calificaciones;
@@ -79,6 +80,7 @@ class PDF extends FPDF
 	     * Cabecera de las listas
 	     */
     	$this->Cell($GLOBALS['ancho_km'], 15, utf8_decode("Km"),1,0,'C', 0);
+    	$this->Cell($GLOBALS['ancho_fecha_medicion'], 15, utf8_decode("Fecha"),1,0,'C', 0);
 
 	    // Se establecen los ejes X
 	    $x_costado = $this->getX();
@@ -86,7 +88,7 @@ class PDF extends FPDF
 	    $x_fecha = $this->getX();
 
 	    // 1. Se calcula el ancho
-	    $ancho_costado = ($GLOBALS['ancho_hoja'] - $GLOBALS['ancho_km']) / count($GLOBALS['costados']);
+	    $ancho_costado = ($GLOBALS['ancho_hoja'] - $GLOBALS['ancho_km'] - $GLOBALS['ancho_fecha_medicion']) / count($GLOBALS['costados']);
 
 	    // 2. Se recorren los registros existentes
 		foreach ($GLOBALS['costados'] as $costado) {
@@ -169,6 +171,7 @@ $pdf->SetCreator('John Arley Cano - johnarleycano@hotmail.com');
 // Se crean los registros de las abscisas
 foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => $id_medicion_anterior)) as $abscisa) {
 	$pdf->Cell($GLOBALS['ancho_km'], 5, ($abscisa->Valor / 1000),1,0,'R', 0);
+	$pdf->Cell($GLOBALS['ancho_fecha_medicion'], 5, $this->configuracion_model->obtener("formato_fecha", $abscisa->Fecha, "corto"),1,0,'L', 0);
 
 	// Se recorren los costados de la medición anterior
 	foreach ($GLOBALS['costados'] as $costado) {
