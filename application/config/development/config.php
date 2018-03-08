@@ -36,7 +36,7 @@ $config['id_aplicacion_sesion'] = 15;
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/devimed/mediciones';
+$config['base_url'] = 'http://localhost/devimed/mantenimiento';
 
 /*
 |--------------------------------------------------------------------------
