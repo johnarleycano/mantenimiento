@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido
 /**
  * @author: 	John Arley Cano Salinas
  * Fecha: 		21 de noviembre de 2017
- * Programa:  	Mediciones | Módulo de configuración
+ * Programa:  	Mantenimiento | Módulo de configuración
  *            	Permite configurar y parametrizar todas las opciones
  *             	de la aplicación
  * Email: 		johnarleycano@hotmail.com

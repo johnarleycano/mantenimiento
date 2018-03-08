@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido
 /**
  * @author:     John Arley Cano Salinas
  * Fecha:       23 de noviembre de 2017
- * Programa:    Mediciones | Módulo inicial - panel principal
+ * Programa:    Mantenimiento | Módulo inicial - panel principal
  *              Permite visualizar el resumen o estado de las 
  *              mediciones y  gráficos o estadísticos
  * Email:       johnarleycano@hotmail.com

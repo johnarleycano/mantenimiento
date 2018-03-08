@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('El acceso directo a este archivo no está permitido
 /**
  * @author:     John Arley Cano Salinas
  * Fecha:       28 de noviembre de 2017
- * Programa:    Mediciones | Módulo de rocería
+ * Programa:    Mantenimiento | Módulo de rocería
  *              Medición, visualización y demás interacciones
  *              en la medición de la rocería
  * Email:       johnarleycano@hotmail.com
