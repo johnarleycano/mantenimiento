@@ -36,7 +36,8 @@ $config['id_aplicacion_sesion'] = 15;
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.168.0.54/mediciones';
+<<<<<<< HEAD
+$config['base_url'] = 'http://192.168.0.54/mantenimiento';
 
 /*
 |--------------------------------------------------------------------------
