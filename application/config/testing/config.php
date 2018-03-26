@@ -4,10 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
-| Id del Sistema de Mediciones
+| Ids
 |--------------------------------------------------------------------------
 |
-| El id de la aplicacion es usado para los permisos en la base de datos suite
+| El id de la aplicacion es usado para los permisos en la base de datos configuracion
 | 
 |
 */

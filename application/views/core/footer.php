@@ -10,7 +10,7 @@
     text-align: center;
     width: 100%;
 ">
-	Sistema de registro de mediciones | <a href="http://devimed.com.co/" target="_blank">Devimed S.A.</a> | <i>Versión <b><?php echo version(); ?>
+	Sistema de mantenimiento | <a href="http://devimed.com.co/" target="_blank">Devimed S.A.</a> | <i>Versión <b><?php echo version(); ?>
 </footer>
 
 <?php

@@ -70,11 +70,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'mediciones';
+$active_group = 'mantenimiento';
 $query_builder = TRUE;
 
-// Conexión a la base de datos de mediciones
-$db['mediciones'] = array(
+// Conexión a la base de datos de mantenimiento
+$db['mantenimiento'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',

@@ -3,7 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Título que viene desde el controlador de cada interfaz -->
-<title><?php echo $titulo; ?> | Mediciones</title>
+<title><?php echo $titulo; ?> | Mantenimiento</title>
 
 <!-- Estilos -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/mediciones.css" />
