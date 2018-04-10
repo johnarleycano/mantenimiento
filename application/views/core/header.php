@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/mediciones.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css" />
 
-<?php if(ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') { ?>
+<?php if(ENVIRONMENT === 'development' || ENVIRONMENT === 'mediciones') { ?>
 	<!-- Estilos -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.css" />
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/fontawesome-all.css" />
