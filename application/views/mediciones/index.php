@@ -18,9 +18,7 @@
     </p>
     
     <p>
-        <?php
-        $rango = $this->configuracion_model->obtener("rango_abscisado");
-        ?>
+        <?php $rango = $this->configuracion_model->obtener("rango_abscisado"); ?>
         <select class="uk-select" id="select_km_inicial">
             <?php for ($i = $rango->Minimo; $i < $rango->Maximo; $i++) { ?>
                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
@@ -47,17 +45,7 @@
      */
     function continuar_medicion(id_medicion)
     {
-        // Se consulta la abscisa donde terminó la medición
-        medicion = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "medicion", "id": id_medicion}, 'JSON')
-
-        // Se obtiene las abscisas límite de la última medición
-        medicion_abscisa = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "abscisas_limite", "id": id_medicion}, 'JSON')
-
-        // Si el orden es ascendente, la abscisa será la mayor, sino, será la menor
-        abscisa = (medicion.Orden == 1) ? parseFloat(medicion_abscisa.Mayor) + 1000 : parseFloat(medicion_abscisa.Menor) - 1000
-
-        // roceria/medir/id_medicion/posicion/abscisa/orden
-        redireccionar(`<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${abscisa}/${medicion.Orden}`)
+        redireccionar(`<?php echo site_url('roceria/parametrizar'); ?>/${id_medicion}`, `ventana`)
     }
 
     /**
@@ -91,10 +79,8 @@
 
         if (sector) datos.Fk_Id_Sector = sector
         if (via) datos.Fk_Id_Via = via
-        
-        imprimir(datos, "tabla")
-
-		cargar_interfaz("cont_lista", "<?php echo site_url('mediciones/cargar_interfaz'); ?>", {"tipo": "mediciones_lista", "datos": datos});
+		
+        cargar_interfaz("cont_lista", "<?php echo site_url('mediciones/cargar_interfaz'); ?>", {"tipo": "mediciones_lista", "datos": datos});
 	}
 
 	$(document).ready(function(){

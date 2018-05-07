@@ -33,9 +33,18 @@ Class Mediciones_model extends CI_Model{
             break;
 
             case 'medicion':
-                return $this->db
-                    ->where("Pk_Id", $id)
-                    ->get("mediciones")->row();
+                $this->db
+                    ->select(array(
+                        'm.*',
+                        'v.Fk_Id_Sector',
+                    ))
+                    ->where("m.Pk_Id", $id)
+                    ->from("mediciones m")
+                    ->join('configuracion.vias v', 'm.Fk_Id_Via = v.Pk_Id')
+                ;
+                
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->row();
             break;
             
             case 'resumen':

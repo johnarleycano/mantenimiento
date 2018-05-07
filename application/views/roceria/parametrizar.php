@@ -3,6 +3,10 @@
 <input type="hidden" id="kilometro_final">
 
 <div id="cont_roceria" class="uk-container uk-container-small">
+	<h3 class="ui dividing header">
+		<center><?php echo ($this->uri->segment(3)) ? "Reanudar la medición" : "Parametrizar el inicio de una nueva medición" ; ?></center>
+	</h3>
+	
 	<form class="uk-form-horizontal uk-margin-large">
 		<!-- Sector -->
 	    <div class="uk-margin">
@@ -87,13 +91,20 @@
 	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>",
 	    	"Orden": $("#select_orden").val()
 	    }
-	    // imprimir(datos);
-
-        id_medicion = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML');
+	    // imprimir(datos)
+	    
+	    // Si es una medición existente
+	    if("<?php echo $this->uri->segment(3); ?>") {
+	    	// Medición existente
+	    	var id_medicion = "<?php echo $this->uri->segment(3); ?>"
+	    } else {
+	    	// Nueva medición
+        	var id_medicion = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML')
+	    }
 
 		// Se carga la interfaz de medición
 		redireccionar(`<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${$("#input_kilometro_inicio").val()*1000}/${$("#select_orden").val()}`);
-		return false;
+		return false
 	}
 
 	$(document).ready(function(){
@@ -101,9 +112,9 @@
 		botones(Array("iniciar"));
 
 		$("form").on("submit", function(){
-			iniciar_medicion();
+			iniciar_medicion()
 
-			return false;
+			return false
 		});
 
 		// Cuando se elija el sector, se cargan las vías de
@@ -148,3 +159,49 @@
 		});
 	});
 </script>
+
+<!-- Si trae id de medición -->
+<?php if($this->uri->segment(3)){ ?>
+	<script type="text/javascript">
+		let id_medicion = "<?php echo $this->uri->segment(3); ?>"
+
+		// Se consulta la abscisa donde terminó la medición
+        medicion = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "medicion", "id": id_medicion}, 'JSON')
+
+		select_por_defecto("select_sector", medicion.Fk_Id_Sector)
+		
+		// Se consultan las vías del sector
+		datos = {
+			url: "<?php echo site_url('configuracion/obtener'); ?>",
+			tipo: "vias",
+			id: medicion.Fk_Id_Sector,
+			elemento_padre: $("#select_sector"),
+			elemento_hijo: $("#select_via"),
+			mensaje_padre: "Elija primero un sector",
+			mensaje_hijo: "Elija una vía"
+		}
+		cargar_lista_desplegable(datos)
+
+		via = ajax("<?php echo site_url('configuracion/obtener'); ?>", {"tipo": "via", "id": medicion.Fk_Id_Via}, "JSON")
+		
+		$("#kilometro_inicial").val(via.Kilometro_Inicial)
+		$("#kilometro_final").val(via.Kilometro_Final)
+
+		// Selects por defecto
+		select_por_defecto("select_via", medicion.Fk_Id_Via)
+		select_por_defecto("select_orden", medicion.Orden)
+
+		// Deshabilitar campos
+		$("#select_sector, #select_via").attr("disabled", true)
+
+		// Se obtiene las abscisas límite de la última medición
+        medicion_abscisa = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "abscisas_limite", "id": id_medicion}, 'JSON')
+        imprimir(medicion_abscisa, "tabla")
+
+		// Si es ascendente
+        kilometro = (medicion.Orden == 1) ? parseFloat(medicion_abscisa.Mayor) / 1000 : parseFloat(medicion_abscisa.Menor) / 1000
+		imprimir(kilometro)
+
+		$("#input_kilometro_inicio").val(kilometro).removeAttr("disabled")
+	</script>
+<?php } ?>

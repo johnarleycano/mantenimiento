@@ -24,6 +24,24 @@ class Mediciones extends CI_Controller {
     }
 
     /**
+     * Visualización de mediciones
+     * 
+     * @return [void]
+     */
+    function ver()
+    {
+        // Si no ha iniciado sesión o es un usuario diferente al 1,
+        // redirecciona al inicio de sesión
+        if(!$this->session->userdata('Pk_Id_Usuario')){
+            redirect('sesion/cerrar');
+        }
+
+        $this->data['titulo'] = 'Listado';
+        $this->data['contenido_principal'] = 'mediciones/index';
+        $this->load->view('core/template', $this->data);
+    }
+
+    /**
      * Carga de interfaces vía Ajax
      * 
      * @return [void]
@@ -72,24 +90,6 @@ class Mediciones extends CI_Controller {
             // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
         }
-    }
-
-    /**
-     * Visualización de mediciones
-     * 
-     * @return [void]
-     */
-    function ver()
-    {
-        // Si no ha iniciado sesión o es un usuario diferente al 1,
-        // redirecciona al inicio de sesión
-        if(!$this->session->userdata('Pk_Id_Usuario')){
-            redirect('sesion/cerrar');
-        }
-
-        $this->data['titulo'] = 'Listado';
-        $this->data['contenido_principal'] = 'mediciones/index';
-        $this->load->view('core/template', $this->data);
     }
 
 }
