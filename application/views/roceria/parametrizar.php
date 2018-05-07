@@ -27,16 +27,6 @@
 	        </div>
 	    </div>
 		
-		
-		<!-- Abscisa de inicio -->
-	    <div class="uk-margin">
-        	<label class="uk-form-label" for="input_kilometro_inicio">Kilómetro de inicio</label>
-	        <div class="uk-form-controls">
-	            <input class="uk-input" type="number" id="input_kilometro_inicio" title="kilómetro de inicio" placeholder="Elja primero una vía" disabled>
-	        </div>
-	    </div>
-		
-		
 		<!-- Orden -->
 	    <div class="uk-margin">
         	<label class="uk-form-label" for="select_orden">Orden para medir</label>
@@ -45,6 +35,14 @@
 	            	<option value="1">Ascendente</option>
 	            	<option value="2">Descendente</option>
 	            </select>
+	        </div>
+	    </div>
+		
+		<!-- Abscisa de inicio -->
+	    <div class="uk-margin">
+        	<label class="uk-form-label" for="input_kilometro_inicio">Kilómetro de inicio</label>
+	        <div class="uk-form-controls">
+	            <input class="uk-input" type="number" id="input_kilometro_inicio" title="kilómetro de inicio" placeholder="Elja primero una vía" disabled>
 	        </div>
 	    </div>
     </form>
@@ -126,24 +124,27 @@
 		// Al seleccionar una vía, carga una interfaz con el rango del abscisado
 		$("#select_via").on("change", function(){
 			// Se desactiva el input y se quita el valor
-			$("#input_kilometro_inicio").val("").attr("disabled", true);
+			$("#input_kilometro_inicio").val("").attr("disabled", true)
 
 			// Si seleccióno una vía, se obtienen los datos
 			if($("#select_via").val() != ""){
-				via = ajax("<?php echo site_url('configuracion/obtener'); ?>", {"tipo": "via", "id": $(this).val()}, "JSON");
+				via = ajax("<?php echo site_url('configuracion/obtener'); ?>", {"tipo": "via", "id": $(this).val()}, "JSON")
 
 				// Se almacenan en inputs los valores de kilómetros inicial y final
-				$("#kilometro_inicial").val(via.Kilometro_Inicial);
-				$("#kilometro_final").val(via.Kilometro_Final);
+				$("#kilometro_inicial").val(via.Kilometro_Inicial)
+				$("#kilometro_final").val(via.Kilometro_Final)
 
 				// Se activa el input y se pone valor mínimo
-				$("#input_kilometro_inicio").val(via.Kilometro_Inicial).removeAttr("disabled").focus();
+				$("#input_kilometro_inicio").val(via.Kilometro_Inicial).removeAttr("disabled")
+				$("#select_orden").focus()
 			}
 		});
 
 		// Al seleccionar el orden, cambia los valores límite del kilómetro de inicio
 		$("#select_orden").on("change", function(){
 			($(this).val() == 1) ? $("#input_kilometro_inicio").val($("#kilometro_inicial").val()) : $("#input_kilometro_inicio").val($("#kilometro_final").val())
+
+			$("#input_kilometro_inicio").focus()
 		});
 	});
 </script>
