@@ -35,4 +35,4 @@
 <script src="<?php echo base_url(); ?>js/jquery-3.2.1.min.js"></script> <!-- jQuery -->
 <script src="<?php echo base_url(); ?>js/jquery.timeago.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery.timeago.es.js"></script>
-<script src="<?php echo base_url(); ?>js/funciones.js"></script> <!-- Funciones generales -->
+<script src="<?php echo base_url(); ?>js/funciones2.js"></script> <!-- Funciones generales -->
