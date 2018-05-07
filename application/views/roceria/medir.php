@@ -30,9 +30,9 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 
 <!-- Contenedor de mediciones -->
 <div id="mediciones">
-	<h3 class="uk-heading-line uk-text-center">
+	<h4 class="uk-heading-line uk-text-center">
 		<span>Kilómetro <?php echo $abscisa/1000; ?></span>
-	</h3>
+	</h4>
 
 	<!-- Medición -->
 	<div id="medicion">
@@ -78,7 +78,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 				$nombre_costado = "";
 				?>
 
-				<span class="uk-text-small">&nbsp;<?php echo "$tipo_medicion->Nombre"; ?></span>
+				<span class="uk-text-small titulo_tipo_medicion">&nbsp;<?php echo "$tipo_medicion->Nombre"; ?></span>
 
 				<?php
 				// Se recorren las calificaciones
