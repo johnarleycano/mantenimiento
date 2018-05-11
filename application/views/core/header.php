@@ -6,6 +6,7 @@
 <title><?php echo $titulo; ?> | Mantenimiento</title>
 
 <!-- Estilos -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>css/highcharts.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/mediciones.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css" />
 
@@ -35,4 +36,5 @@
 <script src="<?php echo base_url(); ?>js/jquery-3.2.1.min.js"></script> <!-- jQuery -->
 <script src="<?php echo base_url(); ?>js/jquery.timeago.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery.timeago.es.js"></script>
+<script src="<?php echo base_url(); ?>js/highcharts.js"></script>
 <script src="<?php echo base_url(); ?>js/funciones2.js"></script> <!-- Funciones generales -->
