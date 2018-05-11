@@ -15,22 +15,25 @@
                 <li class="uk-nav-header">MEDICIONES</li>
                 <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Realizar medición</a></li>
                 <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver mediciones</a></li>
-
-                <li class="uk-nav-header">INVENTARIO</li>
-                <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Agregar</a></li>
-                <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver</a></li>
-
-                <li class="uk-nav-header">MANTENIMIENTO</li>
-                <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Iniciar</a></li>
-                <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver</a></li>
                 
-                <li class="uk-nav-header"></li>
+                <!-- Menús pendientes de habilitar -->
+                <?php if(ENVIRONMENT === 'development'){ ?>
+                    <li class="uk-nav-header">INVENTARIO</li>
+                    <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Agregar</a></li>
+                    <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver</a></li>
+
+                    <li class="uk-nav-header">MANTENIMIENTO</li>
+                    <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Iniciar</a></li>
+                    <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver</a></li>
+                <?php } ?>
+                
+                <!-- <li class="uk-nav-header"></li> -->
                 <li class="uk-nav-divider"></li>
                 <li><a href="<?php echo site_url('reportes'); ?>"><i class="far fa-clipboard fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Reportes</a></li>
                 <li><a href="<?php echo site_url('configuracion'); ?>"><i class="fas fa-cog fa-lg"></i>&nbsp;&nbsp;&nbsp;Configuración</a></li>
                 
                 <li class="uk-nav-divider"></li>
-                <li class="uk-nav-header"></li>
+                <!-- <li class="uk-nav-header"></li> -->
                 <li><a href="<?php echo site_url('sesion/cerrar'); ?>"><i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;Salir</a></li>
             </ul>
         </div>
