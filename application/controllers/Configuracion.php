@@ -77,8 +77,8 @@ class Configuracion extends CI_Controller {
                 break;
 
                 case "vias":
-					print json_encode($this->configuracion_model->obtener($tipo, $id));
-				break;
+                    print json_encode($this->configuracion_model->obtener($tipo, $id));
+                break;
 			}
 		} else {
             // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
