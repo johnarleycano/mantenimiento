@@ -97,6 +97,9 @@
 	    if("<?php echo $this->uri->segment(3); ?>") {
 	    	// Medición existente
 	    	var id_medicion = "<?php echo $this->uri->segment(3); ?>"
+
+	    	// Inserción de log
+	    	ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_continuar_log", "id": id_medicion}, 'HTML')
 	    } else {
 	    	// Nueva medición
         	var id_medicion = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML')
@@ -196,11 +199,11 @@
 
 		// Se obtiene las abscisas límite de la última medición
         medicion_abscisa = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "abscisas_limite", "id": id_medicion}, 'JSON')
-        imprimir(medicion_abscisa, "tabla")
+        // imprimir(medicion_abscisa, "tabla")
 
 		// Si es ascendente
         kilometro = (medicion.Orden == 1) ? parseFloat(medicion_abscisa.Mayor) / 1000 : parseFloat(medicion_abscisa.Menor) / 1000
-		imprimir(kilometro)
+		// imprimir(kilometro)
 
 		$("#input_kilometro_inicio").val(kilometro).removeAttr("disabled")
 	</script>
