@@ -58,6 +58,7 @@ Class Mediciones_model extends CI_Model{
                     ->from('mediciones m')
                     ->join('configuracion.vias v', 'm.Fk_Id_Via = v.Pk_Id')
                     ->join('configuracion.sectores s', 'v.Fk_Id_Sector = s.Pk_Id')
+                    ->order_by('m.Fecha_Inicial', 'DESC')
                 ;
                 
                 // return $this->db->get_compiled_select(); // string de la consulta
