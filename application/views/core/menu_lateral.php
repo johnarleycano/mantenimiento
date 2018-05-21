@@ -16,8 +16,13 @@
                 <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Realizar medición</a></li>
                 <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver mediciones</a></li>
                 
+                <li class="uk-nav-header">BÁSCULAS</li>
+                <li><a href="<?php echo site_url('basculas/pesaje'); ?>"><i class="fas fa-truck fa-lg"></i>&nbsp;&nbsp;&nbsp;Pesaje</a></li>
+                
                 <!-- Menús pendientes de habilitar -->
                 <?php if(ENVIRONMENT === 'development'){ ?>
+                <li><a onCLick="javascript:certificados_calibracion()"><i class="fas fa-server fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Cert. calibración</a></li>
+                    
                     <li class="uk-nav-header">INVENTARIO</li>
                     <li><a onCLick="javascript:medir_roceria()"><i class="far fa-paper-plane fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Agregar</a></li>
                     <li><a href="<?php echo site_url('mediciones/ver'); ?>"><i class="fas fa-list-alt fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ver</a></li>
