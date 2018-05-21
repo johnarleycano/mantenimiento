@@ -110,8 +110,13 @@ class Roceria extends CI_Controller {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        $this->logs_model->insertar(4, "Medición {$datos["0"]["Fk_Id_Medicion"]}, Abscisa {$datos["0"]["Abscisa"]}");
+                        // $this->logs_model->insertar(4, "Medición {$datos["0"]["Fk_Id_Medicion"]}, Abscisa {$datos["0"]["Abscisa"]}");
                     }
+                break;
+
+                case "medicion_continuar_log":
+                    // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
+                    $this->logs_model->insertar(7, "Medición {$this->input->post('id')}");
                 break;
             }
         }else{
