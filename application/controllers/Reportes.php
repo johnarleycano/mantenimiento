@@ -39,18 +39,11 @@ Class Reportes extends CI_Controller{
     function pdf()
     {
     	switch ($this->uri->segment(3)) {
-            case 'medicion':
+    		case 'medicion':
                 // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
                 $this->logs_model->insertar(6, "Medición {$this->uri->segment(4)}");
                 
                 $this->load->view("reportes/pdf/medicion");
-            break;
-
-    		case 'certificado_pesaje':
-                // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                $this->logs_model->insertar(6, "Medición {$this->uri->segment(4)}");
-                
-                $this->load->view("reportes/pdf/certificado_pesaje");
 			break;
     	}
     }
