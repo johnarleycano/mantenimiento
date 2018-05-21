@@ -25,6 +25,7 @@ Class Reportes extends CI_Controller{
 
         // Carga de librerías
         require('system/libraries/Fpdf.php');
+        require('system/libraries/Pdf_js.php');
 
         // Definición de la ruta de las fuentes
         define('FPDF_FONTPATH','system/fonts/');
