@@ -18,9 +18,7 @@ function version()
 {
     foreach(array_reverse(glob('.git/refs/tags/*')) as $archivo) {
         $contents = file_get_contents($archivo);
-
         return basename($archivo);
-        exit();
     }
 }
 ?>

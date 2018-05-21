@@ -14,3 +14,7 @@ commits.txt
 user_guide/
 
 # Fin de https://www.gitignore.io/api/codeigniter
+
+application/migrations/
+
+highcharts/
