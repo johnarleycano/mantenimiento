@@ -37,4 +37,4 @@
 <script src="<?php echo base_url(); ?>js/jquery.timeago.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery.timeago.es.js"></script>
 <script src="<?php echo base_url(); ?>js/highcharts.js"></script>
-<script src="<?php echo base_url(); ?>js/funciones2.js"></script> <!-- Funciones generales -->
+<script src="<?php echo base_url(); ?>js/funciones_generales.js"></script> <!-- Funciones generales -->
