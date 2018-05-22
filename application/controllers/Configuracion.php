@@ -54,8 +54,8 @@ class Configuracion extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "":
-                    
+                case "filtros":
+                    $this->load->view("configuracion/filtros");
                 break;
             }
         } else {

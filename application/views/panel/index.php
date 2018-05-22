@@ -2,9 +2,20 @@
 <input type="hidden" id="calificacion">
 <input type="hidden" id="id_medicion">
 
-<div class="uk-section">
+<div class="uk-section" id="cont_panel">
     <div class="uk-container">
+    	<!-- Filtros del panel -->
+		<div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+			<div id="cont_filtros_panel"></div>
+		</div>
+		
+		<!-- Gráfico de mediciones -->
+        <div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+        	<div id="cont_mediciones"></div>
+        </div>
+        
         <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+        	<!-- Puntos críticos -->
             <div>
             	<div class="uk-margin-medium-top">
 				    <ul class="uk-flex-center" uk-tab>
@@ -20,6 +31,8 @@
                     <div id="cont_mediciones_urgentes"></div>
                 </div>
             </div>
+
+            <!-- Últimas mediciones -->
             <div>
             	<div class="uk-margin-medium-top">
 				    <ul class="uk-flex-center" uk-tab>
@@ -69,6 +82,23 @@
 	}
 
 	/**
+	 * Carga la interfaz con el resumen de las mediciones
+	 * por sectores
+	 * 
+	 * @return [void]       	
+	 */
+	function resumen_mediciones()
+	{
+		
+		cargar_interfaz("cont_mediciones", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "resumen_mediciones"})
+
+		// Se guarda el filtro del usuario
+		// guardar_filtros = 
+		// 
+		
+	}
+
+	/**
 	 * Carga la interfaz con las últimas mediciones realizadas
 	 * 
 	 * @param  [string] fecha 	[hoy, semana, mes]
@@ -98,13 +128,16 @@
 	$(document).ready(function(){
 		$("#calificacion_2").css({"color": "black"});
 
-		setInterval(function(){
-			mediciones_urgentes($("#calificacion").val());
-			ultimas_mediciones($("#ultima_medicion").val());
-		}, 1000);
+		// setInterval(function(){
+		// 	mediciones_urgentes($("#calificacion").val());
+		// 	ultimas_mediciones($("#ultima_medicion").val());
+		// }, 1000);
+		
+        cargar_interfaz("cont_filtros_panel", "<?php echo site_url('configuracion/cargar_interfaz'); ?>", {"tipo": "filtros"});
 
-		mediciones_urgentes(1);
-		ultimas_mediciones("hoy");
+		resumen_mediciones();
+		mediciones_urgentes(1)
+		ultimas_mediciones("hoy")
 
 		// Botones del menú
 		botones();

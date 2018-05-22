@@ -65,9 +65,35 @@ class Panel extends CI_Controller {
                     $this->load->view("panel/mediciones_urgentes", $this->data);
                 break;
 
+                case "resumen_mediciones":
+                    $this->load->view("panel/resumen_mediciones");
+                break;
+
                 case "ultimas_mediciones":
                     $this->data["fecha"] = $this->input->post("fecha");
                     $this->load->view("panel/ultimas_mediciones", $this->data);
+                break;
+            }
+        } else {
+            // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+    function obtener()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            $tipo = $this->input->post("tipo");
+            $id = $this->input->post("id");
+
+            switch ($tipo) {
+                case "calificaciones":
+                    print json_encode($this->panel_model->obtener($tipo, $id));
+                break;
+                
+                case "valores_por_calificacion":
+                    print json_encode($this->panel_model->obtener($tipo, $id));
                 break;
             }
         } else {

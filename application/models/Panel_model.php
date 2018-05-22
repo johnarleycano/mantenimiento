@@ -24,6 +24,24 @@ Class Panel_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case "calificaciones":
+                // Filtros
+                if ($id) $this->db->where("Valor", $id);
+
+                $this->db
+                    ->select(array(
+                        "c.Descripcion",
+                        "c.Valor",
+                        "c.Color_R",
+                        "c.Color_G",
+                        "c.Color_B",
+                    ))
+                    ->order_by("c.Valor", "DESC")
+                    ->from("valores_calificaciones c");
+
+                return $this->db->get()->result();
+            break;
+
             case 'mediciones_urgentes':
                 $this->db
                     ->select(array(
@@ -105,6 +123,28 @@ Class Panel_model extends CI_Model{
                 
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->result();
+            break;
+
+            case 'valores_por_calificacion':
+                // Filtros
+                $sector = ($id["sector"]) ? "AND v.Fk_Id_Sector = {$id['sector']}" : "" ;
+                $via = ($id["via"]) ? "AND m.Fk_Id_Via = {$id['via']}" : "" ;
+
+                $sql =
+                "SELECT
+                    m.Pk_Id,
+                    CONCAT( YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ) ) AS Titulo,
+                    ( SELECT COUNT( d.Pk_Id ) FROM mediciones_detalle AS d WHERE d.Fk_Id_Medicion = m.Pk_Id AND d.Calificacion = {$id['calificacion']} ) AS Total 
+                FROM
+                    mediciones AS m
+                    INNER JOIN configuracion.vias AS v ON m.Fk_Id_Via = v.Pk_Id
+                WHERE
+                    m.Pk_Id IS NOT NULL
+                    $sector
+                    $via
+                ";
+
+                return $this->db->query($sql)->result();
             break;
         }
     }

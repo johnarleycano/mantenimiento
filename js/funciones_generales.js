@@ -80,7 +80,7 @@ function botones(parametros)
 function cargar_interfaz(contenedor, url, datos)
 {
     // Carga de la interfaz
-    $("#" + contenedor).load(url, datos);
+    $(`#${contenedor}`).load(url, datos);
 }
 
 /**

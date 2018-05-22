@@ -12,9 +12,9 @@ commits.txt
 
 ### Carpetas ###
 user_guide/
+application/migrations/
+highcharts/
 
 # Fin de https://www.gitignore.io/api/codeigniter
 
-application/migrations/
 
-highcharts/
