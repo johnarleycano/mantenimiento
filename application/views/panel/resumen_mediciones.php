@@ -48,7 +48,7 @@
 		        type: 'line'
 		    },
 		    title: {
-		        text: `Resumen de mediciones | ${$("#select_tipo_medicion option:selected").text()}`
+		        text: `Resumen de mediciones | ${$("#select_tipo_medicion option:selected").text()} | ${$("#select_sector option:selected").text()} | ${$("#select_via option:selected").text()}`
 		    },
 		    subtitle: {
 		        text: "<?php echo $this->configuracion_model->obtener("formato_fecha", date('Y-m-d')); ?>"

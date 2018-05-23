@@ -133,7 +133,7 @@ Class Panel_model extends CI_Model{
                 $sql =
                 "SELECT
                     m.Pk_Id,
-                    CONCAT( YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ) ) AS Titulo,
+                    CONCAT(v.Nombre, ' (', YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ), ')' ) AS Titulo,
                     -- m.Fecha_Inicial AS Titulo,
                     COUNT( md.Pk_Id ) Total 
                 FROM
