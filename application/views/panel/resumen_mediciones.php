@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
+		filtros_por_defecto(1)
 
 		// Recolección de valores
 		let id_tipo_medicion = $("#select_tipo_medicion").val();
@@ -73,6 +74,5 @@
 		})
 		
 		$(".highcharts-credits").html("")
-	
 	})
 </script>

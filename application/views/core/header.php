@@ -38,4 +38,4 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="<?php echo base_url(); ?>js/highcharts.exporting.js"></script>
 <script src="<?php echo base_url(); ?>js/highcharts.export-data.js"></script>
-<script src="<?php echo base_url(); ?>js/funciones_generales.js"></script> <!-- Funciones generales -->
+<script src="<?php echo base_url(); ?>js/funciones.js"></script> <!-- Funciones generales -->

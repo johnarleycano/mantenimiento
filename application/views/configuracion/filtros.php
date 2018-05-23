@@ -34,7 +34,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("select").on("change", resumen_mediciones)
+		$("select").on("change", function(){
+			resumen_mediciones()
+
+			// Se guarda el filtro del usuario
+			guardar_filtros(1, "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>")	
+		})
 
 		$("#select_sector").on("change", function(){
 			// Se consultan las vías del sector

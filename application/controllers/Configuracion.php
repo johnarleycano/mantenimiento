@@ -64,6 +64,54 @@ class Configuracion extends CI_Controller {
         }
     }
 
+    /**
+     * Elimina registros en base de datos
+     * 
+     * @return [boolean] true, false
+     */
+    function eliminar(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Datos por POST
+            $tipo = $this->input->post("tipo");
+
+            // Suiche
+            switch ($tipo) {
+                case 'filtro':
+                    echo $this->configuracion_model->eliminar($tipo, $this->input->post("datos"));
+                break;
+            }
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+    /**
+     * Permite la inserción de datos en la base de datos 
+     * 
+     * @return [void]
+     */
+    function insertar()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Datos vía POST
+            $datos = $this->input->post('datos');
+            $tipo = $this->input->post('tipo');
+
+            switch ($tipo) {
+                case "filtro":
+                    // Se inserta el registro y log en base de datos
+                    echo $this->configuracion_model->insertar($tipo, $datos);
+                break;
+            }
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        } // if
+    }
+
 	function obtener()
 	{
         //Se valida que la peticion venga mediante ajax y no mediante el navegador
@@ -72,6 +120,10 @@ class Configuracion extends CI_Controller {
         	$id = $this->input->post("id");
 
         	switch ($tipo) {
+                case "filtro":
+                    print json_encode($this->configuracion_model->obtener($tipo, $id));
+                break;
+
                 case "via":
                     print json_encode($this->configuracion_model->obtener($tipo, $id));
                 break;

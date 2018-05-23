@@ -135,6 +135,76 @@ function convertir_mayusculas(elemento)
     $(elemento).val($(elemento).val().toUpperCase())
 }
 
+
+/**
+ * Configura los filtros por defecto guardados previamente
+ * 
+ * @param  {int} id_modulo [Id del módulo de donde se tomarán los filtros]
+ * 
+ * @return {void}
+ */
+function filtros_por_defecto(id_modulo)
+{
+    // Consulta del filtro
+    filtro = ajax(`${$("#url").val()}/configuracion/obtener`, {"tipo": "filtro", "id": id_modulo}, 'JSON')
+    // imprimir(filtro, "tabla")
+
+    // Si tiene vía
+    if (filtro.Fk_Id_Via || filtro.Fk_Id_Via > 0) {
+        // Se consultan las vías del sector
+        datos = {
+            url: `${$("#url").val()}/configuracion/obtener`,
+            tipo: "vias",
+            id: filtro.Fk_Id_Sector,
+            elemento_padre: $("#select_sector"),
+            elemento_hijo: $("#select_via"),
+            mensaje_padre: "Elija primero un sector",
+            mensaje_hijo: "Todas las vías"
+        }
+        cargar_lista_desplegable(datos)
+        
+        select_por_defecto("select_via", filtro.Fk_Id_Via)
+    }
+    
+    // Valores por defecto
+    select_por_defecto("select_tipo_medicion", filtro.Fk_Id_Tipo_Medicion)
+    select_por_defecto("select_sector", filtro.Fk_Id_Sector)
+    select_por_defecto("select_calificacion", filtro.Calificacion)
+}
+
+/**
+ * Guarda los filtros del usuario en base de datos
+ * 
+ * @param  {int} id_modulo  [id del módulo]
+ * @param  {int} id_usuario [id del usuario]
+ * 
+ * @return {void}
+ */
+function guardar_filtros(id_modulo, id_usuario)
+{
+    let id_tipo_medicion = $("#select_tipo_medicion").val();
+    let id_sector = ($("#select_sector").val() != 0) ? $("#select_sector").val() : null;
+    let id_via = ($("#select_via").val() != 0) ? $("#select_via").val() : null;
+    let calificacion = ($("#select_calificacion").val() != 0) ? $("#select_calificacion").val() : null;
+
+    let datos = {
+        "Fk_Id_Usuario": id_usuario,
+        "Fk_Id_Modulo": id_modulo,
+    }
+
+    // Se elimina el filtro del usuario para el módulo específico
+    ajax(`${$("#url").val()}/configuracion/eliminar`, {"tipo": "filtro", "datos": datos}, 'HTML')
+    
+    // Agregamos el resto de datos que se van a insertar
+    datos.Fk_Id_Tipo_Medicion = id_tipo_medicion
+    datos.Fk_Id_Sector = id_sector
+    datos.Fk_Id_Via = id_via
+    datos.Calificacion = calificacion
+
+    // Se inserta el registro con el nuevo filtro
+    ajax(`${$("#url").val()}/configuracion/insertar`, {"tipo": "filtro", "datos": datos}, 'HTML')
+}
+
 /**
  * Imprime mensaje en consola
  * 

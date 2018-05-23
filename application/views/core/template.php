@@ -18,10 +18,13 @@
         <div id="contenedor_principal" class="uk-container uk-container">
             <!--Se carga el contenido principal -->
             <?php $this->load->view($contenido_principal); ?>
-    	</div>
+        </div>
 
-	   <!-- Pié de página -->
+       <!-- Pié de página -->
         <?php $this->load->view('core/footer'); ?>
+
+        <!-- Input que entrega url base para archivos en JS -->
+        <input type="hidden" id="url" value="<?php echo site_url(''); ?>">
 	</body>
 </html>
 

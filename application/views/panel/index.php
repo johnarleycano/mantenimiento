@@ -89,13 +89,7 @@
 	 */
 	function resumen_mediciones()
 	{
-		
 		cargar_interfaz("cont_mediciones", "<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "resumen_mediciones"})
-
-		// Se guarda el filtro del usuario
-		// guardar_filtros = 
-		// 
-		
 	}
 
 	/**

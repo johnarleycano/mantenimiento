@@ -12,6 +12,41 @@ Class Configuracion_model extends CI_Model{
         $this->db_configuracion = $this->load->database('configuracion', TRUE);
     }
     
+    /**
+	 * Elimina registros en base de datos
+	 * 
+	 * @param  [string] $tipo 	[lo que eliminará]
+	 * @param  [int] $id   		[Id del registro a eliminar]
+	 * @return [boolean]       	[true]
+	 */	
+	function eliminar($tipo, $id){
+		// Según el tipo
+		switch ($tipo) {
+			case 'filtro':
+				if($this->db->delete('filtros', $id)){
+					return true;
+				}
+			break;
+		}
+	}
+
+	/**
+	 * Permite la inserción de datos en la base de datos 
+	 * 
+	 * @param  [string] $tipo  Tipo de inserción
+	 * @param  [array] 	$datos Datos que se van a insertar
+	 * 
+	 * @return [boolean]        true, false
+	 */
+	function insertar($tipo, $datos)
+	{
+		switch ($tipo) {
+			case "filtro":
+				return $this->db->insert('filtros', $datos);
+			break;
+		}
+	}
+
 	/**
 	 * Obtiene registros de base de datos
 	 * y los retorna a las vistas
@@ -72,6 +107,12 @@ Class Configuracion_model extends CI_Model{
 		        
 		        // return $this->db_configuracion->get_compiled_select(); // string de la consulta
 		        return $this->db_configuracion->get()->result();
+			break;
+
+			case "filtro":
+				return $this->db
+					->where(array("Fk_Id_Modulo" => $id,"Fk_Id_Usuario" => $this->session->userdata("Pk_Id_Usuario")))
+					->get("filtros")->row();
 			break;
 
 			case 'formato_fecha':
