@@ -1,6 +1,14 @@
 <div class="uk-column-1-4@s" id="cont_filtros">
 	<p>
-	    <select class="uk-select" id="select_sector" title="sector" autofocus>
+	    <select class="uk-select" id="select_tipo_medicion" title="tipo de medición" autofocus>
+	    	<?php foreach ($this->configuracion_model->obtener("tipos_mediciones") as $tipo) { ?>
+	            <option value="<?php echo $tipo->Pk_Id ?>"><?php echo $tipo->Nombre; ?></option>
+	    	<?php } ?>
+	    </select>
+	</p>
+
+	<p>
+	    <select class="uk-select" id="select_sector" title="sector">
 	    	<option value="0">Todos los sectores</option>
 	    	<?php foreach ($this->configuracion_model->obtener("sectores") as $sector) { ?>
 	            <option value="<?php echo $sector->Pk_Id ?>"><?php echo $sector->Codigo; ?></option>

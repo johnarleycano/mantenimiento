@@ -134,15 +134,19 @@ Class Panel_model extends CI_Model{
                 "SELECT
                     m.Pk_Id,
                     CONCAT( YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ) ) AS Titulo,
-                    ( SELECT COUNT( d.Pk_Id ) FROM mediciones_detalle AS d WHERE d.Fk_Id_Medicion = m.Pk_Id AND d.Calificacion = {$id['calificacion']} ) AS Total 
+                    -- m.Fecha_Inicial AS Titulo,
+                    COUNT( md.Pk_Id ) Total 
                 FROM
-                    mediciones AS m
-                    INNER JOIN configuracion.vias AS v ON m.Fk_Id_Via = v.Pk_Id
+                    mediciones_detalle AS md
+                    INNER JOIN mediciones AS m ON md.Fk_Id_Medicion = m.Pk_Id
+                    INNER JOIN configuracion.vias AS v ON m.Fk_Id_Via = v.Pk_Id 
                 WHERE
-                    m.Pk_Id IS NOT NULL
+                    md.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']}  
+                    AND md.Calificacion = {$id['calificacion']} 
                     $sector
                     $via
-                ";
+                GROUP BY
+                    m.Pk_Id";
 
                 return $this->db->query($sql)->result();
             break;

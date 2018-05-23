@@ -2,6 +2,7 @@
 	$(document).ready(function(){
 
 		// Recolección de valores
+		let id_tipo_medicion = $("#select_tipo_medicion").val();
 		let id_sector = ($("#select_sector").val() != 0) ? $("#select_sector").val() : null;
 		let id_via = ($("#select_via").val() != 0) ? $("#select_via").val() : null;
 		let calificacion = ($("#select_calificacion").val() != 0) ? $("#select_calificacion").val() : null;
@@ -16,12 +17,14 @@
 		// Recorrido de las calificaciones para establecer cada línea
 		$.each(calificaciones, function(key, calificacion){
 			filtros = {
+				"tipo_medicion": id_tipo_medicion,
 				"calificacion": calificacion.Valor,
 				"sector": id_sector,
 				"via": id_via,
 			}
 
 			mediciones_por_calificacion = ajax("<?php echo site_url('panel/obtener'); ?>", {"tipo": "valores_por_calificacion", "id": filtros}, 'JSON')
+			// imprimir(mediciones_por_calificacion, "tabla")
 
 			valor2 = []
 			titulos_mediciones = []
@@ -44,7 +47,7 @@
 		        type: 'line'
 		    },
 		    title: {
-		        text: 'Resumen de mediciones'
+		        text: `Resumen de mediciones | ${$("#select_tipo_medicion option:selected").text()}`
 		    },
 		    subtitle: {
 		        text: "<?php echo $this->configuracion_model->obtener("formato_fecha", date('Y-m-d')); ?>"
