@@ -21,7 +21,7 @@ Class Reportes extends CI_Controller{
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('configuracion_model', 'reportes_model', 'roceria_model'));
+        $this->load->model(array('configuracion_model', 'reportes_model', 'roceria_model', 'basculas_model'));
 
         // Carga de librerías
         require('system/libraries/Fpdf.php');
