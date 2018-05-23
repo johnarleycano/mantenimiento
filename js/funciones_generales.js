@@ -264,8 +264,7 @@ function validar_campos_obligatorios(campos)
         cerrar_notificaciones();
 
         for (var i = 0; i < campos_vacios.length; i++){
-            imprimir($("#" + campos_vacios[i]).attr("id"))
-			imprimir_notificacion("El valor de " + $("#" + campos_vacios[i]).attr("title")  + " no puede estar vacío", "warning");
+			imprimir_notificacion(`El valor de ${$(`#${campos_vacios[i]}`).attr(`title`)} no puede estar vacío`, "warning");
 		}
 	}
 

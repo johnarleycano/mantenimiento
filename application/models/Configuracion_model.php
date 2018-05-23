@@ -145,6 +145,10 @@ Class Configuracion_model extends CI_Model{
 					->get("tipos_costados")->result();
 			break;
 
+			case "tipos_vehiculos":
+				return $this->db->get("tipos_vehiculos")->result();
+			break;
+
 			case "via":
 				return $this->db_configuracion
 					->select(array(

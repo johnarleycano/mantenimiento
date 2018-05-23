@@ -21,7 +21,7 @@ class Basculas extends CI_Controller {
         parent::__construct();
 
         // Carga de modelos
-        // $this->load->model(array('configuracion_model'));
+        $this->load->model(array('configuracion_model', 'basculas_model'));
     }
 
     /**
@@ -62,7 +62,7 @@ class Basculas extends CI_Controller {
                         echo $id = $this->db->insert_id();
 
                         // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
-                        // $this->logs_model->insertar(3, "Medición $id");
+                        $this->logs_model->insertar(7, "Certificado $id");
                     }
                 break;
             }

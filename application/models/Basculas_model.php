@@ -12,7 +12,7 @@ Class Basculas_model extends CI_Model{
 	{
 		switch ($tipo) {
 			case "certificado_pesaje":
-				// return $this->db->insert('mediciones', $datos);
+				return $this->db->insert('certificados_basculas', $datos);
 			break;
 		}
 	}
