@@ -120,6 +120,10 @@ class Configuracion extends CI_Controller {
         	$id = $this->input->post("id");
 
         	switch ($tipo) {
+                case "costados":
+                    print json_encode($this->configuracion_model->obtener($tipo, $id));
+                break;
+
                 case "filtro":
                     print json_encode($this->configuracion_model->obtener($tipo, $id));
                 break;

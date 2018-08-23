@@ -1,4 +1,4 @@
-<div class="uk-column-1-4@s" id="cont_filtros">
+<div class="uk-column-1-5@s" id="cont_filtros">
 	<p>
 	    <select class="uk-select" id="select_tipo_medicion" title="tipo de medición" autofocus>
 	    	<?php foreach ($this->configuracion_model->obtener("tipos_mediciones") as $tipo) { ?>
@@ -23,6 +23,12 @@
 	</p>
 
 	<p>
+	    <select class="uk-select" id="select_costado" title="costado">
+	    	<option value="0">Elija primero una vía...</option>
+	    </select>
+	</p>
+
+	<p>
 	    <select class="uk-select" id="select_calificacion" title="vía">
 	    	<option value="0">Todas las calificaciones</option>
 	    	<?php foreach ($this->configuracion_model->obtener("calificaciones") as $calificacion) { ?>
@@ -34,11 +40,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		// Se consultan los costados de la vía
+		datos = {
+			url: "<?php echo site_url('configuracion/obtener'); ?>",
+			tipo: "costados",
+			id: $("#select_via").val(),
+			elemento_padre: $("#select_via"),
+			elemento_hijo: $("#select_costado"),
+			mensaje_padre: "Elija primero una vía",
+			mensaje_hijo: "Todos los costados"
+		}
+		cargar_lista_desplegable(datos)
 
 		$("select").on("change", function(){
 			if ($("#select_via").val() != "0"){
-				mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val())
+				mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val(), $("#select_costado").val())
 			}
 			
 			resumen_mediciones()
@@ -49,7 +65,7 @@
 		})
 
 		if ($("#select_via").val() != "0"){
-			mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val())
+			mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val(), $("#select_costado").val())
 		}
 
 		$("#select_sector").on("change", function(){
@@ -62,6 +78,20 @@
 				elemento_hijo: $("#select_via"),
 				mensaje_padre: "Elija primero un sector",
 				mensaje_hijo: "Todas las vías"
+			}
+			cargar_lista_desplegable(datos)
+		})
+
+		$("#select_via").on("change", function(){
+			// Se consultan los costados de la vía
+			datos = {
+				url: "<?php echo site_url('configuracion/obtener'); ?>",
+				tipo: "costados",
+				id: $(this).val(),
+				elemento_padre: $("#select_via"),
+				elemento_hijo: $("#select_costado"),
+				mensaje_padre: "Elija primero una vía",
+				mensaje_hijo: "Todos los costados"
 			}
 			cargar_lista_desplegable(datos)
 		})

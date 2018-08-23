@@ -72,13 +72,13 @@
 		redireccionar(`<?php echo site_url('reportes/pdf/medicion'); ?>/${id_medicion}`, "ventana");
 	}
 
-	function mapa_mediciones(id_via, id_tipo_medicion)
+	function mapa_mediciones(id_via, id_tipo_medicion, id_costado)
 	{
 		// Se consulta la última medición de la vía
 		ultima_medicion = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "ultima_medicion", "id": id_via}, 'JSON')
-		
+		imprimir(ultima_medicion, "tabla")
 		var oldSrc = $("#cont_mapa iframe").attr("src")
-        var newSrc = oldSrc.replace("zoom=11", `zoom=11&medicion=${ultima_medicion.Pk_Id}&tipo=${id_tipo_medicion}`)
+        var newSrc = oldSrc.replace("zoom=11", `zoom=11&medicion=${ultima_medicion.Pk_Id}&tipo=${id_tipo_medicion}&costado=${id_costado}`)
           
         $("#cont_mapa iframe").attr("src", newSrc)
           
