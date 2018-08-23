@@ -37,8 +37,9 @@ $config['id_aplicacion_sesion'] = 15;
 |
 */
 $config['base_url'] = 'http://192.168.0.54/mantenimiento';
+$config['mapa_url'] = 'http://mapa.devimed.com.co/geo/index.html?';
 
-/*
+/*0
 |--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------

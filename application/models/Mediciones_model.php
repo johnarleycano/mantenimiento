@@ -64,6 +64,10 @@ Class Mediciones_model extends CI_Model{
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->result();
             break;
+
+            case 'ultima_medicion':
+                return $this->db->where("Fk_Id_Via", $id)->order_by("Pk_Id", "DESC")->get("mediciones")->row();
+            break;
         }
     }
 }

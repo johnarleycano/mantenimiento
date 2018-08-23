@@ -13,27 +13,33 @@
         <div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
         	<div id="cont_mediciones"></div>
         </div>
+
+        <!-- Mapa de calor -->
+        <div class="uk-grid-match uk-child-width-1-1@m" id="cont_mapa" uk-grid>
+        	<center><h3>Última medición</h3></center>
+        	<iframe src="<?php echo $this->config->item('mapa_url').'zoom=11'; ?>" height="460"></iframe>
+        </div>
         
         <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
         	<!-- Puntos críticos -->
-            <div>
+            <!-- <div>
             	<div class="uk-margin-medium-top">
-				    <ul class="uk-flex-center" uk-tab>
-				    	<!-- se recorren las calificaciones críticas -->
-				    	<?php foreach ($this->configuracion_model->obtener("calificaciones_criticas") as $calificacion) { ?>
-				    		<li>
-					        	<a onCLick="javascript:mediciones_urgentes(<?php echo $calificacion->Valor; ?>);">
-					        		<span class="uk-label" style="background-color: rgb(<?php echo $calificacion->Color_R; ?>, <?php echo $calificacion->Color_G; ?>, <?php echo $calificacion->Color_B; ?>);" id="calificacion_<?php echo $calificacion->Valor; ?>"><?php echo $calificacion->Descripcion; ?></span>
-					        	</a>
-					        </li>
-				    	<?php } ?>
-				    </ul>
+            				    <ul class="uk-flex-center" uk-tab>
+            				    	se recorren las calificaciones críticas
+            				    	<?php // foreach ($this->configuracion_model->obtener("calificaciones_criticas") as $calificacion) { ?>
+            				    		<li>
+            					        	<a onCLick="javascript:mediciones_urgentes(<?php//  echo $calificacion->Valor; ?>);">
+            					        		<span class="uk-label" style="background-color: rgb(<?php // echo $calificacion->Color_R; ?>, <?php // echo $calificacion->Color_G; ?>, <?php//  echo $calificacion->Color_B; ?>);" id="calificacion_<?php // echo $calificacion->Valor; ?>"><?php // echo $calificacion->Descripcion; ?></span>
+            					        	</a>
+            					        </li>
+            				    	<?php // } ?>
+            				    </ul>
                     <div id="cont_mediciones_urgentes"></div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Últimas mediciones -->
-            <div>
+           <!--  <div>
             	<div class="uk-margin-medium-top">
 				    <ul class="uk-flex-center" uk-tab>
 				        <li class="uk-active">
@@ -48,7 +54,7 @@
 				    </ul>
                     <div id="cont_ultimas_mediciones"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -64,6 +70,19 @@
 	function generar_pdf(id_medicion)
 	{
 		redireccionar(`<?php echo site_url('reportes/pdf/medicion'); ?>/${id_medicion}`, "ventana");
+	}
+
+	function mapa_mediciones(id_via, id_tipo_medicion)
+	{
+		// Se consulta la última medición de la vía
+		ultima_medicion = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "ultima_medicion", "id": id_via}, 'JSON')
+		
+		var oldSrc = $("#cont_mapa iframe").attr("src")
+        var newSrc = oldSrc.replace("zoom=11", `zoom=11&medicion=${ultima_medicion.Pk_Id}&tipo=${id_tipo_medicion}`)
+          
+        $("#cont_mapa iframe").attr("src", newSrc)
+          
+		$("iframe").attr("src" , function(i, val){return val})
 	}
 
 	/**
@@ -120,18 +139,17 @@
     }
 
 	$(document).ready(function(){
-		$("#calificacion_2").css({"color": "black"});
-
-		// setInterval(function(){
-		// 	mediciones_urgentes($("#calificacion").val());
-		// 	ultimas_mediciones($("#ultima_medicion").val());
-		// }, 1000);
+		setInterval(function(){
+			// mediciones_urgentes($("#calificacion").val());
+			// ultimas_mediciones($("#ultima_medicion").val());
+		}, 1000);
 		
         cargar_interfaz("cont_filtros_panel", "<?php echo site_url('configuracion/cargar_interfaz'); ?>", {"tipo": "filtros"});
 
-		resumen_mediciones();
-		mediciones_urgentes(1)
-		ultimas_mediciones("hoy")
+		resumen_mediciones()
+		// mapa_mediciones()
+		// mediciones_urgentes(1)
+		// ultimas_mediciones("hoy")
 
 		// Botones del menú
 		botones();
