@@ -82,7 +82,7 @@
           
         $("#cont_mapa iframe").attr("src", newSrc)
           
-		$("iframe").attr("src" , function(i, val){return val})
+		// $("iframe").attr("src" , function(i, val){return val})
 	}
 
 	/**
