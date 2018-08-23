@@ -34,12 +34,23 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+
 		$("select").on("change", function(){
+			if ($("#select_via").val() != "0"){
+				mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val())
+			}
+			
 			resumen_mediciones()
 
 			// Se guarda el filtro del usuario
 			guardar_filtros(1, "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>")	
+			
 		})
+
+		if ($("#select_via").val() != "0"){
+			mapa_mediciones($("#select_via").val(), $("#select_tipo_medicion").val())
+		}
 
 		$("#select_sector").on("change", function(){
 			// Se consultan las vías del sector
