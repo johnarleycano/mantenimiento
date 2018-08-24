@@ -130,23 +130,26 @@ Class Panel_model extends CI_Model{
                 $sector = ($id["sector"]) ? "AND v.Fk_Id_Sector = {$id['sector']}" : "" ;
                 $via = ($id["via"]) ? "AND m.Fk_Id_Via = {$id['via']}" : "" ;
 
-                $sql =
+                $sql = 
                 "SELECT
                     m.Pk_Id,
-                    CONCAT(v.Nombre, ' (', YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ), ')' ) AS Titulo,
-                    -- m.Fecha_Inicial AS Titulo,
-                    COUNT( md.Pk_Id ) Total 
+                    CONCAT( v.Nombre, ' (', YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ), ')' ) Titulo,
+                    ( SELECT
+                        Count( d.Pk_Id ) 
+                    FROM
+                        mediciones_detalle AS d 
+                    WHERE
+                        d.Fk_Id_Medicion = m.Pk_Id 
+                        AND d.Calificacion = {$id['calificacion']} 
+                        AND d.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']} 
+                    ) Total 
                 FROM
-                    mediciones_detalle AS md
-                    INNER JOIN mediciones AS m ON md.Fk_Id_Medicion = m.Pk_Id
+                    devimed_mantenimiento.mediciones AS m
                     INNER JOIN configuracion.vias AS v ON m.Fk_Id_Via = v.Pk_Id 
                 WHERE
-                    md.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']}  
-                    AND md.Calificacion = {$id['calificacion']} 
-                    $sector
-                    $via
-                GROUP BY
-                    m.Pk_Id";
+                    m.Pk_Id IS NOT NULL
+                    $sector 
+                    $via";
 
                 return $this->db->query($sql)->result();
             break;
