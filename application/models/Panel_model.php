@@ -144,7 +144,7 @@ Class Panel_model extends CI_Model{
                         AND d.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']} 
                     ) Total 
                 FROM
-                    devimed_mantenimiento.mediciones AS m
+                    mediciones AS m
                     INNER JOIN configuracion.vias AS v ON m.Fk_Id_Via = v.Pk_Id 
                 WHERE
                     m.Pk_Id IS NOT NULL
