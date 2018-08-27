@@ -74,13 +74,15 @@
 
 	function mapa_mediciones(id_via, id_tipo_medicion, id_costado)
 	{
+		imprimir(id_via)
 		// Se consulta la última medición de la vía
 		ultima_medicion = ajax("<?php echo site_url('mediciones/obtener'); ?>", {"tipo": "ultima_medicion", "id": id_via}, 'JSON')
-		imprimir(ultima_medicion, "tabla")
-		var oldSrc = $("#cont_mapa iframe").attr("src")
-        var newSrc = oldSrc.replace("zoom=11", `zoom=11&medicion=${ultima_medicion.Pk_Id}&tipo=${id_tipo_medicion}&costado=${id_costado}`)
+		
+		let url_anterior = $("#cont_mapa iframe").attr("src")
+        let url_nueva = url_anterior.replace("zoom=11", `zoom=11&via=${id_via}&medicion=${ultima_medicion.Pk_Id}&tipo=${id_tipo_medicion}&costado=${id_costado}`)
+        imprimir(url_nueva)
           
-        $("#cont_mapa iframe").attr("src", newSrc)
+        $("#cont_mapa iframe").attr("src", url_nueva)
           
 		// $("iframe").attr("src" , function(i, val){return val})
 	}
