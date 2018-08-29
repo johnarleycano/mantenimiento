@@ -182,10 +182,17 @@ function filtros_por_defecto(id_modulo)
  */
 function guardar_filtros(id_modulo, id_usuario)
 {
-    let id_tipo_medicion = $("#select_tipo_medicion").val();
-    let id_sector = ($("#select_sector").val() != 0) ? $("#select_sector").val() : null;
-    let id_via = ($("#select_via").val() != 0) ? $("#select_via").val() : null;
+    // Filtros generales
+    let id_sector = ($("#select_sector_filtro").val() != 0) ? $("#select_sector_filtro").val() : null
+    let id_via = ($("#select_via_filtro").val() != 0) ? $("#select_via_filtro").val() : null
+    let id_costado = ($("#select_costado_filtro").val() != 0) ? $("#select_costado_filtro").val() : null
+
+    // Filtros específicos
+    let id_tipo_medicion_resumen = $("#select_tipo_medicion_resumen").val();
     let calificacion = ($("#select_calificacion").val() != 0) ? $("#select_calificacion").val() : null;
+    let id_tipo_medicion_mapa = $("#select_tipo_medicion_mapa").val();
+    let id_medicion = $("#select_medicion").val();
+    
 
     let datos = {
         "Fk_Id_Usuario": id_usuario,
@@ -196,10 +203,16 @@ function guardar_filtros(id_modulo, id_usuario)
     ajax(`${$("#url").val()}/configuracion/eliminar`, {"tipo": "filtro", "datos": datos}, 'HTML')
     
     // Agregamos el resto de datos que se van a insertar
-    datos.Fk_Id_Tipo_Medicion = id_tipo_medicion
     datos.Fk_Id_Sector = id_sector
     datos.Fk_Id_Via = id_via
+    datos.Fk_Id_Costado = id_costado
+    datos.Fk_Id_Tipo_Medicion_Resumen = id_tipo_medicion_resumen
     datos.Calificacion = calificacion
+    datos.Fk_Id_Tipo_Medicion_Mapa = id_tipo_medicion_mapa
+    datos.Fk_Id_Medicion = id_medicion
+    
+    cerrar_notificaciones()
+    imprimir_notificacion("Filtros personalizados actualizados.", "success")
 
     // Se inserta el registro con el nuevo filtro
     ajax(`${$("#url").val()}/configuracion/insertar`, {"tipo": "filtro", "datos": datos}, 'HTML')

@@ -86,6 +86,10 @@ class Mediciones extends CI_Controller {
                     print json_encode($this->mediciones_model->obtener($tipo, $id));
                 break;
 
+                case "mediciones":
+                    print json_encode($this->mediciones_model->obtener($tipo, $id));
+                break;
+
                 case "ultima_medicion":
                     print json_encode($this->mediciones_model->obtener($tipo, $id));
                 break;

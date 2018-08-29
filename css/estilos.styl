@@ -1,22 +1,26 @@
+tamanio_menu = 50px;
+
 #cont_filtros
 	margin-top 10px
+
+#cont_grafico_resumen_mediciones
+	height 360px
 
 #cont_mediciones
 	width 100%
 	height 400px
 
 #cont_panel
-	padding 0
-	
-	div
-		padding 0
-		
+	margin-top 20px
+
 #contenedor_principal
 	height 100vh -100px
-	margin-top 80px
+	margin-top tamanio_menu
+	padding 0
+	min-height 100%
 
 #menu_lateral
-	margin-top 80px
+	margin-top tamanio_menu
 	padding 15px
 	width 200px
 
@@ -25,7 +29,11 @@
 	right 0
 	left 0
 	top 0
+	height tamanio_menu
 	z-index 1030
+	
+	a
+		height 50px
 	
 	div
 		margin-right 10px
@@ -39,4 +47,9 @@
 	text-decoration none
 	
 .modal
-	margin-top 80px
+	margin-top tamanio_menu
+	
+@media (max-width: 450px)
+	#select_sector_filtro, #select_via_filtro, #select_costado_filtro
+		width 70px
+	

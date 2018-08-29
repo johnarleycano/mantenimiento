@@ -68,7 +68,7 @@
         cerrar_notificaciones();
         imprimir_notificacion("<div uk-spinner></div> Buscando mediciones...");
 
-        console.clear()
+        // console.clear()
 
         const datos = {}
         const sector = $("#select_sector").val()

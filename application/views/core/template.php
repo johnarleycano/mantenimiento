@@ -15,7 +15,7 @@
         ?>
 
     	<!-- Contenedor principal -->
-        <div id="contenedor_principal" class="uk-container uk-container">
+        <div id="contenedor_principal" class="uk-container uk-container-medium">
             <!--Se carga el contenido principal -->
             <?php $this->load->view($contenido_principal); ?>
         </div>

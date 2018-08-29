@@ -32,6 +32,21 @@ Class Mediciones_model extends CI_Model{
                     ->get("mediciones_detalle d")->row();
             break;
 
+            case 'mediciones':
+                $this->db
+                    ->select(array(
+                        "m.Pk_Id",
+                        "CONCAT(YEAR(m.Fecha_Inicial), '-', LPAD(MONTH(m.Fecha_Inicial),2,'0') , '-', LPAD(DAY(m.Fecha_Inicial),2,'0')) AS Nombre",
+                    ))
+                    ->where("m.Fk_Id_Via", $id)
+                    ->from("mediciones m")
+                    ->order_by("m.Fecha_Inicial", "DESC")
+                ;
+                
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
+            break;
+
             case 'medicion':
                 $this->db
                     ->select(array(

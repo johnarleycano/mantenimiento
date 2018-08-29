@@ -129,11 +129,12 @@ Class Panel_model extends CI_Model{
                 // Filtros
                 $sector = ($id["sector"]) ? "AND v.Fk_Id_Sector = {$id['sector']}" : "" ;
                 $via = ($id["via"]) ? "AND m.Fk_Id_Via = {$id['via']}" : "" ;
+                $costado = ($id["costado"]) ? "AND d.Fk_Id_Costado = {$id['costado']}" : "" ;
 
                 $sql = 
                 "SELECT
                     m.Pk_Id,
-                    CONCAT( v.Nombre, ' (', YEAR ( m.Fecha_Inicial ), '-', MONTH ( m.Fecha_Inicial ), '-', DAY ( m.Fecha_Inicial ), ')' ) Titulo,
+                    CONCAT( ' (', YEAR ( m.Fecha_Inicial ), '-', LPAD(MONTH ( m.Fecha_Inicial ), 2, '0'), '-', LPAD(DAY ( m.Fecha_Inicial ), 2, '0'), ')'  ) Titulo,
                     ( SELECT
                         Count( d.Pk_Id ) 
                     FROM
@@ -141,7 +142,8 @@ Class Panel_model extends CI_Model{
                     WHERE
                         d.Fk_Id_Medicion = m.Pk_Id 
                         AND d.Calificacion = {$id['calificacion']} 
-                        AND d.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']} 
+                        AND d.Fk_Id_Tipo_Medicion = {$id['tipo_medicion']}
+                        $costado
                     ) Total 
                 FROM
                     mediciones AS m
