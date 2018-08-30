@@ -18,3 +18,5 @@ highcharts/
 # Fin de https://www.gitignore.io/api/codeigniter
 
 
+
+img/Thumbs\.db

@@ -7,7 +7,7 @@
 		<center><?php echo ($this->uri->segment(3)) ? "Reanudar la medición" : "Parametrizar el inicio de una nueva medición" ; ?></center>
 	</h3>
 	
-	<form class="uk-form-horizontal uk-margin-large">
+	<form class="uk-form-horizontal uk-margin-small">
 		<!-- Sector -->
 	    <div class="uk-margin">
         	<label class="uk-form-label" for="select_sector">Sector</label>
@@ -111,8 +111,11 @@
 	}
 
 	$(document).ready(function(){
+		// Ocultar el filtro superior
+		$("#filtro_superior").hide()
+
 		// Botones del menú
-		botones(Array("iniciar"));
+		botones(Array("iniciar"))
 
 		$("form").on("submit", function(){
 			iniciar_medicion()

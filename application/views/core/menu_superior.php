@@ -4,7 +4,7 @@
         <span uk-navbar-toggle-icon></span>
     </a>
 
-    <div class="uk-navbar-center">
+    <div class="uk-navbar-center" id="filtro_superior">
         <!-- Sector -->
         <select class="uk-select uk-form-width-medium uk-form-small" id="select_sector_filtro">
             <option value="0">Todos los sectores</option>
@@ -51,7 +51,6 @@
     $(document).ready(function(){
         // Consulta de los datos del filtro
         let filtro = ajax("<?php echo site_url('configuracion/obtener'); ?>", {"tipo": "filtro", "id": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>"}, 'JSON')
-        imprimir(filtro)
 
         // Si tiene un filtro previo guardado
         if(filtro){
