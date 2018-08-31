@@ -65,10 +65,6 @@ class Panel extends CI_Controller {
                     $this->load->view("panel/mediciones_urgentes", $this->data);
                 break;
 
-                case "resumen_mediciones":
-                    $this->load->view("panel/resumen_mediciones");
-                break;
-
                 case "ultimas_mediciones":
                     $this->data["fecha"] = $this->input->post("fecha");
                     $this->load->view("panel/ultimas_mediciones", $this->data);

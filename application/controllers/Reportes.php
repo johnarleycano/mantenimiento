@@ -38,7 +38,7 @@ Class Reportes extends CI_Controller{
      */
     function pdf()
     {
-    	switch ($this->uri->segment(3)) {
+        switch ($this->uri->segment(3)) {
             case 'medicion':
                 // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
                 $this->logs_model->insertar(6, "Medición {$this->uri->segment(4)}");
@@ -46,12 +46,26 @@ Class Reportes extends CI_Controller{
                 $this->load->view("reportes/pdf/medicion");
             break;
 
-    		case 'certificado_pesaje':
+            case 'certificado_pesaje':
                 // Se inserta el registro de logs enviando tipo de log y dato adicional si corresponde
                 $this->logs_model->insertar(6, "Medición {$this->uri->segment(4)}");
                 
                 $this->load->view("reportes/pdf/certificado_pesaje");
-			break;
+            break;
+        }
+    }
+
+    /**
+     * Reportes gráficos
+     * 
+     * @return [void]
+     */
+    function graficos()
+    {
+    	switch ($this->input->post("tipo")) {
+            case 'resumen_mediciones':
+                $this->load->view("reportes/graficos/resumen_mediciones");
+            break;
     	}
     }
 }

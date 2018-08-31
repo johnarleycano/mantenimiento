@@ -175,7 +175,7 @@
 	 */
 	function resumen_mediciones()
 	{
-		$("#cont_grafico_resumen_mediciones").load("<?php echo site_url('panel/cargar_interfaz'); ?>", {"tipo": "resumen_mediciones"})
+		$("#cont_grafico_resumen_mediciones").load("<?php echo site_url('reportes/graficos'); ?>", {"tipo": "resumen_mediciones"})
 	}
 
 	/**
