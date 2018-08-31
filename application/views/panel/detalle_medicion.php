@@ -57,7 +57,7 @@
 		$("#id_medicion").val("<?php echo $id_medicion; ?>");
 
 		// Botones del menú
-		botones(Array("pdf"));
+		// botones(Array("pdf"))
 
 		UIkit.modal("#modal_detalles").show();
 

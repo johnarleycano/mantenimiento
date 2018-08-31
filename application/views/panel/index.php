@@ -243,6 +243,9 @@
 		resumen_mediciones()
 		mapa_mediciones()
 		actualizar_mediciones()
+
+		// Activación del filtro superior
+		filtro_superior()
 		
 		// setInterval(function(){
 		// 	// Aquí se consultará si hay cambios en las tablas
@@ -253,6 +256,6 @@
 		// ultimas_mediciones("hoy")
 
 		// Botones del menú
-		botones()
+		// botones()
 	});
 </script>

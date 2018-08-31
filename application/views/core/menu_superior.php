@@ -4,7 +4,8 @@
         <span uk-navbar-toggle-icon></span>
     </a>
 
-    <div class="uk-navbar-center" id="filtro_superior">
+    <!-- Filtro superior -->
+    <div class="uk-navbar-center uk-hidden" id="filtro_superior">
         <!-- Sector -->
         <select class="uk-select uk-form-width-medium uk-form-small" id="select_sector_filtro">
             <option value="0">Todos los sectores</option>
@@ -23,26 +24,54 @@
             <option value="0">Elija primero una vía...</option>
         </select>
     </div>
-
     
     <!-- Menú derecho -->
-    <div class="uk-navbar-right uk-hidden">
+    <div class="uk-navbar-right">
         <ul class="uk-iconnav">
-            <li><a onClick="javascript:algo()" id="icono_guardar" uk-icon="icon: plus; ratio: 2" title="Guardar" uk-tooltip="pos: bottom-left"></a></li>
-            <li><a onClick="javascript:algo()" id="icono_editar" uk-icon="icon: file-edit; ratio: 2" title="Editar" uk-tooltip="pos: bottom-center"></a></li>
-            <li><a onClick="javascript:algo()" id="icono_eliminar" uk-icon="icon: trash; ratio: 2" title="Eliminar" uk-tooltip="pos: bottom-left"></a></li>
-            <li><a onClick="javascript:iniciar_medicion()" id="icono_iniciar" uk-icon="icon: play; ratio: 2" title="Iniciar medición" uk-tooltip="pos: bottom-left"></a></li>
+            <!-- Guardar -->
+            <li id="icono_guardar" class="uk-hidden">
+                <a onClick="#" uk-icon="icon: check; ratio: 1.5" title="Guardar" uk-tooltip="pos: bottom-left"></a>
+            </li>
             
-            <!--  -->
-            <li><a onClick="javascript:continuar('atras')" id="icono_anterior" uk-icon="icon: chevron-left; ratio: 2" title="Anterior" uk-tooltip="pos: bottom-left"></a></li>
+            <!-- Editar -->
+            <li id="icono_editar" class="uk-hidden">
+                <a onClick="#" uk-icon="icon: file-edit; ratio: 1.5" title="Editar" uk-tooltip="pos: bottom-center"></a>
+            </li>
             
-            <li><a onClick="javascript:detener()" id="icono_detener" uk-icon="icon: minus-circle; ratio: 2" title="Detener medición" uk-tooltip="pos: bottom-left"></a></li>
+            <!-- Eliminar -->
+            <li id="icono_eliminar" class="uk-hidden">
+                <a onClick="#" uk-icon="icon: trash; ratio: 1.5" title="Eliminar" uk-tooltip="pos: bottom-left"></a>
+            </li>
             
-            <!--  -->
-            <li><a onClick="javascript:continuar('adelante')" id="icono_siguiente" uk-icon="icon: chevron-right; ratio: 2" title="Siguiente" uk-tooltip="pos: bottom-left"></a></li>
+            <!-- Iniciar medición -->
+            <li id="icono_iniciar" class="uk-hidden">
+                <a onClick="javascript:iniciar_medicion()" uk-icon="icon: play; ratio: 1.5" title="Iniciar medición" uk-tooltip="pos: bottom-left"></a>
+            </li>
             
-            <li><a onClick="javascript:generar_pdf()" id="icono_pdf" uk-icon="icon: copy; ratio: 2" title="Imprimir reporte en PDF" uk-tooltip="pos: bottom-center"></a></li>
-            <li><a onClick="javascript:volver()" id="icono_volver" uk-icon="icon: reply; ratio: 2" title="Volver al panel" uk-tooltip="pos: bottom-center"></a></li>
+            <!-- Atrás medición -->
+            <li id="icono_anterior" class="uk-hidden">
+                <a onClick="javascript:continuar('atras')" uk-icon="icon: chevron-left; ratio: 1.5" title="Anterior" uk-tooltip="pos: bottom-left"></a>
+            </li>
+            
+            <!-- Detener medición -->
+            <li id="icono_detener" class="uk-hidden">
+                <a onClick="javascript:detener()" uk-icon="icon: minus-circle; ratio: 1.5" title="Detener medición" uk-tooltip="pos: bottom-left"></a>
+            </li>
+            
+            <!-- Adelante -->
+            <li id="icono_siguiente" class="uk-hidden">
+                <a onClick="javascript:continuar('adelante')" uk-icon="icon: chevron-right; ratio: 1.5" title="Siguiente" uk-tooltip="pos: bottom-left"></a>
+            </li>
+            
+            <!-- PDF -->
+            <li id="icono_pdf" class="uk-hidden">
+                <a onClick="javascript:generar_pdf()" uk-icon="icon: copy; ratio: 1.5" title="Imprimir reporte en PDF" uk-tooltip="pos: bottom-center"></a>
+            </li>
+
+            <!-- Volver -->
+            <li id="icono_volver" class="uk-hidden">
+                <a onClick="javascript:volver()" uk-icon="icon: reply; ratio: 1.5" title="Volver al panel" uk-tooltip="pos: bottom-center"></a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -65,14 +65,11 @@ function byte2Hex (n)
  */
 function botones(parametros)
 {
-    $("[id^='icono_']").hide();
-
     // Si trae parámetros
     if (parametros) {
-        $("#menu_superior > div").removeClass("uk-hidden");
-        
-        for (i = 0; i < parametros.length; i++) { 
-            $("#icono_" + parametros[i]).show();
+        for (i = 0; i < parametros.length; i++) {
+            // Se muestra el ícono
+            $(`#icono_${parametros[i]}`).removeClass("uk-hidden")
         }
     }
 }
@@ -170,6 +167,17 @@ function filtros_por_defecto(id_modulo)
     select_por_defecto("select_tipo_medicion", filtro.Fk_Id_Tipo_Medicion)
     select_por_defecto("select_sector", filtro.Fk_Id_Sector)
     select_por_defecto("select_calificacion", filtro.Calificacion)
+}
+
+/**
+ * Muestra el filtro en el menú superior
+ * 
+ * 
+ * @return [void]
+ */
+function filtro_superior()
+{
+    $(`#filtro_superior`).removeClass("uk-hidden")
 }
 
 /**

@@ -313,15 +313,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 	}
 	
 	$(document).ready(function(){
-		// Ocultar el filtro superior
-		$("#filtro_superior").hide()
-		
-		var opciones = Array("anterior", "detener", "siguiente");
+		let opciones = Array("anterior", "detener", "siguiente");
 
 		// Si es la primera posición, quita el botón "anterior" y "detener medición"
 		if ($("#posicion").val() == 1) opciones.splice(0, 1);
 
 		// Botones del menú
-		botones(opciones);
-	});
+		botones(opciones)
+	})
 </script>

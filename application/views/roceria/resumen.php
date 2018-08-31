@@ -72,6 +72,6 @@ $abscisas = $this->roceria_model->obtener("abscisas_mediciones", array("id_medic
 		imprimir_notificacion("Medición detenida. Puede editar cualquier calificación de la medición", "success");
 
 		// Botones del menú
-		botones(Array("volver"));
+		botones(Array("volver"))
 	});
 </script>

@@ -87,5 +87,8 @@
 		listar()
 
         $("select").on("change", listar)
+
+        // Activación del filtro superior
+        filtro_superior()
 	})
 </script>
