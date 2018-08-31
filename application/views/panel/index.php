@@ -8,7 +8,7 @@
 	    <p>
 			<div class="ui padded segment uk-column-1-2@m" id="cont_filtros">
 				<div class="ui green segment">
-				    <select class="uk-select" id="select_tipo_medicion_resumen" title="tipo de medición">
+				    <select class="uk-select uk-form-small" id="select_tipo_medicion_resumen" title="tipo de medición">
 				    	<?php foreach ($this->configuracion_model->obtener("tipos_mediciones") as $tipo) { ?>
 				            <option value="<?php echo $tipo->Pk_Id ?>"><?php echo $tipo->Nombre; ?></option>
 				    	<?php } ?>
@@ -16,7 +16,7 @@
 			    </div>
 
 			    <div class="ui green segment">
-				    <select class="uk-select" id="select_calificacion" title="vía">
+				    <select class="uk-select uk-form-small" id="select_calificacion" title="vía">
 				    	<option value="0">Todas las calificaciones</option>
 				    	<?php foreach ($this->configuracion_model->obtener("calificaciones") as $calificacion) { ?>
 				            <option value="<?php echo $calificacion->Valor ?>"><?php echo $calificacion->Descripcion; ?></option>
@@ -34,7 +34,7 @@
 	    <p>
 			<div class="ui padded segment uk-column-1-2@m" id="cont_filtros">
 				<div class="ui green segment">
-				    <select class="uk-select" id="select_tipo_medicion_mapa" title="tipo de medición">
+				    <select class="uk-select uk-form-small" id="select_tipo_medicion_mapa" title="tipo de medición">
 				    	<?php foreach ($this->configuracion_model->obtener("tipos_mediciones") as $tipo) { ?>
 				            <option value="<?php echo $tipo->Pk_Id ?>"><?php echo $tipo->Nombre; ?></option>
 				    	<?php } ?>
@@ -42,7 +42,7 @@
 			    </div>
 
 			    <div class="ui green segment">
-				    <select class="uk-select" id="select_medicion" title="medición"></select>
+				    <select class="uk-select uk-form-small" id="select_medicion" title="medición"></select>
 			    </div>
 			</div>
 
@@ -59,13 +59,6 @@
 
     	<!-- <iframe src="<?php //echo $this->config->item('mapa_url').'zoom=11'; ?>" width="100%" height="460"></iframe> -->
     </div>
-
-
-
-    <!-- Mapa de calor -->
-    <!-- <div class="uk-grid-match uk-child-width-1-2@m" id="cont_mapa" uk-grid>
-    	
-    </div> -->
     
     <!-- <div class="uk-grid-match uk-child-width-1-2@m" uk-grid> -->
     	<!-- Puntos críticos -->

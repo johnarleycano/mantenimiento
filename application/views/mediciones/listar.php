@@ -9,7 +9,9 @@ if (count($mediciones) == 0) { ?>
 	</div>
 <?php exit(); } ?>
 
-<ul class="uk-list uk-list-striped">
+<h1 class="uk-heading-line uk-margin"><span>Mediciones</span></h1>
+
+<ul class="uk-list uk-list-striped uk-margin">
     <?php foreach ($mediciones as $medicion) { ?>
     	<li>
     		<!-- Generar PDF -->
@@ -22,16 +24,16 @@ if (count($mediciones) == 0) { ?>
 	    	</a>
 
     		<span class="uk-text-left"><?php echo "$medicion->Sector | $medicion->Via"; ?></span>
-    		<time datetime="<?php echo $medicion->Fecha_Inicial; ?>" class="uk-text-muted uk-text-small" style="float: right"><?php echo $medicion->Fecha_Inicial; ?></time>
+
+    		<time datetime="<?php echo $medicion->Fecha_Inicial; ?>" class="uk-text-muted uk-text-small" style="float: right" uk-tooltip="pos: top-right"><?php echo $this->configuracion_model->obtener('formato_fecha', $medicion->Fecha_Inicial); ?></time>
     	</li>
 	<?php } ?>
 </ul>
 
-
 <script type="text/javascript">
 	$(document).ready(function(){
-		cerrar_notificaciones();
+		cerrar_notificaciones()
 		
-		$("time").timeago();
+		$("time").timeago()
 	})
 </script>

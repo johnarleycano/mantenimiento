@@ -1,40 +1,3 @@
-<div class="uk-column-1-4@s">
-    <p>
-        <select class="uk-select" id="select_sector" title="sector" autofocus>
-        	<option value="">Todos los sectores</option>
-        	<?php foreach ($this->configuracion_model->obtener("sectores") as $sector) { ?>
-                <option value="<?php echo $sector->Pk_Id ?>"><?php echo $sector->Codigo; ?></option>
-        	<?php } ?>
-        </select>
-    </p>
-    
-    <p>
-        <select class="uk-select" id="select_via" title="vía">
-            <option value="">Todas las vías</option>
-            <?php foreach ($this->configuracion_model->obtener("vias") as $via) { ?>
-                <option value="<?php echo $via->Pk_Id ?>"><?php echo $via->Nombre; ?></option>
-            <?php } ?>
-        </select>
-    </p>
-    
-    <p>
-        <?php $rango = $this->configuracion_model->obtener("rango_abscisado"); ?>
-        <select class="uk-select" id="select_km_inicial">
-            <?php for ($i = $rango->Minimo; $i < $rango->Maximo; $i++) { ?>
-                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-            <?php } ?>
-        </select>
-    </p>
-    
-    <p>
-        <select class="uk-select" id="select_km_final">
-            <?php for ($i = $rango->Minimo; $i < $rango->Maximo; $i++) { ?>
-                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-            <?php } ?>
-        </select>
-    </p>
-</div>
-
 <div id="cont_lista"></div>
 	
 <script type="text/javascript">
@@ -66,20 +29,12 @@
 	function listar()
 	{
         cerrar_notificaciones();
-        imprimir_notificacion("<div uk-spinner></div> Buscando mediciones...");
-
-        // console.clear()
+        imprimir_notificacion("<div uk-spinner></div> Buscando mediciones...")
 
         const datos = {}
-        const sector = $("#select_sector").val()
-        const via = $("#select_via").val()
-        const costado = $("#select_costado").val()
-        const km_inicial = $("#input_kilometro_inicial").val()
-        const km_final = $("#input_kilometro_final").val()
+        const sector = ($("#select_sector_filtro").val() != 0) ? datos.Fk_Id_Sector = $("#select_sector_filtro").val() : null
+        const via = ($("#select_via_filtro").val() != 0) ? datos.Fk_Id_Via = $("#select_via_filtro").val() : null
 
-        if (sector) datos.Fk_Id_Sector = sector
-        if (via) datos.Fk_Id_Via = via
-		
         cargar_interfaz("cont_lista", "<?php echo site_url('mediciones/cargar_interfaz'); ?>", {"tipo": "mediciones_lista", "datos": datos});
 	}
 
