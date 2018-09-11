@@ -36,8 +36,8 @@ $config['id_aplicacion_sesion'] = 15;
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://mantenimiento.devimed.com.co';
-$config['mapa_url'] = 'http://mapa.devimed.com.co/geo/index.html?';
+$config['base_url'] = 'https://mantenimiento.devimed.com.co';
+$config['mapa_url'] = 'https://mapa.devimed.com.co/geo/index.html?';
 
 /*
 |--------------------------------------------------------------------------
