@@ -2,7 +2,7 @@
 $id_medicion = $this->uri->segment(3);
 
 // Se consulta la medición actual
-$medicion = $this->roceria_model->obtener("medicion", $id_medicion);
+$medicion = $this->mediciones_model->obtener("medicion", $id_medicion);
 
 // Se consulta los ítems a medir
 $tipos_mediciones = $this->configuracion_model->obtener("tipos_mediciones");
@@ -10,8 +10,8 @@ $tipos_mediciones = $this->configuracion_model->obtener("tipos_mediciones");
 // Se consulta los costados de la vía a medir
 $costados = $this->configuracion_model->obtener("costados", $medicion->Fk_Id_Via);
 
-// $detalle_medicion = $this->roceria_model->obtener("resumen_medicion", $id_medicion);
-$abscisas = $this->roceria_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => null));
+// $detalle_medicion = $this->mediciones_model->obtener("resumen_medicion", $id_medicion);
+$abscisas = $this->mediciones_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => null));
 ?>
 
 <h3 class="uk-heading-line"><span><?php echo "$medicion->Sector | $medicion->Via"; ?></span></h3>
@@ -49,7 +49,7 @@ $abscisas = $this->roceria_model->obtener("abscisas_mediciones", array("id_medic
 								"Fk_Id_Medicion" => $medicion->Pk_Id,
 							);
 							?>
-	                		<?php $detalle = $this->roceria_model->obtener("medicion_detalle", $datos); ?>
+	                		<?php $detalle = $this->mediciones_model->obtener("medicion_detalle", $datos); ?>
 			                	<td class="uk-table-link uk-text-center">
 				                    <a class="uk-link-reset" onCLick="javascript:modificarMedicion();">
 				                    <?php $color = (isset($detalle->Calificacion)) ? "rgb({$detalle->Color_R}, {$detalle->Color_G}, {$detalle->Color_B})" : "" ; ?>

@@ -21,7 +21,7 @@ class Panel extends CI_Controller {
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('configuracion_model', 'panel_model', 'roceria_model'));
+        $this->load->model(array('configuracion_model', 'panel_model'));
     }
     
     /**

@@ -34,9 +34,9 @@
      * 
      * @return [void]
      */
-    function medir_roceria()
+    function parametrizar_medicion()
     {
-        redireccionar("<?php echo site_url('roceria/parametrizar'); ?>");
+        redireccionar("<?php echo site_url('mediciones/parametrizar'); ?>");
     }
 
     function volver()

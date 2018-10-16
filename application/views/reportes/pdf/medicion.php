@@ -1,9 +1,9 @@
 <?php
 // Se consulta la medición actual y se toman valores globales para la cabecera
-$medicion = $this->roceria_model->obtener("medicion", $this->uri->segment(4));
+$medicion = $this->mediciones_model->obtener("medicion", $this->uri->segment(4));
 
 // Se consulta la medición anterior
-$medicion_anterior = $this->roceria_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
+$medicion_anterior = $this->mediciones_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
 
 // Se toma el id de la medición actual y anterior (Asigna el id de la medición anterior, si existe tal medición)
 $id_medicion = $medicion->Pk_Id;
@@ -169,7 +169,7 @@ $pdf->SetCreator('John Arley Cano - johnarleycano@hotmail.com');
  * Contenido de las mediciones
  */
 // Se crean los registros de las abscisas
-foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => $id_medicion_anterior)) as $abscisa) {
+foreach ($this->mediciones_model->obtener("abscisas_mediciones", array("id_medicion" => $id_medicion, "id_medicion_anterior" => $id_medicion_anterior)) as $abscisa) {
 	$pdf->Cell($GLOBALS['ancho_km'], 5, ($abscisa->Valor / 1000),1,0,'R', 0);
 	$pdf->Cell($GLOBALS['ancho_fecha_medicion'], 5, $this->configuracion_model->obtener("formato_fecha", $abscisa->Fecha, "corto"),1,0,'L', 0);
 
@@ -192,7 +192,7 @@ foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion
 			);
 
 			// Se consulta el detalle de la medición anterior
-			$detalle_medicion_anterior = $this->roceria_model->obtener("medicion_detalle", $datos);
+			$detalle_medicion_anterior = $this->mediciones_model->obtener("medicion_detalle", $datos);
 
 			if (isset($detalle_medicion_anterior->Calificacion)) {
 				$calificacion_anterior = $detalle_medicion_anterior->Calificacion;
@@ -223,7 +223,7 @@ foreach ($this->roceria_model->obtener("abscisas_mediciones", array("id_medicion
 			);
 
 			// Se consulta el detalle de la medición actual
-			$detalle_medicion_actual = $this->roceria_model->obtener("medicion_detalle", $datos);
+			$detalle_medicion_actual = $this->mediciones_model->obtener("medicion_detalle", $datos);
 
 			if (isset($detalle_medicion_actual->Calificacion)) {
 				$calificacion_actual = $detalle_medicion_actual->Calificacion;

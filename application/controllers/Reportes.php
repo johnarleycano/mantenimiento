@@ -21,7 +21,7 @@ Class Reportes extends CI_Controller{
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('configuracion_model', 'reportes_model', 'roceria_model', 'basculas_model'));
+        $this->load->model(array('configuracion_model', 'reportes_model', 'basculas_model', 'mediciones_model'));
 
         // Carga de librerías
         require('system/libraries/Fpdf.php');
@@ -29,6 +29,37 @@ Class Reportes extends CI_Controller{
 
         // Definición de la ruta de las fuentes
         define('FPDF_FONTPATH','system/fonts/');
+    }
+
+    /**
+     * Reportes gráficos
+     * 
+     * @return [void]
+     */
+    function graficos()
+    {
+    	switch ($this->input->post("tipo")) {
+            case 'resumen_mediciones':
+                $this->load->view("reportes/graficos/resumen_mediciones");
+            break;
+    	}
+    }
+
+    /**
+     * Mapas
+     * 
+     * @return [void]
+     */
+    function mapas()
+    {
+        switch ($this->uri->segment(3)) {
+            case 'prueba':
+                $this->data['titulo'] = 'Mapa';
+                $this->data['via'] = $this->uri->segment(4);
+                $this->data['contenido_principal'] = 'reportes/mapas/prueba';
+                $this->load->view('core/template', $this->data);
+            break;
+        }
     }
 
     /**
@@ -55,18 +86,34 @@ Class Reportes extends CI_Controller{
         }
     }
 
-    /**
-     * Reportes gráficos
-     * 
-     * @return [void]
-     */
-    function graficos()
-    {
-    	switch ($this->input->post("tipo")) {
-            case 'resumen_mediciones':
-                $this->load->view("reportes/graficos/resumen_mediciones");
-            break;
-    	}
+    function wkb_to_json($wkb) {
+        $geom = geoPHP::load($wkb,'wkb');
+        return $geom->out('json');
+    }
+
+    function obtener(){
+        # Build GeoJSON feature collection array
+        $geojson = array(
+           'type'      => 'FeatureCollection',
+           'features'  => array()
+        );
+
+        foreach ($this->configuracion_model->obtener("vias_geometrias", $this->input->post("via")) as $registro) {
+            $feature = array(
+                 'type' => 'Feature',
+                 'geometry' => json_decode($this->wkb_to_json($registro->wkb)),
+                 'properties' => $registro
+            );
+
+            unset($registro->wkb);
+            unset($registro->Shape);
+            # Add feature arrays to feature collection array
+            array_push($geojson['features'], $feature);
+
+        }
+
+echo json_encode($geojson, JSON_NUMERIC_CHECK);
+
     }
 }
 /* Fin del archivo Reportes.php */

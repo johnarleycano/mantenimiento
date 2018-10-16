@@ -2,10 +2,10 @@
 $abscisa = $this->uri->segment(5);
 
 // Se consulta la medición actual
-$medicion = $this->roceria_model->obtener("medicion", $this->uri->segment(3));
+$medicion = $this->mediciones_model->obtener("medicion", $this->uri->segment(3));
 
 // Se consulta la medición anterior
-$medicion_anterior = $this->roceria_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
+$medicion_anterior = $this->mediciones_model->obtener("medicion_anterior", array("id_via" => $medicion->Fk_Id_Via, "id_medicion" => $medicion->Pk_Id));
 
 // Se toma el id de la medición actual y anterior (Asigna el id de la medición anterior, si existe tal medición)
 $id_medicion = $medicion->Pk_Id;
@@ -61,11 +61,11 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 
 			// Se consulta el detalle de la medición actual
 			$datos["Fk_Id_Medicion"] = $id_medicion;
-			$detalle_medicion = $this->roceria_model->obtener("medicion_detalle", $datos);
+			$detalle_medicion = $this->mediciones_model->obtener("medicion_detalle", $datos);
 
 			// Se consulta el detalle de la medición anterior
 			$datos["Fk_Id_Medicion"] = $id_medicion_anterior;
-			$detalle_medicion_anterior = $this->roceria_model->obtener("medicion_detalle", $datos);
+			$detalle_medicion_anterior = $this->mediciones_model->obtener("medicion_detalle", $datos);
 			?>
 			
 			<div id="medicion">
@@ -183,12 +183,12 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		}
 		
 		if (!rango && tipo == "atras") {
-			redireccionar("<?php echo site_url('roceria/parametrizar'); ?>")
+			redireccionar("<?php echo site_url('mediciones/parametrizar'); ?>")
 			return false;
 		}
 
 		guardar(tipo)
-		redireccionar(`<?php echo site_url('roceria/medir'); ?>/${$("#id_medicion").val()}/${posicion}/${siguiente_abscisa}/${$("#orden").val()}`)
+		redireccionar(`<?php echo site_url('mediciones/roceria'); ?>/${$("#id_medicion").val()}/${posicion}/${siguiente_abscisa}/${$("#orden").val()}`)
 	}
 
 	/**
@@ -226,11 +226,11 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
         // imprimir(datos_medicion);
         
         // Se eliminan los anteriores registros que pueda tener
-        ajax("<?php echo site_url('roceria/eliminar'); ?>", {"tipo": "medicion_detalle", "datos": {"Abscisa": abscisa, "Fk_Id_Medicion": id_medicion}}, 'html');
+        ajax("<?php echo site_url('mediciones/eliminar'); ?>", {"tipo": "medicion_detalle", "datos": {"Abscisa": abscisa, "Fk_Id_Medicion": id_medicion}}, 'html');
 
         // Si tiene ítems marcados, se procede a guardar y retornar el id
         if (datos_medicion.length > 0) {
-	        id = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_detalle", "datos": datos_medicion}, 'html');
+	        id = ajax("<?php echo site_url('mediciones/insertar'); ?>", {"tipo": "medicion_detalle", "datos": datos_medicion}, 'html');
 	        return id;
         }
 	}
@@ -309,7 +309,7 @@ $calificaciones = $this->configuracion_model->obtener("calificaciones");
 		guardar("detener");
 
 		// Se redirecciona a la interfaz de resumen
-		redireccionar(`${"<?php echo site_url('roceria/resumen_medicion'); ?>"}/${$("#id_medicion").val()}`);
+		redireccionar(`${"<?php echo site_url('mediciones/resumen'); ?>"}/${$("#id_medicion").val()}`);
 	}
 	
 	$(document).ready(function(){

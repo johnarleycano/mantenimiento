@@ -9,7 +9,7 @@
 
 	        <div class="uk-modal-body" uk-overflow-auto>
 	        	<?php
-	        	$medicion = $this->roceria_model->obtener("medicion", $id_medicion);
+	        	$medicion = $this->mediciones_model->obtener("medicion", $id_medicion);
 	        	$puntos_criticos = $this->panel_model->obtener("puntos_criticos_medicion", array("d.Fk_Id_Medicion" => $id_medicion, "d.Calificacion" => $calificacion));
 	        	$num = 1;
 	        	?>

@@ -8,7 +8,7 @@
      */
     function continuar_medicion(id_medicion)
     {
-        redireccionar(`<?php echo site_url('roceria/parametrizar'); ?>/${id_medicion}`, `ventana`)
+        redireccionar(`<?php echo site_url('mediciones/parametrizar'); ?>/${id_medicion}`, `ventana`)
     }
 
     /**

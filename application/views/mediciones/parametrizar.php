@@ -99,14 +99,14 @@
 	    	var id_medicion = "<?php echo $this->uri->segment(3); ?>"
 
 	    	// Inserción de log
-	    	ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion_continuar_log", "id": id_medicion}, 'HTML')
+	    	ajax("<?php echo site_url('mediciones/insertar'); ?>", {"tipo": "medicion_continuar_log", "id": id_medicion}, 'HTML')
 	    } else {
 	    	// Nueva medición
-        	var id_medicion = ajax("<?php echo site_url('roceria/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML')
+        	var id_medicion = ajax("<?php echo site_url('mediciones/insertar'); ?>", {"tipo": "medicion", "datos": datos}, 'HTML')
 	    }
 
 		// Se carga la interfaz de medición
-		redireccionar(`<?php echo site_url('roceria/medir'); ?>/${id_medicion}/1/${$("#input_kilometro_inicio").val()*1000}/${$("#select_orden").val()}`);
+		redireccionar(`<?php echo site_url('mediciones/roceria'); ?>/${id_medicion}/1/${$("#input_kilometro_inicio").val()*1000}/${$("#select_orden").val()}`);
 		return false
 	}
 
