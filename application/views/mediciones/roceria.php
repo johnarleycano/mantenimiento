@@ -17,8 +17,8 @@ $tipos_mediciones = $this->configuracion_model->obtener("tipos_mediciones");
 // Se consulta los costados de la vía a medir
 $costados = $this->configuracion_model->obtener("costados", $medicion->Fk_Id_Via);
 
-// Se consulta los costados de la vía a medir
-$calificaciones = $this->configuracion_model->obtener("calificaciones");
+// Se consulta las calificaciones activas
+$calificaciones = $this->configuracion_model->obtener("calificaciones_activas");
 ?>
 
 <input type="hidden" id="id_medicion" value="<?php echo $id_medicion; ?>">

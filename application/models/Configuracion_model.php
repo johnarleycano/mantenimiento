@@ -85,6 +85,13 @@ Class Configuracion_model extends CI_Model{
 					->get("valores_calificaciones")->result();
 			break;
 
+			case "calificaciones_activas":
+				return $this->db
+					->order_by("Valor", "DESC")
+					->where("Estado", 1)
+					->get("valores_calificaciones")->result();
+			break;
+
 			case "calificaciones_criticas":
 				return $this->db
 					->order_by("Valor")
