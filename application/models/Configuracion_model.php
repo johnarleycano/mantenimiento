@@ -173,6 +173,13 @@ Class Configuracion_model extends CI_Model{
 					->get("sectores")->result();
 			break;
 
+			case "sectores_activos":
+				return $this->db_configuracion
+					->order_by("Codigo")
+					->where("Estado", 1)
+					->get("sectores")->result();
+			break;
+
 			case "tipos_mediciones":
 				return $this->db
 					->where("Estado", 1)
