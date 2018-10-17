@@ -55,7 +55,7 @@
 
 			<div id="cont_mapa_mediciones" class="uk-margin-small">
 				<p></p>
-				<iframe src="<?php echo $this->config->item('mapa_url').'?'; ?>" width="100%" height="460"></iframe>
+				<iframe width="100%" height="460"></iframe>
 			</div>
 	    </p>
 	</div>
@@ -108,7 +108,7 @@
 		let id_medicion = ($("#select_medicion").val() != 0) ? $("#select_medicion").val() : null;
 
 		// URLs
-		let url = `<?php echo $this->config->item('mapa_url'); ?>/${id_medicion}/${id_tipo_medicion}/${id_costado}`
+		let url = `<?php echo $this->config->item('mapa_url'); ?>/mantenimiento/mediciones/${id_medicion}/${id_tipo_medicion}/${id_costado}`
 
         // Si tiene medición seleccionada, muestra el mapa
         if(id_medicion) $("#cont_mapa_mediciones > iframe").attr("src", url)
