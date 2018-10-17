@@ -32,7 +32,14 @@
 	<!-- Mapa detalle de medición -->
 	<div class="uk-column-1-1">
 	    <p>
-			<div class="ui padded segment uk-column-1-2@m" id="cont_filtros">
+			<div class="ui padded segment uk-column-1-3@m" id="cont_filtros">
+				<div class="ui green segment">
+					<!-- Costado -->
+			        <select class="uk-select uk-form-width-large uk-margin-small-left uk-form-small" id="select_costado_filtro">
+			            <option value="0">Elija primero una vía...</option>
+			        </select>	
+				</div>
+				
 				<div class="ui green segment">
 				    <select class="uk-select uk-form-small" id="select_tipo_medicion_mapa" title="tipo de medición">
 				    	<?php foreach ($this->configuracion_model->obtener("tipos_mediciones") as $tipo) { ?>
@@ -48,7 +55,7 @@
 
 			<div id="cont_mapa_mediciones" class="uk-margin-small">
 				<p></p>
-				<iframe src="<?php echo $this->config->item('mapa_url').'zoom=11'; ?>" width="100%" height="460"></iframe>
+				<iframe src="<?php echo $this->config->item('mapa_url').'?'; ?>" width="100%" height="460"></iframe>
 			</div>
 	    </p>
 	</div>
@@ -59,43 +66,6 @@
 
     	<!-- <iframe src="<?php //echo $this->config->item('mapa_url').'zoom=11'; ?>" width="100%" height="460"></iframe> -->
     </div>
-    
-    <!-- <div class="uk-grid-match uk-child-width-1-2@m" uk-grid> -->
-    	<!-- Puntos críticos -->
-        <!-- <div>
-        	<div class="uk-margin-medium-top">
-        				    <ul class="uk-flex-center" uk-tab>
-        				    	se recorren las calificaciones críticas
-        				    	<?php // foreach ($this->configuracion_model->obtener("calificaciones_criticas") as $calificacion) { ?>
-        				    		<li>
-        					        	<a onCLick="javascript:mediciones_urgentes(<?php//  echo $calificacion->Valor; ?>);">
-        					        		<span class="uk-label" style="background-color: rgb(<?php // echo $calificacion->Color_R; ?>, <?php // echo $calificacion->Color_G; ?>, <?php//  echo $calificacion->Color_B; ?>);" id="calificacion_<?php // echo $calificacion->Valor; ?>"><?php // echo $calificacion->Descripcion; ?></span>
-        					        	</a>
-        					        </li>
-        				    	<?php // } ?>
-        				    </ul>
-                <div id="cont_mediciones_urgentes"></div>
-            </div>
-        </div> -->
-
-        <!-- Últimas mediciones -->
-       <!--  <div>
-        	<div class="uk-margin-medium-top">
-			    <ul class="uk-flex-center" uk-tab>
-			        <li class="uk-active">
-			        	<a onCLick="javascript:ultimas_mediciones('hoy');">Hoy</a>
-			        </li>
-			        <li>
-		        		<a onCLick="javascript:ultimas_mediciones('semana');">La última semana</a>
-			    	</li>
-			        <li>
-		        		<a onCLick="javascript:ultimas_mediciones('mes');">El último mes</a>
-			    	</li>
-			    </ul>
-                <div id="cont_ultimas_mediciones"></div>
-            </div>
-        </div> -->
-    <!-- </div> -->
 
     <div id="cont_modal"></div>
 </div>
@@ -138,18 +108,10 @@
 		let id_medicion = ($("#select_medicion").val() != 0) ? $("#select_medicion").val() : null;
 
 		// URLs
-		let url_anterior = $("#cont_mapa_mediciones > iframe").attr("src")
-        let url_nueva = url_anterior.replace('zoom=11', `zoom=11&via=${id_via}&medicion=${id_medicion}&tipo=${id_tipo_medicion}&costado=${id_costado}`)
+		let url = `<?php echo $this->config->item('mapa_url'); ?>/${id_medicion}/${id_tipo_medicion}/${id_costado}`
 
-        // Si tiene medición seleccionada
-        if(id_medicion){
-        	// Muestra el mapa
-        	$("#cont_mapa_mediciones > iframe").attr("src", url_nueva)
-    	} else {
-    		// Mensaje
-    		$("#cont_mapa_mediciones>p").text("Elija una medición para ver el mapa")
-    	}
-		// $("#cont_mapa_mediciones > iframe").attr("src" , function(i, val){return val})
+        // Si tiene medición seleccionada, muestra el mapa
+        if(id_medicion) $("#cont_mapa_mediciones > iframe").attr("src", url)
 	}
 
 	/**

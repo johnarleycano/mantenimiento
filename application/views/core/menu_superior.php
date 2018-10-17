@@ -18,11 +18,6 @@
         <select class="uk-select uk-form-width-medium uk-margin-small-left uk-form-small" id="select_via_filtro">
             <option value="0">Elija primero un sector...</option>
         </select>
-
-        <!-- Costado -->
-        <select class="uk-select uk-form-width-medium uk-margin-small-left uk-form-small" id="select_costado_filtro">
-            <option value="0">Elija primero una vía...</option>
-        </select>
     </div>
     
     <!-- Menú derecho -->
