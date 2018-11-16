@@ -108,7 +108,7 @@
 		let id_medicion = ($("#select_medicion").val() != 0) ? $("#select_medicion").val() : null;
 
 		// URLs
-		let url = `<?php echo $this->config->item('mapa_url'); ?>/mantenimiento/mediciones/${id_medicion}/${id_tipo_medicion}/${id_costado}`
+		let url = `<?php echo $this->config->item('mapa_url'); ?>/mediciones/roceria_cuneta/${id_medicion}/${id_tipo_medicion}/${id_costado}`
 
         // Si tiene medición seleccionada, muestra el mapa
         if(id_medicion) $("#cont_mapa_mediciones > iframe").attr("src", url)
