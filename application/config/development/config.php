@@ -37,7 +37,7 @@ $config['id_aplicacion_sesion'] = 15;
 |
 */
 $config['base_url'] = 'http://localhost/devimed/mantenimiento';
-$config['mapa_url'] = 'http://localhost/devimed/mapas/index.php/mantenimiento/mediciones';
+$config['mapa_url'] = 'http://localhost/devimed/mapas';
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ $config['mapa_url'] = 'http://localhost/devimed/mapas/index.php/mantenimiento/me
 | variable so that it is blank.	
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
