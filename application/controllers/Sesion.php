@@ -61,7 +61,7 @@ class Sesion extends CI_Controller {
         
         $aplicacion = $this->configuracion_model->obtener("aplicacion", $this->config->item('id_aplicacion_sesion'));
         
-        redirect("{$aplicacion->Url}sesion/iniciar/".$this->config->item('id_aplicacion'));
+        redirect("{$aplicacion->Url}/sesion/iniciar/".$this->config->item('id_aplicacion'));
 	}
 }
 /* Fin del archivo Sesion.php */
